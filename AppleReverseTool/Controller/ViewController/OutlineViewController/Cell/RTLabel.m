@@ -1012,32 +1012,72 @@ NSSet *RTLabelValidTags;
 
 + (RTLabelExtractedComponent*)extractTextStyleFromText:(NSString*)data paragraphReplacement:(NSString*)paragraphReplacement
 {
-	NSScanner *scanner = nil; 
-	NSString *text = nil;
-	NSString *tag = nil;
-	
+    NSString *originString = data;
+    NSString *tag = nil;
 	NSMutableArray *components = [NSMutableArray array];
-	
 	NSInteger last_position = 0;
-	scanner = [NSScanner scannerWithString:data];
-	while (![scanner isAtEnd])
+    NSInteger startCursor = 0;
+    NSInteger endCursor = 0;
+    NSInteger lastCursor = 0;
+    NSInteger length = originString.length;
+
+    static NSInteger (^calculateCount)(NSString *string, NSString *characterString);
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        calculateCount = ^(NSString *string, NSString *characterString) {
+            unichar character = [characterString characterAtIndex:0];
+            NSInteger count = 0;
+            for (int i = 0; i < string.length; i++) {
+                if ([string characterAtIndex:i] == character) {
+                    count++;
+                }
+            }
+            return count;
+        };
+    });
+
+	while (startCursor < length)
     {
-		[scanner scanUpToString:@"<" intoString:NULL];
-		[scanner scanUpToString:@">" intoString:&text];
+        NSString *text = nil;
+
+        NSRange startRange = [originString rangeOfString:@"<" options:0 range:NSMakeRange(startCursor, length - startCursor)];
+
+        if (startRange.location == NSNotFound) {
+            break;
+        }
+
+        startCursor = startRange.location;
+        endCursor = startCursor;
+
+        while (endCursor < length) {
+            NSRange endRange = [originString rangeOfString:@">" options:0 range:NSMakeRange(endCursor, length - endCursor)];
+            if (endRange.location == NSNotFound) {
+                break;
+            }
+            endCursor = endRange.location;
+            NSString *innerString = [originString substringWithRange:NSMakeRange(startCursor + 1, endCursor - startCursor - 1)];
+            if (calculateCount(innerString, @"<") == calculateCount(innerString, @">")) {
+                text = [originString substringWithRange:NSMakeRange(startCursor, endCursor - startCursor)];
+                startCursor = endCursor + 1;
+                break;
+            }
+            endCursor = NSMaxRange(endRange);
+        }
 
         if (!text.length) {
-            continue;
+            break;
         }
 		
 		NSString *delimiter = [NSString stringWithFormat:@"%@>", text];
 		NSInteger position = [data rangeOfString:delimiter options:0 range:NSMakeRange(last_position, data.length - last_position)].location;
-        NSString *innerString = [text substringFromIndex:1];
-        if ([innerString rangeOfString:@"<"].length ||
-            ![RTLabelValidTags containsObject:[innerString componentsSeparatedByString:@" "].firstObject])
+        if (![RTLabelValidTags containsObject:[[text substringFromIndex:1] componentsSeparatedByString:@" "].firstObject])
         {
-            scanner.scanLocation = scanner.scanLocation - text.length + 1;
+            lastCursor++;
+            startCursor = lastCursor;
             continue;
         }
+
+        lastCursor = endCursor + 1;
 		if (position!=NSNotFound)
 		{
 			if ([delimiter rangeOfString:@"<p"].location==0)
@@ -1073,7 +1113,34 @@ NSSet *RTLabelValidTags;
 		}
 		else
 		{
+//            <a href=Struct://{unique_ptr<WebKit::NavigationState, std::__1::default_delete<WebKit::NavigationState>>="__ptr_"{__compressed_pair<WebKit::NavigationState *, std::__1::default_delete<WebKit::NavigationState>>="__first_"^{NavigationState}}}/unique_ptr<WebKit::NavigationState, std::__1::default_delete<WebKit::NavigationState>>>
+            NSString *string = [text substringFromIndex:1];
+            NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+            NSScanner *scanner = [[NSScanner alloc] initWithString:string];
+            [scanner scanUpToString:@" " intoString:&tag];
+
+            while (!scanner.isAtEnd) {
+                NSString *key, *value;
+                [scanner scanUpToString:@"=" intoString:&key];
+                scanner.scanLocation = scanner.scanLocation + 1;
+                if ((char)[string characterAtIndex:scanner.scanLocation] == '\'') {
+                    scanner.scanLocation = scanner.scanLocation + 1;
+                    [scanner scanUpToString:@"'" intoString:&value];
+                    [scanner scanUpToString:@" " intoString:nil];
+                } else {
+                    [scanner scanUpToString:@" " intoString:&value];
+                    value = [value stringByReplacingOccurrencesOfString:@"\"" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, MIN(1, value.length))];
+                    value = [value stringByReplacingOccurrencesOfString:@"\"" withString:@"" options:NSLiteralSearch range:NSMakeRange(MAX(0, (NSInteger)[value length]-1), MIN(1, value.length))];
+                }
+                if (!scanner.isAtEnd) {
+                    scanner.scanLocation = scanner.scanLocation + 1;
+                }
+
+                attributes[key] = value ?: key;
+            }
+
 			// start of tag
+            /*
 			NSArray *textComponents = [[text substringFromIndex:1] componentsSeparatedByString:@" "];
 			tag = textComponents[0];
 			//NSLog(@"start of tag: %@", tag);
@@ -1096,6 +1163,7 @@ NSSet *RTLabelValidTags;
 					}
 				}
 			}
+             */
 			RTLabelComponent *component = [RTLabelComponent componentWithString:nil tag:tag attributes:attributes];
 			component.position = position;
 			[components addObject:component];
