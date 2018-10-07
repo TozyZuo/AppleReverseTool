@@ -37,7 +37,7 @@ NS_INLINE NSString *ARTColorStringCreate(NSString *string, NSString *color)
 
 NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSString *string)
 {
-    return [NSString stringWithFormat:@"<a href=%@://%@>%@</a>", scheme, path, string];
+    return [NSString stringWithFormat:@"<a href='%@://%@'>%@</a>", scheme, path, string];
 }
 
 @class ARTDataController;

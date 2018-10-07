@@ -126,7 +126,7 @@
             } else {
                 NSAlert *alert = [[NSAlert alloc] init];
                 alert.messageText = [NSString stringWithFormat:@"未发现类 %@", value];
-                alert.informativeText = @"不应该出现，请提一个issue";
+                alert.informativeText = [NSString stringWithFormat:@"应该是%@没有link这个类所在的库导致", self.dataController.filePath.lastPathComponent];
                 [alert runModal];
             }
         }

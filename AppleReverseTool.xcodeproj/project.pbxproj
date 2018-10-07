@@ -217,10 +217,6 @@
 		BA3BE7C221632C73007AEFEF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				BA3BE7C721632CB0007AEFEF /* RTLabel.h */,
-				BA3BE7C621632CB0007AEFEF /* RTLabel.m */,
-				BA3BE7C921634B3B007AEFEF /* ARTButton.h */,
-				BA3BE7CA21634B3B007AEFEF /* ARTButton.m */,
 				BA3BE7C321632C95007AEFEF /* ARTOutlineViewCell.h */,
 				BA3BE7C421632C95007AEFEF /* ARTOutlineViewCell.m */,
 			);
@@ -248,6 +244,7 @@
 		BA635C9B215DFBEE0048AB9A /* AppleReverseTool */ = {
 			isa = PBXGroup;
 			children = (
+				BAB6E5DC216A0F67005BA8C9 /* View */,
 				BA635CE9215E02930048AB9A /* Base */,
 				BAF2FEC72160BAAE0082A508 /* Common */,
 				BA635CED215E02BF0048AB9A /* Data */,
@@ -355,6 +352,17 @@
 				BA3BE7CD21635425007AEFEF /* NSColor+ART.m */,
 			);
 			path = Categary;
+			sourceTree = "<group>";
+		};
+		BAB6E5DC216A0F67005BA8C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BA3BE7C721632CB0007AEFEF /* RTLabel.h */,
+				BA3BE7C621632CB0007AEFEF /* RTLabel.m */,
+				BA3BE7C921634B3B007AEFEF /* ARTButton.h */,
+				BA3BE7CA21634B3B007AEFEF /* ARTButton.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		BAF2FEB22160A7F70082A508 /* Controller */ = {

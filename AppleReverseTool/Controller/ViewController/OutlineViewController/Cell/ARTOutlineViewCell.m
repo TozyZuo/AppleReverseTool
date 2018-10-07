@@ -52,7 +52,8 @@
 
     self.label.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>", [self prefixWithData:data], kSchemeClass, data.name, data.isInsideMainBundle ? kColorClass : kColorOtherClass, data.name];
 
-//    self.label.text = @"<font color=class><a href=ddd://sss>objc</a></font>";
+//    self.label.text = @"<a href='Struct://{unique_ptr<WebKit::NavigationState, std::__1::default_delete<WebKit::NavigationState>>=\"__ptr_\"{__compressed_pair<WebKit::NavigationState *, std::__1::default_delete<WebKit::NavigationState>>=\"__first_\"^{NavigationState}}}/unique_ptr<WebKit::NavigationState, std::__1::default_delete<WebKit::NavigationState>>'>xxx</a>";
+//    self.label.text = @"xxx<xxxx<font color=class><a href=ddd://sss>objc</a></font>xxxx>xxx";
 }
 
 - (NSString *)prefixWithData:(CDOCClass *)data

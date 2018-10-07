@@ -34,9 +34,7 @@
 - (void)updateData:(NSArray<CDOCClass *> *)data
 {
     self.data = data;
-//    CDOCClass *class = [[CDOCClass alloc] init];
-//    class.name = @"abjc";
-//    self.data = @[class];
+//    self.data = @[@1];
     [self.outlineView reloadData];
     [self.outlineView expandItem:nil expandChildren:YES];
 }
