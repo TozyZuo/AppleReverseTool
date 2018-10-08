@@ -10,6 +10,7 @@
 #import "RTLabel.h"
 #import "ClassDumpExtension.h"
 #import "ARTClass.h"
+#import "ARTURL.h"
 
 
 @interface ARTOutlineViewCell ()
@@ -96,8 +97,9 @@
 
 #pragma mark - RTLabelDelegate
 
-- (void)label:(RTLabel *)label didSelectLinkWithURL:(NSURL *)url rightMouse:(BOOL)rightMouse
+- (void)label:(RTLabel *)label didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
+    ARTURL *url = [[ARTURL alloc] initWithString:link];
     if ([url.scheme isEqualToString:kSchemeAction]) {
         if ([url.host isEqualToString:kClosureAction]) {
             CDOCClass *data = self.data;
@@ -109,8 +111,8 @@
             [self updateData:self.data];
         }
     } else {
-        if ([self.delegate respondsToSelector:@selector(outlineViewCell:didClickLinkWithURL:rightMouse:)]) {
-            [self.delegate outlineViewCell:self didClickLinkWithURL:url rightMouse:rightMouse];
+        if ([self.delegate respondsToSelector:@selector(outlineViewCell:didClickLink:rightMouse:)]) {
+            [self.delegate outlineViewCell:self didClickLink:link rightMouse:rightMouse];
         }
     }
 }

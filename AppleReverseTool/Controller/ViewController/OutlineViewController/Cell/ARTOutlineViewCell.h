@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ARTOutlineViewCellDelegate <NSObject>
 @optional
-- (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLinkWithURL:(NSURL *)url rightMouse:(BOOL)rightMouse;
+- (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse;
 @end
 
 @interface ARTOutlineViewCell : NSView

@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ARTOutlineViewControllerDelegate <NSObject>
 @optional
-- (void)outlineViewController:(ARTOutlineViewController *)outlineViewController didClickItem:(CDOCClass *)item url:(NSURL *)url rightMouse:(BOOL)rightMouse;
+- (void)outlineViewController:(ARTOutlineViewController *)outlineViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse;
 @end
 
 @interface ARTOutlineViewController : ARTViewController

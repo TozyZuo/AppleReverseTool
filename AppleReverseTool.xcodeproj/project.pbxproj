@@ -42,6 +42,7 @@
 		BA6C1AA62166579100ABC059 /* ARTView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AA52166579100ABC059 /* ARTView.m */; };
 		BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
+		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
 		BAA937F2216074CA00E66342 /* ARTiVar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA937F1216074CA00E66342 /* ARTiVar.m */; };
 		BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBA2160A8150082A508 /* ARTWindowController.m */; };
 		BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBD2160A83C0082A508 /* ARTMainWindowController.m */; };
@@ -157,6 +158,8 @@
 		BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSView_TZCategory.m; sourceTree = "<group>"; };
 		BA8434042168AD13007E55B0 /* ARTURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTURL.h; sourceTree = "<group>"; };
 		BA8434052168AD13007E55B0 /* ARTURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTURL.m; sourceTree = "<group>"; };
+		BA856D17216B5AA5009944A3 /* NSAlert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAlert+ART.h"; sourceTree = "<group>"; };
+		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
 		BAA937F0216074CA00E66342 /* ARTiVar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTiVar.h; sourceTree = "<group>"; };
 		BAA937F1216074CA00E66342 /* ARTiVar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTiVar.m; sourceTree = "<group>"; };
 		BAF2FEB92160A8150082A508 /* ARTWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTWindowController.h; sourceTree = "<group>"; };
@@ -350,6 +353,8 @@
 				BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */,
 				BA3BE7CC21635425007AEFEF /* NSColor+ART.h */,
 				BA3BE7CD21635425007AEFEF /* NSColor+ART.m */,
+				BA856D17216B5AA5009944A3 /* NSAlert+ART.h */,
+				BA856D18216B5AA5009944A3 /* NSAlert+ART.m */,
 			);
 			path = Categary;
 			sourceTree = "<group>";
@@ -540,6 +545,7 @@
 				BA635CF0215E02D90048AB9A /* ARTController.m in Sources */,
 				BA635EDA215F83830048AB9A /* ARTClass.m in Sources */,
 				BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */,
+				BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */,
 				BA3BE7B921625BBD007AEFEF /* ARTOutlineViewController.m in Sources */,
 				BAA937F2216074CA00E66342 /* ARTiVar.m in Sources */,
 				BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */,

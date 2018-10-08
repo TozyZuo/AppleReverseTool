@@ -22,6 +22,7 @@
 #import "ARTClass.h"
 #import "CRNode.h"
 #import "ARTDefine.h"
+#import "NSAlert+ART.h"
 #import <objc/runtime.h>
 
 @interface ARTDataController ()
@@ -31,6 +32,7 @@
 @property (nonatomic, strong) CDTypeController *typeController;
 @property (nonatomic, strong) NSArray<CDOCClass *> *classNodes;
 @property (nonatomic, strong) NSDictionary<NSString *, CDOCClass *> *allClasses;
+@property (nonatomic, strong) NSDictionary<NSString *, CDOCClass *> *allClassesInMainFile;
 @property (nonatomic, strong) NSDictionary<NSString *, CDOCProtocol *> *allProtocols;
 @property (class) BOOL isInDataProcessing;
 @end
@@ -84,6 +86,13 @@ static BOOL _isInDataProcessing = NO;
 
 #pragma mark - Public
 
+- (CDOCClass * _Nullable (^)(NSString * _Nonnull))classForName
+{
+    return ^(NSString *name) {
+        return self.allClassesInMainFile[name] ?: self.allClasses[name];
+    };
+}
+
 - (void)processDataWithFilePath:(NSString *)path progress:(void (^ _Nullable)(ARTDataControllerProcessState, NSString * _Nullable, NSString * _Nullable, NSString * _Nullable, NSString * _Nullable))progress completion:(nonnull void (^)(ARTDataController * _Nonnull))completion
 {
     self.filePath = path;
@@ -99,7 +108,7 @@ static BOOL _isInDataProcessing = NO;
         CDFile * file = [CDFile fileWithContentsOfFile:path searchPathState:searchPathState];
 
         if ([file isKindOfClass:[CDFatFile class]] ) {
-            fprintf(stderr,"Restore-symbol supports armv7 and arm64 archtecture, but not support fat file. Please use lipo to thin the image file first.");
+            [NSAlert showModalAlertWithTitle:@"暂不支持fat file, 请手动用lipo切割(后续会加上)" message:nil];
             exit(1);
         }
 
@@ -115,7 +124,7 @@ static BOOL _isInDataProcessing = NO;
         classDump[@"typeController"] = typeController;
         CDArch targetArch;
         if (![machOFile bestMatchForLocalArch:&targetArch]) {
-            fprintf(stderr, "Error: Couldn't get local architecture!\n");
+            [NSAlert showModalAlertWithTitle:@"Error: Couldn't get local architecture!" message:nil];
             exit(1);
         }
         classDump.targetArch = targetArch;
@@ -127,7 +136,7 @@ static BOOL _isInDataProcessing = NO;
 
         NSError *error;
         if (![classDump loadFile:machOFile error:&error]) {
-            fprintf(stderr, "Error: %s\n", [[error localizedFailureReason] UTF8String]);
+            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"Error: %@", error.localizedFailureReason] message:nil];
             exit(1);
         } else {
             if (progress) {
@@ -167,6 +176,7 @@ static BOOL _isInDataProcessing = NO;
             self.visitor = visitor;
             self.typeController = classDump.typeController;
             self.allClasses = visitor.classesByClassString;
+            self.allClassesInMainFile = visitor.classesByClassStringInMainFile;
             self.allProtocols = visitor.protocolsByProtocolString;
             self.classNodes = (NSArray<CDOCClass *> *)NodesWithProvider(self);
         }
@@ -183,12 +193,12 @@ static BOOL _isInDataProcessing = NO;
 
 - (NSArray<id<ARTNode>> *)nodes
 {
-    return self.visitor.classesByClassStringInMainFile.allValues;
+    return self.allClassesInMainFile.allValues;
 }
 
-- (id<ARTNode>)superNodeForNode:(ARTClass *)node
+- (id<ARTNode>)superNodeForNode:(CDOCClass *)node
 {
-    return self.visitor.classesByClassString[node.superClassName];
+    return self.classForName(node.superClassName);
 }
 
 @end

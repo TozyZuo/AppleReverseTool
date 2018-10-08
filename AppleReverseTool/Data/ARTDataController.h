@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ARTDataController : ARTController
 @property (nonatomic, readonly) NSArray<CDOCClass *> *classNodes;
-@property (nonatomic, readonly) NSDictionary<NSString *, CDOCClass *> *allClasses;
+@property (nonatomic, readonly) CDOCClass * _Nullable (^classForName)(NSString *name);
 @property (nonatomic, readonly) NSDictionary<NSString *, CDOCProtocol *> *allProtocols;
 @property (nonatomic, readonly) NSString *filePath;
 @property (nonatomic, readonly) CDTypeController *typeController;

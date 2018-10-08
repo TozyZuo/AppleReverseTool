@@ -58,7 +58,7 @@
 {
     self.isCurrentFrameworkInsideMainFile = NO;
     NSString *frameworkName = processor.machOFile.importBaseName;
-    if (!frameworkName && [processor.machOFile.filename isEqualToString:self.dataController.filePath])
+    if (!frameworkName || [processor.machOFile.filename isEqualToString:self.dataController.filePath])
     {
         frameworkName = self.dataController.filePath.lastPathComponent;
         // 去重

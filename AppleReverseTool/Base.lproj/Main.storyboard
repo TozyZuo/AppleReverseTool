@@ -338,6 +338,35 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Navigate" id="aUF-d1-5bR">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Navigate" systemMenu="window" id="Td7-aD-5lo">
+                                    <items>
+                                        <menuItem title="Go Forward" keyEquivalent="" id="OY7-WF-poV">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <binding destination="hnw-xV-0zn" name="enabled" keyPath="keyWindow.nextResponder.contentViewController.textViewController.canGoForward" id="q3c-NQ-XaQ"/>
+                                                <binding destination="hnw-xV-0zn" name="target" keyPath="keyWindow.nextResponder.contentViewController.textViewController" id="Bqo-uY-vvH">
+                                                    <dictionary key="options">
+                                                        <string key="NSSelectorName">goForward</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Go Back" keyEquivalent="" id="R4o-n2-Eq4">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <binding destination="hnw-xV-0zn" name="enabled" keyPath="keyWindow.nextResponder.contentViewController.textViewController.canGoBack" id="lWI-iJ-nxO"/>
+                                                <binding destination="hnw-xV-0zn" name="target" keyPath="keyWindow.nextResponder.contentViewController.textViewController" id="zte-cD-YaK">
+                                                    <dictionary key="options">
+                                                        <string key="NSSelectorName">goBack</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Format" id="jxT-CU-nIS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Format" id="GEO-Iw-cKr">
@@ -632,26 +661,26 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Window" id="aUF-d1-5bR">
+                            <menuItem title="Window" id="66A-Am-D3P">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
+                                <menu key="submenu" title="Window" systemMenu="window" id="NIW-DV-qgD">
                                     <items>
-                                        <menuItem title="Minimize" keyEquivalent="m" id="OY7-WF-poV">
+                                        <menuItem title="Minimize" keyEquivalent="m" id="L5k-gB-hSB">
                                             <connections>
-                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="VwT-WD-YPe"/>
+                                                <action selector="performMiniaturize:" target="Ady-hI-5gd" id="NkE-9a-xzx"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom" id="R4o-n2-Eq4">
+                                        <menuItem title="Zoom" id="sgX-0U-qL6">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="performZoom:" target="Ady-hI-5gd" id="DIl-cC-cCs"/>
+                                                <action selector="performZoom:" target="Ady-hI-5gd" id="PNY-Ol-4Uo"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
-                                        <menuItem title="Bring All to Front" id="LE2-aR-0XJ">
+                                        <menuItem isSeparatorItem="YES" id="mfj-o8-O10"/>
+                                        <menuItem title="Bring All to Front" id="DfD-cP-LJG">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="DRN-fu-gQh"/>
+                                                <action selector="arrangeInFront:" target="Ady-hI-5gd" id="4qU-9d-zPy"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -678,6 +707,12 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <objectController id="IqU-dL-3mQ">
+                    <connections>
+                        <binding destination="hnw-xV-0zn" name="contentObject" keyPath="keyWindow" id="mFq-6W-XmH"/>
+                    </connections>
+                </objectController>
+                <userDefaultsController representsSharedInstance="YES" id="wzk-VF-SNh"/>
             </objects>
             <point key="canvasLocation" x="76" y="-224"/>
         </scene>
@@ -699,7 +734,7 @@
                 </windowController>
                 <customObject id="6f7-a7-6o1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="64" y="465"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -781,7 +816,7 @@
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="76" y="1004"/>
+            <point key="canvasLocation" x="64" y="1284"/>
         </scene>
         <!--Outline View Controller-->
         <scene sceneID="eTV-Sj-VE2">
@@ -853,7 +888,7 @@
                 </viewController>
                 <customObject id="onl-2M-8IM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-153" y="1656"/>
+            <point key="canvasLocation" x="-183" y="1928"/>
         </scene>
         <!--Text View Controller-->
         <scene sceneID="Jae-jV-xnv">
@@ -880,7 +915,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JNE-Qx-ZOn" customClass="RTLabel">
-                                            <rect key="frame" x="0.0" y="0.0" width="412" height="302"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="410" height="302"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                         </view>
                                     </subviews>
@@ -903,7 +938,7 @@
                 </viewController>
                 <customObject id="MPO-da-X0V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="339" y="1656"/>
+            <point key="canvasLocation" x="323" y="1928"/>
         </scene>
     </scenes>
 </document>

@@ -10,7 +10,6 @@
 #import "ARTDataController.h"
 #import "ARTOutlineViewController.h"
 #import "ARTTextViewController.h"
-#import "ARTURL.h"
 #import "CDOCClass.h"
 
 @interface ARTMainViewController ()
@@ -52,14 +51,10 @@
     return _textViewController;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do view setup here.
-}
-
-- (void)viewWillAppear
-{
-
 }
 
 - (void)setFileURL:(NSURL *)fileURL
@@ -99,12 +94,12 @@
 
 #pragma mark - ARTOutlineViewControllerDelegate
 
-- (void)outlineViewController:(id)outlineViewController didClickItem:(CDOCClass *)item url:(NSURL *)url rightMouse:(BOOL)rightMouse
+- (void)outlineViewController:(id)outlineViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     if (rightMouse) {
         // TODO
     } else {
-        [self.textViewController updateData:item];
+        [self.textViewController updateDataWithLink:link];
     }
 }
 
@@ -112,44 +107,10 @@
 
 - (void)textViewController:(ARTTextViewController *)textViewController didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
-    ARTURL *url = [[ARTURL alloc] initWithString:link];
     if (rightMouse) {
         // TODO
     } else {
-        ARTScheme scheme = url.scheme;
-        NSString *value = url.host;
-        if ([scheme isEqualToString:kSchemeClass])
-        {
-            CDOCClass *class = self.dataController.allClasses[value];
-            if (class) {
-                [self.textViewController updateData:class];
-            } else {
-                NSAlert *alert = [[NSAlert alloc] init];
-                alert.messageText = [NSString stringWithFormat:@"未发现类 %@", value];
-                alert.informativeText = [NSString stringWithFormat:@"应该是%@没有link这个类所在的库导致", self.dataController.filePath.lastPathComponent];
-                [alert runModal];
-            }
-        }
-        else if ([scheme isEqualToString:kSchemeProtocol])
-        {
-            CDOCProtocol *protocol = self.dataController.allProtocols[value];
-            if (protocol) {
-                [self.textViewController updateData:protocol];
-            } else {
-                NSAlert *alert = [[NSAlert alloc] init];
-                alert.messageText = [NSString stringWithFormat:@"未发现协议 %@", value];
-                alert.informativeText = @"一般出现于该协议没有类接受";
-                [alert runModal];
-            }
-        }
-        else if ([scheme isEqualToString:kSchemeStruct])
-        {
-            [self.textViewController updateStruct:url.path typeString:value];
-        }
-        else if ([scheme isEqualToString:kSchemeUnion])
-        {
-            [self.textViewController updateUnion:url.path typeString:value];
-        }
+        [self.textViewController updateDataWithLink:link];
     }
 }
 @end

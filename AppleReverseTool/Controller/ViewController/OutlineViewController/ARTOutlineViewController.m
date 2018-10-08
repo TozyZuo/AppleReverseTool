@@ -78,11 +78,11 @@
 
 #pragma mark - ARTOutlineViewCellDelegate
 
-- (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLinkWithURL:(NSURL *)url rightMouse:(BOOL)rightMouse
+- (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
-    if ([self.delegate respondsToSelector:@selector(outlineViewController:didClickItem:url:rightMouse:)])
+    if ([self.delegate respondsToSelector:@selector(outlineViewController:didClickItem:link:rightMouse:)])
     {
-        [self.delegate outlineViewController:self didClickItem:outlineViewCell.data url:url rightMouse:rightMouse];
+        [self.delegate outlineViewController:self didClickItem:outlineViewCell.data link:link rightMouse:rightMouse];
     }
 }
 
