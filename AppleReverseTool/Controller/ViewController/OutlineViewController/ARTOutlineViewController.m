@@ -24,9 +24,11 @@
 
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do view setup here.
+    self.outlineView.headerView = nil;
 }
 
 #pragma mark - Public

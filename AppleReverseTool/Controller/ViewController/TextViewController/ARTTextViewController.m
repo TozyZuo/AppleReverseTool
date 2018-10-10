@@ -10,6 +10,7 @@
 #import "ARTTextViewControllerVisitor.h"
 #import "ARTDataController.h"
 #import "ARTView.h"
+#import "ARTButton.h"
 #import "ARTURL.h"
 #import "CDClassDump.h"
 #import "ClassDumpExtension.h"
@@ -20,13 +21,16 @@
 <RTLabelDelegate>
 @property (weak) IBOutlet NSScrollView *scrollView;
 @property (weak) IBOutlet RTLabel *label;
-@property (nonatomic, strong) NSMutableArray *menuStack;
-@property (nonatomic, strong) NSMutableArray *linkStack;
-@property (nonatomic, strong) NSMutableDictionary *linkMap;
+@property (weak) IBOutlet ARTButton *menuButton;
+
+@property (nonatomic, strong) NSMutableArray<NSString *> *menuStack;
+@property (nonatomic, strong) NSMutableArray<NSString *> *linkStack;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *linkMap;
 @property (nonatomic, assign) NSUInteger maxCount;
 @property (nonatomic, assign) NSInteger currentLinkIndex;
-@property (nonatomic, readonly) BOOL canGoBack;
-@property (nonatomic, readonly) BOOL canGoForward;
+@property (nonatomic, assign) BOOL canGoBack;
+@property (nonatomic, assign) BOOL canGoForward;
+@property (readonly) NSMenu *linkStackMenu;
 @end
 
 @implementation ARTTextViewController
@@ -51,6 +55,53 @@
 
     self.label.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
     self.label.delegate = self;
+#if 0
+    self.menuButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTButtonEventType type, NSEvent * _Nonnull event)
+    {
+        switch (type) {
+            case ARTButtonEventTypeMouseIn:
+                NSLog(@"ARTButtonEventTypeMouseIn");
+                break;
+            case ARTButtonEventTypeMouseOut:
+                NSLog(@"ARTButtonEventTypeMouseOut");
+                break;
+            case ARTButtonEventTypeMouseDown:
+                NSLog(@"ARTButtonEventTypeMouseDown");
+                break;
+            case ARTButtonEventTypeRightMouseDown:
+                NSLog(@"ARTButtonEventTypeRightMouseDown");
+                break;
+            case ARTButtonEventTypeMouseUpOutside:
+                NSLog(@"ARTButtonEventTypeMouseUpOutside");
+                break;
+            case ARTButtonEventTypeRightMouseUpOutside:
+                NSLog(@"ARTButtonEventTypeRightMouseUpOutside");
+                break;
+            case ARTButtonEventTypeMouseUpInside:
+                NSLog(@"ARTButtonEventTypeMouseUpInside");
+                break;
+            case ARTButtonEventTypeRightMouseUpInside:
+                NSLog(@"ARTButtonEventTypeRightMouseUpInside");
+                break;
+            default:
+                break;
+        }
+    };
+#endif
+}
+
+- (void)willChangeLinkStack
+{
+
+}
+
+- (void)didChangeLinkStack
+{
+    [self resizeLabel];
+    [self.label scrollToTop];
+    // trigger button state change
+    self.canGoBack = self.canGoBack;
+    self.canGoForward = self.canGoForward;
 }
 
 #pragma mark - Property
@@ -65,6 +116,31 @@
     return self.currentLinkIndex + 1 < self.linkStack.count;
 }
 
+- (NSMenu *)linkStackMenu
+{
+    NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
+
+    [self.menuStack enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSString *link, NSUInteger idx, BOOL * _Nonnull stop)
+     {
+         ARTURL *url = [[ARTURL alloc] initWithString:link];
+         NSString *title;
+//        NSImage *image;
+         if ([url.scheme isEqualToString:kSchemeStruct]) {
+             title = [@"[S] " stringByAppendingString:url.path];
+         } else if ([url.scheme isEqualToString:kSchemeUnion]) {
+             title = [@"[U] " stringByAppendingString:url.path];
+         } else {
+             title = [@"[C] " stringByAppendingString:url.host];
+         }
+         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:@selector(linkStackMenuAction:) keyEquivalent:@""];
+         item.target = self;
+         item.representedObject = link;
+         [menu addItem:item];
+     }];
+
+    return menu;
+}
+
 #pragma mark - Private
 
 - (void)menuStackHandleLink:(NSString *)link
@@ -73,38 +149,39 @@
     [self.menuStack addObject:link];
 }
 
-- (IBAction)goBack
+
+- (IBAction)goBack:(id)sender
 {
     if (self.canGoBack) {
+        [self willChangeLinkStack];
+
         self.currentLinkIndex = self.currentLinkIndex - 1;
         NSString *link = self.linkStack[self.currentLinkIndex];
         [self menuStackHandleLink:link];
-
         self.label.text = self.linkMap[link];
-        [self resizeLabel];
-        [self.label scrollToTop];
 
-        // TODO button state
+        [self didChangeLinkStack];
     }
 }
 
-- (IBAction)goForward
+- (IBAction)goForward:(id)sender
 {
     if (self.canGoForward) {
+        [self willChangeLinkStack];
+
         self.currentLinkIndex = self.currentLinkIndex + 1;
         NSString *link = self.linkStack[self.currentLinkIndex];
         [self menuStackHandleLink:link];
-
         self.label.text = self.linkMap[link];
-        [self resizeLabel];
-        [self.label scrollToTop];
 
-        // TODO button state
+        [self didChangeLinkStack];
     }
 }
 
 - (void)pushLink:(NSString *)link text:(NSString *)text
 {
+    [self willChangeLinkStack];
+
     [self menuStackHandleLink:link];
 
     while (self.currentLinkIndex < self.linkStack.count - 1) {
@@ -119,8 +196,7 @@
     self.currentLinkIndex = self.linkStack.count - 1;
 
     self.label.text = text;
-    [self resizeLabel];
-    [self.label scrollToTop];
+    [self didChangeLinkStack];
 }
 
 - (void)stringFromData:(CDOCProtocol *)data completion:(void (^)(NSString *text))completion
@@ -141,7 +217,19 @@
 
 - (void)resizeLabel
 {
-    self.label.height = MAX(self.label.optimumSize.height, self.scrollView.height);
+    self.label.height = MAX(self.label.optimumSize.height, self.scrollView.height - 40);
+    self.canGoBack = self.canGoBack;
+}
+
+- (void)linkStackMenuAction:(NSMenuItem *)item
+{
+    NSString *link = item.representedObject;
+    [self pushLink:link text:self.linkMap[link]];
+}
+
+- (IBAction)showLinkStackMenuAction:(NSButton *)sender
+{
+    [NSMenu popUpContextMenu:self.linkStackMenu withEvent:NSApp.currentEvent forView:sender];
 }
 
 #pragma mark - Public
@@ -150,8 +238,8 @@
 {
     // check cache
     if (self.linkMap[link]) {
-        [self pushLink:link text:self.linkMap[link]];
-        return;
+//        [self pushLink:link text:self.linkMap[link]];
+//        return;
     }
 
     ARTURL *url = [[ARTURL alloc] initWithString:link];

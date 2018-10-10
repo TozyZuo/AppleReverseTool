@@ -36,9 +36,9 @@
  */
 
 #import "RTLabel.h"
-#import "ARTButton.h"
+#import "ARTControl.h"
 
-@interface RTLabelButton : ARTButton
+@interface RTLabelButton : ARTControl
 @property (nonatomic, assign) NSInteger componentIndex;
 @property (nonatomic) NSURL *url;
 @property (nonatomic) NSString *link;
@@ -453,27 +453,27 @@ NSSet *RTLabelValidTags;
                     [button setUrl:[NSURL URLWithString:(linkableComponents.attributes)[@"href"]]];
                     button.link = linkableComponents.attributes[@"href"];
                     __weak typeof(self) weakSelf = self;
-                    button.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTButtonEventType type)
+                    button.eventHandler = ^(__kindof ARTControl * _Nonnull button, ARTControlEventType type)
                     {
                         switch (type) {
-                            case ARTButtonEventTypeMouseIn:
+                            case ARTControlEventTypeMouseIn:
 //                                [weakSelf onButtonMouseIn:button];
                                 break;
-                            case ARTButtonEventTypeMouseOut:
+                            case ARTControlEventTypeMouseOut:
 //                                [weakSelf onButtonMouseOut:button];
                                 break;
-                            case ARTButtonEventTypeMouseDown:
-                            case ARTButtonEventTypeRightMouseDown:
+                            case ARTControlEventTypeMouseDown:
+                            case ARTControlEventTypeRightMouseDown:
                                 [weakSelf onButtonTouchDown:button];
                                 break;
-                            case ARTButtonEventTypeMouseUpOutside:
-                            case ARTButtonEventTypeRightMouseUpOutside:
+                            case ARTControlEventTypeMouseUpOutside:
+                            case ARTControlEventTypeRightMouseUpOutside:
                                 [weakSelf onButtonTouchUpOutside:button];
                                 break;
-                            case ARTButtonEventTypeMouseUpInside:
+                            case ARTControlEventTypeMouseUpInside:
                                 [weakSelf onButtonClicked:button rightMouse:NO];
                                 break;
-                            case ARTButtonEventTypeRightMouseUpInside:
+                            case ARTControlEventTypeRightMouseUpInside:
                                 [weakSelf onButtonClicked:button rightMouse:YES];
                                 break;
                             default:

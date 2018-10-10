@@ -6,13 +6,13 @@
 //  Copyright © 2018年 TozyZuo. All rights reserved.
 //
 
-#import "ARTButton.h"
+#import "ARTControl.h"
 
-@interface ARTButton ()
+@interface ARTControl ()
 @property (strong) NSTrackingArea *trackingArea;
 @end
 
-@implementation ARTButton
+@implementation ARTControl
 @synthesize mouseIn = _mouseIn, mouseDown = _mouseDown;
 
 - (instancetype)initWithFrame:(NSRect)frameRect
@@ -48,7 +48,7 @@
     if (!_mouseDown) {
         _mouseDown = YES;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTButtonEventTypeMouseDown);
+            self.eventHandler(self, ARTControlEventTypeMouseDown);
         }
     }
 }
@@ -59,9 +59,9 @@
         _mouseDown = NO;
         if (self.eventHandler) {
             if (_mouseIn) {
-                self.eventHandler(self, ARTButtonEventTypeMouseUpInside);
+                self.eventHandler(self, ARTControlEventTypeMouseUpInside);
             } else {
-                self.eventHandler(self, ARTButtonEventTypeMouseUpOutside);
+                self.eventHandler(self, ARTControlEventTypeMouseUpOutside);
             }
         }
     }
@@ -72,7 +72,7 @@
     if (!_rightMouseDown) {
         _rightMouseDown = YES;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTButtonEventTypeRightMouseDown);
+            self.eventHandler(self, ARTControlEventTypeRightMouseDown);
         }
     }
 }
@@ -83,9 +83,9 @@
         _rightMouseDown = NO;
         if (self.eventHandler) {
             if (_mouseIn) {
-                self.eventHandler(self, ARTButtonEventTypeRightMouseUpInside);
+                self.eventHandler(self, ARTControlEventTypeRightMouseUpInside);
             } else {
-                self.eventHandler(self, ARTButtonEventTypeRightMouseUpOutside);
+                self.eventHandler(self, ARTControlEventTypeRightMouseUpOutside);
             }
         }
     }
@@ -96,7 +96,7 @@
     if (!_mouseIn) {
         _mouseIn = YES;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTButtonEventTypeMouseIn);
+            self.eventHandler(self, ARTControlEventTypeMouseIn);
         }
     }
 }
@@ -106,7 +106,7 @@
     if (_mouseIn) {
         _mouseIn = NO;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTButtonEventTypeMouseOut);
+            self.eventHandler(self, ARTControlEventTypeMouseOut);
         }
     }
 }

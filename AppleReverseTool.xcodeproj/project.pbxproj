@@ -14,7 +14,7 @@
 		BA3BE7BD21625BF1007AEFEF /* ARTTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7BC21625BF1007AEFEF /* ARTTextViewController.m */; };
 		BA3BE7C521632C95007AEFEF /* ARTOutlineViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7C421632C95007AEFEF /* ARTOutlineViewCell.m */; };
 		BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7C621632CB0007AEFEF /* RTLabel.m */; };
-		BA3BE7CB21634B3B007AEFEF /* ARTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7CA21634B3B007AEFEF /* ARTButton.m */; };
+		BA3BE7CB21634B3B007AEFEF /* ARTControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7CA21634B3B007AEFEF /* ARTControl.m */; };
 		BA3BE7CE21635425007AEFEF /* NSColor+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7CD21635425007AEFEF /* NSColor+ART.m */; };
 		BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE80E216459EE007AEFEF /* ARTStrings.m */; };
 		BA3BE8122164C4DA007AEFEF /* ClassDumpExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8112164C4DA007AEFEF /* ClassDumpExtension.m */; };
@@ -44,6 +44,8 @@
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
 		BAA937F2216074CA00E66342 /* ARTiVar.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA937F1216074CA00E66342 /* ARTiVar.m */; };
+		BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F1216C6F69002207CF /* CALayer+ART.m */; };
+		BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F9216C85CC002207CF /* ARTButton.m */; };
 		BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBA2160A8150082A508 /* ARTWindowController.m */; };
 		BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBD2160A83C0082A508 /* ARTMainWindowController.m */; };
 		BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEC52160B07B0082A508 /* ARTModel.m */; };
@@ -110,8 +112,8 @@
 		BA3BE7C421632C95007AEFEF /* ARTOutlineViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTOutlineViewCell.m; sourceTree = "<group>"; };
 		BA3BE7C621632CB0007AEFEF /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		BA3BE7C721632CB0007AEFEF /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
-		BA3BE7C921634B3B007AEFEF /* ARTButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTButton.h; sourceTree = "<group>"; };
-		BA3BE7CA21634B3B007AEFEF /* ARTButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTButton.m; sourceTree = "<group>"; };
+		BA3BE7C921634B3B007AEFEF /* ARTControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTControl.h; sourceTree = "<group>"; };
+		BA3BE7CA21634B3B007AEFEF /* ARTControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTControl.m; sourceTree = "<group>"; };
 		BA3BE7CC21635425007AEFEF /* NSColor+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+ART.h"; sourceTree = "<group>"; };
 		BA3BE7CD21635425007AEFEF /* NSColor+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+ART.m"; sourceTree = "<group>"; };
 		BA3BE80D216459EE007AEFEF /* ARTStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTStrings.h; sourceTree = "<group>"; };
@@ -162,6 +164,10 @@
 		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
 		BAA937F0216074CA00E66342 /* ARTiVar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTiVar.h; sourceTree = "<group>"; };
 		BAA937F1216074CA00E66342 /* ARTiVar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTiVar.m; sourceTree = "<group>"; };
+		BAD5F5F0216C6F69002207CF /* CALayer+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CALayer+ART.h"; sourceTree = "<group>"; };
+		BAD5F5F1216C6F69002207CF /* CALayer+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CALayer+ART.m"; sourceTree = "<group>"; };
+		BAD5F5F8216C85CC002207CF /* ARTButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTButton.h; sourceTree = "<group>"; };
+		BAD5F5F9216C85CC002207CF /* ARTButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTButton.m; sourceTree = "<group>"; };
 		BAF2FEB92160A8150082A508 /* ARTWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTWindowController.h; sourceTree = "<group>"; };
 		BAF2FEBA2160A8150082A508 /* ARTWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTWindowController.m; sourceTree = "<group>"; };
 		BAF2FEBC2160A83C0082A508 /* ARTMainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTMainWindowController.h; sourceTree = "<group>"; };
@@ -274,6 +280,8 @@
 				BA635CEB215E02930048AB9A /* ARTSingleInstance.m */,
 				BA6C1AA42166579100ABC059 /* ARTView.h */,
 				BA6C1AA52166579100ABC059 /* ARTView.m */,
+				BAD5F5F8216C85CC002207CF /* ARTButton.h */,
+				BAD5F5F9216C85CC002207CF /* ARTButton.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -355,6 +363,8 @@
 				BA3BE7CD21635425007AEFEF /* NSColor+ART.m */,
 				BA856D17216B5AA5009944A3 /* NSAlert+ART.h */,
 				BA856D18216B5AA5009944A3 /* NSAlert+ART.m */,
+				BAD5F5F0216C6F69002207CF /* CALayer+ART.h */,
+				BAD5F5F1216C6F69002207CF /* CALayer+ART.m */,
 			);
 			path = Categary;
 			sourceTree = "<group>";
@@ -364,8 +374,8 @@
 			children = (
 				BA3BE7C721632CB0007AEFEF /* RTLabel.h */,
 				BA3BE7C621632CB0007AEFEF /* RTLabel.m */,
-				BA3BE7C921634B3B007AEFEF /* ARTButton.h */,
-				BA3BE7CA21634B3B007AEFEF /* ARTButton.m */,
+				BA3BE7C921634B3B007AEFEF /* ARTControl.h */,
+				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -532,6 +542,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */,
+				BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */,
 				BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */,
 				BA635EC4215E0F1C0048AB9A /* CRNode.m in Sources */,
 				BA635EBC215E09C70048AB9A /* CDTypeController.m in Sources */,
@@ -556,11 +567,12 @@
 				BA3BE7C521632C95007AEFEF /* ARTOutlineViewCell.m in Sources */,
 				BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */,
 				BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */,
-				BA3BE7CB21634B3B007AEFEF /* ARTButton.m in Sources */,
+				BA3BE7CB21634B3B007AEFEF /* ARTControl.m in Sources */,
 				BA3BE8122164C4DA007AEFEF /* ClassDumpExtension.m in Sources */,
 				BA3BE7BD21625BF1007AEFEF /* ARTTextViewController.m in Sources */,
 				BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */,
 				BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */,
+				BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */,
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
 				BA635CEC215E02930048AB9A /* ARTSingleInstance.m in Sources */,

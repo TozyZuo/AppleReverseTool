@@ -326,7 +326,7 @@
     if (self.isFlipped) {
         [self scrollPoint:CGPointZero];
     } else {
-        [self scrollPoint:NSMakePoint(0, self.height)];
+        [self scrollPoint:NSMakePoint(self.left, self.height)];
     }
 }
 

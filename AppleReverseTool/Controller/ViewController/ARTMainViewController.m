@@ -10,14 +10,14 @@
 #import "ARTDataController.h"
 #import "ARTOutlineViewController.h"
 #import "ARTTextViewController.h"
-#import "CDOCClass.h"
+
 
 @interface ARTMainViewController ()
 <ARTOutlineViewControllerDelegate, ARTTextViewControllerDelegate>
 @property (nonatomic, strong) ARTDataController *dataController;
 @property (readonly) ARTOutlineViewController *outlineViewController;
 @property (readonly) ARTTextViewController *textViewController;
-@property IBOutlet NSTextField *stateLabel;
+@property (weak) IBOutlet NSTextField *stateLabel;
 @end
 
 @implementation ARTMainViewController

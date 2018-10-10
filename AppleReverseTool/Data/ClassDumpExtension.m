@@ -159,7 +159,7 @@ TZWarningIgnoreEnd
     NSString *formattedString = [structDeclarationTypeFormatter formatVariable:nil type:info.type];
     info.type.isParsing = NO;
     if (formattedString && info.typedefName) {
-        return _S(_SC(@"typedef", kColorKeywords), _SF(@" %@ %@;\n", formattedString, info.typedefName), nil);
+        return _S(_SC(@"typedef", kColorKeywords), _SF(@" %@ %@;\n", formattedString, info.typedefName ? _SC(info.typedefName, kColorOtherClass) : @""), nil);
     }
 
 
@@ -496,7 +496,7 @@ TZWarningIgnoreEnd
             /*if (typeName == nil || [@"?" isEqual:[typeName description]])*/ {
                 NSString *typedefName = [typeFormatter typedefNameForStructure:self level:level];
                 if (typedefName != nil) {
-                    baseType = typedefName;
+                    baseType = _SC(_UL(typedefName), kColorOtherClass);
                 }
             }
 
@@ -529,7 +529,7 @@ TZWarningIgnoreEnd
             /*if (typeName == nil || [@"?" isEqual:[typeName description]])*/ {
                 NSString *typedefName = [typeFormatter typedefNameForStructure:self level:level];
                 if (typedefName != nil) {
-                    baseType = typedefName;
+                    baseType = _SC(_SL(typedefName), kColorOtherClass);
                 }
             }
             if (baseType == nil) {
