@@ -80,6 +80,26 @@ NSString *ARTStringCreate(NSString *string, ...)
     return interalSubNodes;
 }
 
+- (NSArray<CDOCCategory *> *)categories
+{
+    return self.interalCategories;
+}
+
+- (void)addCategory:(CDOCCategory *)category
+{
+    [self.interalCategories addObject:category];
+}
+
+- (NSMutableArray *)interalCategories
+{
+    NSMutableArray *interalCategories = self[ARTAssociatedKeyForSelector(_cmd)];
+    if (!interalCategories) {
+        interalCategories = [[NSMutableArray alloc] init];
+        self[ARTAssociatedKeyForSelector(_cmd)] = interalCategories;
+    }
+    return interalCategories;
+}
+
 @end
 
 @interface CDType (ARTExtension_Private)

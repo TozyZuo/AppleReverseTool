@@ -43,7 +43,7 @@
 - (NSString *)path
 {
     if (!_path) {
-        _path = [[self.string componentsSeparatedByString:self.host].lastObject substringFromIndex:1];
+        _path = [self.string substringFromIndex:NSMaxRange([self.string rangeOfString:self.host]) + 1 /* +1 for "/"*/];
     }
     return _path;
 }

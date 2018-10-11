@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTClass, ARTOutlineViewController, CDOCClass;
+@class ARTOutlineViewController, CDOCClass;
 
 @protocol ARTOutlineViewControllerDelegate <NSObject>
 @optional

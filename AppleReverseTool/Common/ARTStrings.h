@@ -11,12 +11,14 @@
 typedef NSString *ARTScheme;
 extern ARTScheme kSchemeAction;
 extern ARTScheme kSchemeClass;
+extern ARTScheme kSchemeCategory;
 extern ARTScheme kSchemeProtocol;
 extern ARTScheme kSchemeStruct;
 extern ARTScheme kSchemeUnion;
 
 typedef NSString *ARTSchemeAction;
-extern ARTSchemeAction kClosureAction;
+extern ARTSchemeAction kExpandSubClassAction;
+extern ARTSchemeAction kExpandCategoryAction;
 
 typedef NSString *ARTColorType;
 extern ARTColorType kColorClass;

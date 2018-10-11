@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, ARTDataControllerProcessState) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTClass, CDOCProtocol, CDOCClass, CDTypeController;
+@class CDOCProtocol, CDOCClass, CDTypeController;
 
 @interface ARTDataController : ARTController
 @property (nonatomic, readonly) NSArray<CDOCClass *> *classNodes;

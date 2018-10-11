@@ -10,11 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTDataController, ARTClass, CDOCClass, CDOCProtocol;
+@class ARTDataController, CDOCClass, CDOCProtocol;
 
 @interface ARTVisitor : CDVisitor
-//@property (readonly) NSMutableDictionary<NSString *, ARTClass *> *classesByClassStringInMainFile;
-//@property (readonly) NSMutableDictionary<NSString *, ARTClass *> *classesByClassString;
 @property (readonly) NSMutableDictionary<NSString *, CDOCClass *> *classesByClassStringInMainFile;
 @property (readonly) NSMutableDictionary<NSString *, CDOCClass *> *classesByClassString;
 @property (readonly) NSMutableDictionary<NSString *, CDOCProtocol *> *protocolsByProtocolString;

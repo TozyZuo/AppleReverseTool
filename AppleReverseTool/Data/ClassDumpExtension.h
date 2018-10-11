@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CRNode.h"
 #import "CDOCClass.h"
+#import "CDOCCategory.h"
 #import "CDType.h"
 #import "CDTypeName.h"
 #import "CDTypeFormatter.h"
@@ -50,6 +51,8 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 
 @interface CDOCClass (ARTExtension)
 <ARTNode>
+@property (readonly) NSArray<CDOCCategory *> *categories;
+- (void)addCategory:(CDOCCategory *)category;
 @end
 
 @interface CDType (ARTExtension)

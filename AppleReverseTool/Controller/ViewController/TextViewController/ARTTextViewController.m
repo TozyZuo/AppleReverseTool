@@ -238,36 +238,63 @@
 {
     // check cache
     if (self.linkMap[link]) {
-//        [self pushLink:link text:self.linkMap[link]];
-//        return;
+        [self pushLink:link text:self.linkMap[link]];
+        return;
     }
 
     ARTURL *url = [[ARTURL alloc] initWithString:link];
     ARTScheme scheme = url.scheme;
-    NSString *value = url.host;
+    NSString *host = url.host;
 
     if ([scheme isEqualToString:kSchemeClass])
     {
-        CDOCClass *class = self.dataController.classForName(value);
+        NSString *className = host;
+        CDOCClass *class = self.dataController.classForName(className);
         if (class) {
             self.label.text = _SC(@"Loading...", kColorComments);
             [self stringFromData:class completion:^(NSString *text) {
                 [self pushLink:link text:text];
             }];
         } else {
-            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未发现类 %@", value] message:[NSString stringWithFormat:@"应该是%@没有link这个类所在的库导致", self.dataController.filePath.lastPathComponent]];
+            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未发现类 %@", className] message:[NSString stringWithFormat:@"应该是%@没有link这个类所在的库导致", self.dataController.filePath.lastPathComponent]];
         }
     }
     else if ([scheme isEqualToString:kSchemeProtocol])
     {
-        CDOCProtocol *protocol = self.dataController.allProtocols[value];
+        NSString *protocolName = host;
+        CDOCProtocol *protocol = self.dataController.allProtocols[protocolName];
         if (protocol) {
             self.label.text = _SC(@"Loading...", kColorComments);
             [self stringFromData:protocol completion:^(NSString *text) {
                 [self pushLink:link text:text];
             }];
         } else {
-            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未发现协议 %@", value] message:@"一般出现于该协议没有类接受"];
+            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未发现协议 %@", protocolName] message:@"一般出现于该协议没有类接受"];
+        }
+    }
+    else if ([scheme isEqualToString:kSchemeCategory])
+    {
+        NSString *className = host;
+        NSString *categoryName = url.path;
+        CDOCClass *class = self.dataController.classForName(className);
+        if (class) {
+            CDOCCategory *category = nil;
+            for (CDOCCategory *oneCategory in class.categories) {
+                if ([oneCategory.name isEqualToString:categoryName]) {
+                    category = oneCategory;
+                    break;
+                }
+            }
+            if (category) {
+                self.label.text = _SC(@"Loading...", kColorComments);
+                [self stringFromData:category completion:^(NSString *text) {
+                    [self pushLink:link text:text];
+                }];
+            } else {
+                [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"类%@未找到类别(%@)", className, categoryName] message:@"不应该出现，请提issue"];
+            }
+        } else {
+            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未找到类别(%@)所属的类%@", categoryName, className] message:@"不应该出现，请提issue"];
         }
     }
     else if ([scheme isEqualToString:kSchemeStruct] || [scheme isEqualToString:kSchemeUnion])
@@ -278,7 +305,7 @@
         }
 
         NSString *name = url.path;
-        NSString *typeString = value;
+        NSString *typeString = host;
 
         CDStructureInfo *info = table.namedStructureInfo[name];
         if (!info) {

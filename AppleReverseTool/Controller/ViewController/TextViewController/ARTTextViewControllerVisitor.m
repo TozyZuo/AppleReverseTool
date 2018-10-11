@@ -95,11 +95,20 @@ static BOOL debug = NO;
 
 - (void)willVisitCategory:(CDOCCategory *)category;
 {
-    [self.resultString appendFormat:@"@interface %@ (%@)", category.className, category.name];
+//    [self.resultString appendFormat:@"@interface %@ (%@)", category.className, category.name];
+    [self.resultString appendString:_S(_SC(@"@interface ", kColorKeywords), _CL(category.className), @" (", _SC(category.name, self.dataController.classForName(category.name).isInsideMainBundle ? kColorClass : kColorOtherClass), @")", nil)];
 
     NSArray *protocols = category.protocols;
-    if ([protocols count] > 0) {
-        [self.resultString appendFormat:@" <%@>", category.protocolsString];
+    if (protocols.count) {
+
+        [self.resultString appendString:@"\n<\n"];
+
+        for (CDOCProtocol *protocol in protocols) {
+            [self.resultString appendString:_S(@"\t", _PL(protocol.name), @",\n", nil)];
+        }
+
+        [self.resultString deleteCharactersInRange:NSMakeRange(self.resultString.length - 2, 2)];
+        [self.resultString appendString:@"\n>"];
     }
 
     [self.resultString appendString:@"\n"];
@@ -107,7 +116,7 @@ static BOOL debug = NO;
 
 - (void)didVisitCategory:(CDOCCategory *)category;
 {
-    [self.resultString appendString:@"@end\n\n"];
+    [self.resultString appendString:_SC(@"@end\n\n", kColorKeywords)];
 }
 
 - (void)willVisitProtocol:(CDOCProtocol *)protocol;

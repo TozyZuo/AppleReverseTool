@@ -12,14 +12,15 @@
 
 ARTScheme kSchemeAction = @"Action";
 ARTScheme kSchemeClass = @"Class";
+ARTScheme kSchemeCategory = @"Category";
 ARTScheme kSchemeProtocol = @"Protocol";
 ARTScheme kSchemeStruct = @"Struct";
 ARTScheme kSchemeUnion = @"Union";
 
-
 #pragma mark - scheme action
 
-ARTSchemeAction kClosureAction = @"kClosureAction";
+ARTSchemeAction kExpandSubClassAction = @"kExpandSubClassAction";
+ARTSchemeAction kExpandCategoryAction = @"kExpandCategoryAction";
 
 #pragma mark - color
 

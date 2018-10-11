@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTOutlineViewCell, ARTClass, CDOCClass;
+@class ARTOutlineViewCell, CDOCProtocol, CDOCClass, CDOCCategory;
 
 @protocol ARTOutlineViewCellDelegate <NSObject>
 @optional
@@ -18,10 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface ARTOutlineViewCell : NSView
-@property (nonatomic, weak) id<ARTOutlineViewCellDelegate> delegate;
-@property (nonatomic, weak) NSOutlineView *outlineView;
-@property (nonatomic, weak, readonly) CDOCClass *data;
-- (void)updateData:(CDOCClass *)data;
+@property (nonatomic,   weak  ) id<ARTOutlineViewCellDelegate> delegate;
+@property (nonatomic,   weak  ) NSOutlineView *outlineView;
+@property (nonatomic, readonly) __kindof CDOCProtocol *data;
+- (void)updateDataWithClass:(CDOCClass *)class;
+- (void)updateDataWithCategory:(CDOCCategory *)category;
 @end
 
 NS_ASSUME_NONNULL_END

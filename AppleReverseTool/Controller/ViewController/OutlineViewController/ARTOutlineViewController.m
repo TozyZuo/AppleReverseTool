@@ -8,8 +8,25 @@
 
 #import "ARTOutlineViewController.h"
 #import "ClassDumpExtension.h"
-#import "ARTClass.h"
 #import "ARTOutlineViewCell.h"
+#import "ARTURL.h"
+
+@interface CDOCClass (ARTOutlineViewController)
+@property (nonatomic, assign) BOOL isCategoryExpanded;
+@end
+@implementation CDOCClass (ARTOutlineViewController)
+
+- (BOOL)isCategoryExpanded
+{
+    return [self[ARTAssociatedKeyForSelector(_cmd)] boolValue];
+}
+
+- (void)setIsCategoryExpanded:(BOOL)isCategoryExpanded
+{
+    self[ARTAssociatedKeyForSelector(@selector(isCategoryExpanded))] = @(isCategoryExpanded);
+}
+
+@end
 
 @interface ARTOutlineViewController ()
 <NSOutlineViewDataSource, NSOutlineViewDelegate, ARTOutlineViewCellDelegate>
@@ -46,7 +63,7 @@
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable CDOCClass *)item
 {
     if (item) {
-        return item.subNodes.count;
+        return item.subNodes.count + (item.isCategoryExpanded ? item.categories.count : 0);
     } else {
         return self.data.count;
     }
@@ -55,14 +72,25 @@
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable CDOCClass *)item
 {
     if (item) {
-        return item.subNodes[index];
+        if (item.isCategoryExpanded) {
+            if (index < item.categories.count) {
+                return item.categories[index];
+            } else {
+                return item.subNodes[index - item.categories.count];
+            }
+        } else {
+            return item.subNodes[index];
+        }
     } else {
         return self.data[index];
     }
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(ARTClass *)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(CDOCClass *)item
 {
+    if ([item isKindOfClass:CDOCCategory.class]) {
+        return NO;
+    }
     return item.subNodes.count ? YES : NO;
 }
 
@@ -72,7 +100,11 @@
 {
     ARTOutlineViewCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
-    [cell updateData:item];
+    if ([item isKindOfClass:CDOCClass.class]) {
+        [cell updateDataWithClass:item];
+    } else {
+        [cell updateDataWithCategory:(CDOCCategory *)item];
+    }
     cell.delegate = self;
 
     return cell;
@@ -82,9 +114,37 @@
 
 - (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
-    if ([self.delegate respondsToSelector:@selector(outlineViewController:didClickItem:link:rightMouse:)])
-    {
-        [self.delegate outlineViewController:self didClickItem:outlineViewCell.data link:link rightMouse:rightMouse];
+    ARTURL *url = [[ARTURL alloc] initWithString:link];
+    if ([url.scheme isEqualToString:kSchemeAction]) {
+        CDOCClass *data = outlineViewCell.data;
+        if ([url.host isEqualToString:kExpandSubClassAction]) {
+            if ([self.outlineView isItemExpanded:data]) {
+                [self.outlineView collapseItem:data];
+            } else {
+                [self.outlineView expandItem:data];
+            }
+            [outlineViewCell updateDataWithClass:data];
+        }
+        else if ([url.host isEqualToString:kExpandCategoryAction])
+        {
+            if ([self.outlineView isItemExpanded:data]) {
+                data.isCategoryExpanded = !data.isCategoryExpanded;
+                if (data.isCategoryExpanded) {
+                    [self.outlineView insertItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.categories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
+                } else {
+                    [self.outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.categories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
+                }
+            } else {
+                data.isCategoryExpanded = YES;
+                [self.outlineView expandItem:data];
+                [outlineViewCell updateDataWithClass:data];
+            }
+        }
+    } else {
+        if ([self.delegate respondsToSelector:@selector(outlineViewController:didClickItem:link:rightMouse:)])
+        {
+            [self.delegate outlineViewController:self didClickItem:outlineViewCell.data link:link rightMouse:rightMouse];
+        }
     }
 }
 

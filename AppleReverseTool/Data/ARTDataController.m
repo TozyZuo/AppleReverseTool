@@ -19,7 +19,6 @@
 #import "CDMethodType.h"
 #import "ClassDumpHook.h"
 #import "ARTVisitor.h"
-#import "ARTClass.h"
 #import "CRNode.h"
 #import "ARTDefine.h"
 #import "NSAlert+ART.h"

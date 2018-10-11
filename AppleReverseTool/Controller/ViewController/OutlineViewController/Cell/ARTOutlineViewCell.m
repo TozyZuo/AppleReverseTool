@@ -8,15 +8,16 @@
 
 #import "ARTOutlineViewCell.h"
 #import "RTLabel.h"
-#import "ClassDumpExtension.h"
-#import "ARTClass.h"
 #import "ARTURL.h"
+#import "ClassDumpExtension.h"
+#import "CDOCClassReference.h"
 
 
 @interface ARTOutlineViewCell ()
 <RTLabelDelegate>
 @property (nonatomic, strong) RTLabel *label;
-@property (nonatomic,  weak ) CDOCClass *data;
+@property (nonatomic,  weak ) CDOCClass *aClass;
+@property (nonatomic,  weak ) CDOCCategory *category;
 @property (nonatomic,  weak ) id closureTarget;
 @property (nonatomic, assign) SEL closureAction;
 @end
@@ -47,17 +48,24 @@
     [self addSubview:self.label];
 }
 
-- (void)updateData:(CDOCClass *)data
+- (NSString *)prefixWithCategory:(CDOCCategory *)category
 {
-    self.data = data;
+    NSString *prefix = @"";
+    CDOCClass *class = category.classRef.classObject;
+    CDOCClass *node = class;
 
-    self.label.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>", [self prefixWithData:data], kSchemeClass, data.name, data.isInsideMainBundle ? kColorClass : kColorOtherClass, data.name];
+    while (node) {
+        BOOL isLastNode = !node.superNode || ([node.superNode.subNodes indexOfObject:node] == (node.superNode.subNodes.count - 1));
+        prefix = isLastNode ? [@" \t" stringByAppendingString:prefix] : [@"<font color=connectingLine>│</font>\t" stringByAppendingString:prefix];
+        node = (CDOCClass *)node.superNode;
+    }
 
-//    self.label.text = @"<a href='Struct://{unique_ptr<WebKit::NavigationState, std::__1::default_delete<WebKit::NavigationState>>=\"__ptr_\"{__compressed_pair<WebKit::NavigationState *, std::__1::default_delete<WebKit::NavigationState>>=\"__first_\"^{NavigationState}}}/unique_ptr<WebKit::NavigationState, std::__1::default_delete<WebKit::NavigationState>>'>xxx</a>";
-//    self.label.text = @"xxx<xxxx<font color=class><a href=ddd://sss>objc</a></font>xxxx>xxx";
+
+
+    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
 }
 
-- (NSString *)prefixWithData:(CDOCClass *)data
+- (NSString *)prefixWithClass:(CDOCClass *)data
 {
     NSString *prefix = @"";
     CDOCClass *node = data;
@@ -79,42 +87,70 @@
 
         if (data.subNodes.count) {
             if ([self.outlineView isItemExpanded:data]) {
-                return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>%@</a>", kSchemeAction, kClosureAction, isLastNode ? @"└" : @"├"];
+                return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>%@</a>", kSchemeAction, kExpandSubClassAction, isLastNode ? @"└" : @"├"];
             } else {
-                return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>%@</a>", kSchemeAction, kClosureAction, isLastNode ? @"┴" : @"┼"];
+                return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>%@</a>", kSchemeAction, kExpandSubClassAction, isLastNode ? @"┴" : @"┼"];
             }
         } else {
             return isLastNode ? @"<font color=connectingLine>└</font>" : @"<font color=connectingLine>├</font>";
         }
     } else {
         if ([self.outlineView isItemExpanded:data]) {
-            return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>-</a>", kSchemeAction, kClosureAction];
+            return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>-</a>", kSchemeAction, kExpandSubClassAction];
         } else {
-            return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>+</a>", kSchemeAction, kClosureAction];
+            return [NSString stringWithFormat:@"<a href='%@://%@' color=expandButton>+</a>", kSchemeAction, kExpandSubClassAction];
         }
     }
+}
+
+- (NSString *)categoryLinkButtonWithData:(CDOCClass *)data
+{
+    return data.categories.count ? [NSString stringWithFormat:@" (<a href='%@://%@' color=%@>%ld</a>)", kSchemeAction, kExpandCategoryAction, kColorNumbers, data.categories.count] : @"";
+}
+
+#pragma mark - Public
+
+- (CDOCProtocol *)data
+{
+    return self.aClass ?: self.category.classRef.classObject;
+}
+
+- (void)updateDataWithClass:(CDOCClass *)class
+{
+    self.aClass = class;
+
+    self.label.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>%@", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name, [self categoryLinkButtonWithData:class]];
+}
+
+- (void)updateDataWithCategory:(CDOCCategory *)category
+{
+    self.label.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name];
 }
 
 #pragma mark - RTLabelDelegate
 
 - (void)label:(RTLabel *)label didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
-    ARTURL *url = [[ARTURL alloc] initWithString:link];
-    if ([url.scheme isEqualToString:kSchemeAction]) {
-        if ([url.host isEqualToString:kClosureAction]) {
-            CDOCClass *data = self.data;
-            if ([self.outlineView isItemExpanded:data]) {
-                [self.outlineView collapseItem:data];
-            } else {
-                [self.outlineView expandItem:data];
-            }
-            [self updateData:self.data];
-        }
-    } else {
+//    ARTURL *url = [[ARTURL alloc] initWithString:link];
+//    if ([url.scheme isEqualToString:kSchemeAction]) {
+//        if ([url.host isEqualToString:kExpandSubClassAction]) {
+//            CDOCClass *data = self.data;
+//            if ([self.outlineView isItemExpanded:data]) {
+//                [self.outlineView collapseItem:data];
+//            } else {
+//                [self.outlineView expandItem:data];
+//            }
+//            [self updateData:self.data];
+//        }
+//        else if ([url.host isEqualToString:kExpandCategoryAction])
+//        {
+//
+//        }
+//    } else {
         if ([self.delegate respondsToSelector:@selector(outlineViewCell:didClickLink:rightMouse:)]) {
             [self.delegate outlineViewCell:self didClickLink:link rightMouse:rightMouse];
         }
-    }
+//    }
 }
 
 @end

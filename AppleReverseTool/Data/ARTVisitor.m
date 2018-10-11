@@ -15,7 +15,6 @@
 #import "CDTypeFormatter.h"
 #import "CDOCInstanceVariable.h"
 #import "ClassDumpExtension.h"
-#import "ARTClass.h"
 #import "ARTiVar.h"
 #import "ARTDataController.h"
 
@@ -26,12 +25,12 @@
 
 @property (nonatomic,  weak ) ARTDataController *dataController;
 @property (nonatomic,  copy ) void (^progress)(NSString *, NSString *, NSString *);
-//@property (nonatomic, strong) NSMutableDictionary<NSString *, ARTClass *> *classesByClassStringInMainFile;
-//@property (nonatomic, strong) NSMutableDictionary<NSString *, ARTClass *> *classesByClassString;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, CDOCProtocol *> *protocolsByProtocolStringInMainFile;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, CDOCProtocol *> *protocolsByProtocolString;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, CDOCClass *> *classesByClassStringInMainFile;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, CDOCClass *> *classesByClassString;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, ARTiVar *> *iVarsByiVarType;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, CDOCCategory *> *> *categoriesByClassStringInMainFile;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, CDOCCategory *> *> *categoriesByClassString;
 @property (nonatomic, strong) NSArray *mainFileRunPaths;
 @property (nonatomic, assign) BOOL isCurrentFrameworkInsideMainFile;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray *> *classesByFrameworkName;
@@ -45,10 +44,12 @@
     if (self) {
         self.dataController = dataController;
         self.progress = progress;
+        self.protocolsByProtocolStringInMainFile = [[NSMutableDictionary alloc] init];
         self.protocolsByProtocolString = [[NSMutableDictionary alloc] init];
         self.classesByClassStringInMainFile = [[NSMutableDictionary alloc] init];
         self.classesByClassString = [[NSMutableDictionary alloc] init];
-        self.iVarsByiVarType = [[NSMutableDictionary alloc] init];
+        self.categoriesByClassStringInMainFile = [[NSMutableDictionary alloc] init];
+        self.categoriesByClassString = [[NSMutableDictionary alloc] init];
         self.classesByFrameworkName = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -85,10 +86,17 @@
 
 - (void)willVisitProtocol:(CDOCProtocol *)protocol
 {
+    if (self.protocolsByProtocolStringInMainFile[protocol.name]) {
+        return;
+    }
+
     [super willVisitProtocol:protocol];
 
     protocol.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
     self.protocolsByProtocolString[protocol.name] = protocol;
+    if (self.isCurrentFrameworkInsideMainFile) {
+        self.protocolsByProtocolStringInMainFile[protocol.name] = protocol;
+    }
 
     self.className = protocol.name;
     if (self.progress) {
@@ -99,9 +107,12 @@
 
 - (void)willVisitClass:(CDOCClass *)aClass
 {
+    if (self.classesByClassStringInMainFile[aClass.name]) {
+        return;
+    }
+
     [super willVisitClass:aClass];
 
-//    ARTClass *class = [[ARTClass alloc] initWithClass:aClass bundleName:self.frameworkName];
     CDOCClass *class = (CDOCClass *)aClass;
     class.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
 
@@ -124,12 +135,42 @@
     [classes addObject:aClass.name];
 }
 
+- (void)willVisitCategory:(CDOCCategory *)category
+{
+    if (self.categoriesByClassStringInMainFile[category.className][category.name]) {
+        return;
+    }
+
+    [super willVisitCategory:category];
+
+    category.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
+
+    NSMutableDictionary *categories = self.categoriesByClassString[category.className];
+    if (!categories) {
+        categories = [[NSMutableDictionary alloc] init];
+        self.categoriesByClassString[category.className] = categories;
+    }
+    categories[category.name] = category;
+
+    if (self.isCurrentFrameworkInsideMainFile) {
+        categories = self.categoriesByClassStringInMainFile[category.className];
+        if (!categories) {
+            categories = [[NSMutableDictionary alloc] init];
+            self.categoriesByClassStringInMainFile[category.className] = categories;
+        }
+        categories[category.name] = category;
+    }
+
+    self.className = [NSString stringWithFormat:@"%@(%@)", category.className, category.name];
+    if (self.progress) {
+        self.progress(self.frameworkName, self.className, nil);
+    }
+}
+
 - (void)visitIvar:(CDOCInstanceVariable *)ivar
 {
     [super visitIvar:ivar];
     ivar.type.dataController = self.dataController;
-
-    // TODO
 
     if (self.progress) {
         self.progress(self.frameworkName, self.className, [self.classDump.typeController.ivarTypeFormatter formatVariable:ivar.name type:ivar.type]);
@@ -140,16 +181,23 @@
 {
     [super didEndVisiting];
 
-    [self.classesByClassString enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CDOCClass * _Nonnull obj, BOOL * _Nonnull stop)
+    // merge all
+    [self.classesByClassString enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CDOCClass * _Nonnull class, BOOL * _Nonnull stop)
     {
-        obj.superClassRef.classObject = self.classesByClassString[obj.superClassName];
-        if (obj.protocols.count) {
+        class.superClassRef.classObject = self.classesByClassString[class.superClassName];
+        if (class.protocols.count) {
             NSMutableArray *protocols = [[NSMutableArray alloc] init];
-            for (CDOCProtocol *protocol in obj.protocols) {
+            for (CDOCProtocol *protocol in class.protocols) {
                 [protocols addObject:self.protocolsByProtocolString[protocol.name] ?: protocol];
             }
-            obj[@"protocols"] = protocols;
+            class[@"protocols"] = protocols;
         }
+
+        [self.categoriesByClassString[class.name] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull name, CDOCCategory * _Nonnull category, BOOL * _Nonnull stop)
+        {
+            category.classRef.classObject = class;
+            [class addCategory:category];
+        }];
     }];
 }
 
