@@ -12,12 +12,13 @@
 #import "CDOCInstanceVariable.h"
 #import "CDMethodType.h"
 #import "CDTypeParser.h"
+#import "CDTypeController.h"
 
 extern void *_dispatch_queue_userInfo_key;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class CDTypeController, CDOCClassReference;
+@class CDOCClassReference;
 
 @interface CDObjectiveCProcessor (ARTDataController)
 - (void)hook_process;
@@ -41,5 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)hook_initWithType:(CDType *)type offset:(NSString *)offset;
 @end
 
+@interface CDTypeController (ARTDataController)
+- (void)hook_workSomeMagic;
+@end
 
 NS_ASSUME_NONNULL_END

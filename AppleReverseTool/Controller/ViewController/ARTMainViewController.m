@@ -79,6 +79,9 @@
                  case ARTDataControllerProcessStateProcessingType:
                      self.stateLabel.stringValue = [NSString stringWithFormat:@"分析类型 [%@] %@ %@", framework, class ?: @"", type ?: @""];
                      break;
+                 case ARTDataControllerProcessStateProcessingStructsAndUnions:
+                     self.stateLabel.stringValue = @"分析结构体和联合体类型";
+                     break;
                  case ARTDataControllerProcessStateDidProcess:
                      self.stateLabel.stringValue = @"数据整理中...";
                      break;

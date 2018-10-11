@@ -7,16 +7,14 @@
 //
 
 #import "ARTVisitor.h"
+#import "ARTDataController.h"
+#import "ClassDumpExtension.h"
 #import "CDObjectiveCProcessor.h"
 #import "CDMachOFile.h"
 #import "CDOCClassReference.h"
 #import "CDClassDump.h"
-#import "CDTypeController.h"
 #import "CDTypeFormatter.h"
 #import "CDOCInstanceVariable.h"
-#import "ClassDumpExtension.h"
-#import "ARTiVar.h"
-#import "ARTDataController.h"
 
 
 @interface ARTVisitor ()

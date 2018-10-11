@@ -7,20 +7,15 @@
 //
 
 #import "ARTDataController.h"
+#import "ARTVisitor.h"
+#import "ARTDefine.h"
+#import "ClassDumpHook.h"
+#import "ClassDumpExtension.h"
 #import "CDMachOFile.h"
 #import "CDFatFile.h"
 #import "CDClassDump.h"
-#import "ClassDumpExtension.h"
-#import "CDTypeController.h"
-#import "CDOCCategory.h"
-#import "CDOCInstanceVariable.h"
 #import "CDSearchPathState.h"
-#import "CDObjectiveCProcessor.h"
-#import "CDMethodType.h"
-#import "ClassDumpHook.h"
-#import "ARTVisitor.h"
 #import "CRNode.h"
-#import "ARTDefine.h"
 #import "NSAlert+ART.h"
 #import <objc/runtime.h>
 
@@ -42,10 +37,7 @@
 {
     self = [super init];
     if (self) {
-//
-//        NSString *str = DescriptionWithNodes(self.classNodes);
-//        NSLog(@"%@", str);
-//        self.classNodes = nil;
+        
     }
     return self;
 }
@@ -80,6 +72,7 @@ static BOOL _isInDataProcessing = NO;
         method_exchangeImplementations(class_getInstanceMethod(CDObjectiveCProcessor.class, @selector(registerTypesWithObject:phase:)), class_getInstanceMethod(CDObjectiveCProcessor.class, @selector(hook_registerTypesWithObject:phase:)));
         method_exchangeImplementations(class_getInstanceMethod(CDOCProtocol.class, @selector(registerTypesWithObject:phase:)), class_getInstanceMethod(CDOCProtocol.class, @selector(hook_registerTypesWithObject:phase:)));
         method_exchangeImplementations(class_getInstanceMethod(CDMethodType.class, @selector(initWithType:offset:)), class_getInstanceMethod(CDMethodType.class, @selector(hook_initWithType:offset:)));
+        method_exchangeImplementations(class_getInstanceMethod(CDTypeController.class, @selector(workSomeMagic)), class_getInstanceMethod(CDTypeController.class, @selector(hook_workSomeMagic)));
     }
 }
 

@@ -7,12 +7,10 @@
 //
 
 #import "ClassDumpHook.h"
+#import "ClassDumpExtension.h"
 #import "CDMachOFile.h"
 #import "CDOCClassReference.h"
 #import "CDTypeLexer.h"
-//#import "CDType.h"
-//#import "CDTypeName.h"
-#import "ClassDumpExtension.h"
 #import "ARTDataController.h"
 #import <objc/runtime.h>
 
@@ -135,6 +133,23 @@ void *_dispatch_queue_userInfo_key = &_dispatch_queue_userInfo_key;
     }
 
     return [self hook_initWithType:type offset:offset];
+}
+
+@end
+
+@implementation CDTypeController (ARTDataController)
+
+- (void)hook_workSomeMagic
+{
+    void *userInfoAddress = dispatch_get_specific(_dispatch_queue_userInfo_key);
+    __unsafe_unretained NSMutableDictionary *userInfo = (__bridge NSMutableDictionary *)(userInfoAddress);
+
+    void (^ _Nullable progress)(ARTDataControllerProcessState, NSString * _Nullable, NSString * _Nullable, NSString * _Nullable, NSString * _Nullable) = userInfo[@"progress"];
+    if (progress) {
+        progress(ARTDataControllerProcessStateProcessingStructsAndUnions, nil, nil, nil, nil);
+    }
+
+    return [self hook_workSomeMagic];
 }
 
 @end

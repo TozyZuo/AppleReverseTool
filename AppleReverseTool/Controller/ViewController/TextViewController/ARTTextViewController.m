@@ -12,8 +12,8 @@
 #import "ARTView.h"
 #import "ARTButton.h"
 #import "ARTURL.h"
-#import "CDClassDump.h"
 #import "ClassDumpExtension.h"
+#import "CDClassDump.h"
 #import "RTLabel.h"
 #import "NSAlert+ART.h"
 

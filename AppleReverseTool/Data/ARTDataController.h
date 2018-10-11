@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, ARTDataControllerProcessState) {
     ARTDataControllerProcessStateWillProcess,
     ARTDataControllerProcessStateProcessingData,
     ARTDataControllerProcessStateProcessingType,
+    ARTDataControllerProcessStateProcessingStructsAndUnions,
     ARTDataControllerProcessStateDidProcess,
 };
 
