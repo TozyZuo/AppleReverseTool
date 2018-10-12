@@ -187,7 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				BA3BE7BF21625F1A007AEFEF /* TextViewController */,
-				BA3BE7BE21625EF1007AEFEF /* OutlineViewController */,
+				BA3BE7BE21625EF1007AEFEF /* ClassTreeViewController */,
 				BA3BE7AE21624C1E007AEFEF /* ARTViewController.h */,
 				BA3BE7AF21624C1E007AEFEF /* ARTViewController.m */,
 				BA3BE7B121624C6C007AEFEF /* ARTMainViewController.h */,
@@ -196,14 +196,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		BA3BE7BE21625EF1007AEFEF /* OutlineViewController */ = {
+		BA3BE7BE21625EF1007AEFEF /* ClassTreeViewController */ = {
 			isa = PBXGroup;
 			children = (
 				BA3BE7C221632C73007AEFEF /* Cell */,
 				BA3BE7B621625BBD007AEFEF /* ARTClassTreeViewController.h */,
 				BA3BE7B721625BBD007AEFEF /* ARTClassTreeViewController.m */,
 			);
-			path = OutlineViewController;
+			path = ClassTreeViewController;
 			sourceTree = "<group>";
 		};
 		BA3BE7BF21625F1A007AEFEF /* TextViewController */ = {
