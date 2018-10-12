@@ -93,7 +93,7 @@ static BOOL debug = NO;
 - (void)willVisitCategory:(CDOCCategory *)category;
 {
 //    [self.resultString appendFormat:@"@interface %@ (%@)", category.className, category.name];
-    [self.resultString appendString:_S(_SC(@"@interface ", kColorKeywords), _CL(category.className), @" (", _SC(category.name, self.dataController.classForName(category.name).isInsideMainBundle ? kColorClass : kColorOtherClass), @")", nil)];
+    [self.resultString appendString:_S(_SC(@"@interface ", kColorKeywords), _CL(category.className), @" (", _SC(category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass), @")", nil)];
 
     NSArray *protocols = category.protocols;
     if (protocols.count) {

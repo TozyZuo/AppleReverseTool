@@ -242,11 +242,6 @@
     [self pushLink:link text:self.linkMap[link]];
 }
 
-- (IBAction)showLinkStackMenuAction:(ARTButton *)sender
-{
-    [NSMenu popUpContextMenu:self.linkStackMenu withEvent:NSApp.currentEvent forView:sender];
-}
-
 #pragma mark - Public
 
 - (void)updateDataWithLink:(NSString *)link

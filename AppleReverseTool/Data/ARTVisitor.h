@@ -6,7 +6,7 @@
 //  Copyright © 2018年 TozyZuo. All rights reserved.
 //
 
-#import "CDClassFrameworkVisitor.h"
+#import "CDVisitor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -18,8 +18,6 @@
 @property (nonatomic, strong) RTLabel *label;
 @property (nonatomic,  weak ) CDOCClass *aClass;
 @property (nonatomic,  weak ) CDOCCategory *category;
-@property (nonatomic,  weak ) id closureTarget;
-@property (nonatomic, assign) SEL closureAction;
 @end
 
 @implementation ARTOutlineViewCell
