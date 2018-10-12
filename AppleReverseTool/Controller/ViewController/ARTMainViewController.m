@@ -10,6 +10,8 @@
 #import "ARTDataController.h"
 #import "ARTOutlineViewController.h"
 #import "ARTTextViewController.h"
+#import "ARTButton.h"
+#import "NSColor+ART.h"
 
 
 @interface ARTMainViewController ()
@@ -18,6 +20,8 @@
 @property (readonly) ARTOutlineViewController *outlineViewController;
 @property (readonly) ARTTextViewController *textViewController;
 @property (weak) IBOutlet NSTextField *stateLabel;
+@property (weak) IBOutlet ARTButton *classTreeButton;
+@property (weak) IBOutlet ARTButton *relationshipTreeButton;
 @end
 
 @implementation ARTMainViewController
@@ -54,7 +58,42 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do view setup here.
+
+    __weak typeof(self) weakSelf = self;
+
+    [self.classTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"类树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica" traits:0 weight:0 size:13], NSForegroundColorAttributeName: RGBColor(128, 128, 128)}] forState:ARTButtonStateNormal];
+    [self.classTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"类树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue" traits:NSBoldFontMask weight:0 size:13], NSForegroundColorAttributeName: RGBColor(49, 49, 49)}] forState:ARTButtonStateHighlighted];
+    [self.classTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"类树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue" traits:NSBoldFontMask weight:0 size:13], NSForegroundColorAttributeName: RGBColor(50, 137, 240)}] forState:ARTButtonStateSelected];
+    self.classTreeButton.eventHandler = ^(__kindof ARTControl * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event) {
+        if (type == ARTControlEventTypeMouseUpInside) {
+            [weakSelf classTreeButtonAction:button];
+        }
+    };
+
+    [self.relationshipTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"关系树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica" traits:0 weight:0 size:13], NSForegroundColorAttributeName: RGBColor(128, 128, 128)}] forState:ARTButtonStateNormal];
+    [self.relationshipTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"关系树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue" traits:NSBoldFontMask weight:0 size:13], NSForegroundColorAttributeName: RGBColor(49, 49, 49)}] forState:ARTButtonStateHighlighted];
+    [self.relationshipTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"关系树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue" traits:NSBoldFontMask weight:0 size:13], NSForegroundColorAttributeName: RGBColor(50, 137, 240)}] forState:ARTButtonStateSelected];
+    self.relationshipTreeButton.eventHandler = ^(__kindof ARTControl * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event) {
+        if (type == ARTControlEventTypeMouseUpInside) {
+            [weakSelf relationshipTreeButtonAction:button];
+        }
+    };
+}
+
+- (IBAction)classTreeButtonAction:(ARTButton *)button
+{
+    if (!button.selected) {
+        button.selected = YES;
+        self.relationshipTreeButton.selected = NO;
+    }
+}
+
+- (IBAction)relationshipTreeButtonAction:(ARTButton *)button
+{
+    if (!button.selected) {
+        button.selected = YES;
+        self.classTreeButton.selected = NO;
+    }
 }
 
 - (void)setFileURL:(NSURL *)fileURL
@@ -63,6 +102,9 @@
         _fileURL = fileURL;
 
 //        [self.outlineViewController updateData:nil];
+//        self.classTreeButton.enabled = YES;
+//        self.classTreeButton.selected = YES;
+//        self.relationshipTreeButton.enabled = YES;
 //        return;
 
         self.dataController = [[ARTDataController alloc] init];
@@ -89,6 +131,9 @@
                      break;
              }
          } completion:^(ARTDataController * _Nonnull dataController) {
+             self.classTreeButton.enabled = YES;
+             self.relationshipTreeButton.enabled = YES;
+             self.classTreeButton.selected = YES;
              self.stateLabel.stringValue = @"";
              [self.outlineViewController updateData:dataController.classNodes];
          }];

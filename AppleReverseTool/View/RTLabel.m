@@ -453,7 +453,7 @@ NSSet *RTLabelValidTags;
                     [button setUrl:[NSURL URLWithString:(linkableComponents.attributes)[@"href"]]];
                     button.link = linkableComponents.attributes[@"href"];
                     __weak typeof(self) weakSelf = self;
-                    button.eventHandler = ^(__kindof ARTControl * _Nonnull button, ARTControlEventType type)
+                    button.eventHandler = ^(__kindof ARTControl * _Nonnull button, ARTControlEventType type, NSEvent *event)
                     {
                         switch (type) {
                             case ARTControlEventTypeMouseIn:

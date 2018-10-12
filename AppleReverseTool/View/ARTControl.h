@@ -27,7 +27,9 @@ IB_DESIGNABLE
 @property (readonly) BOOL mouseIn;
 @property (readonly) BOOL mouseDown;
 @property (readonly) BOOL rightMouseDown;
-@property (nonatomic, copy) void (^eventHandler)(__kindof ARTControl *button, ARTControlEventType type);
+@property (nonatomic, copy) void (^eventHandler)(__kindof ARTControl *button, ARTControlEventType type, NSEvent *event);
+
+- (void)initialize;
 
 @end
 

@@ -7,192 +7,184 @@
 //
 
 #import "ARTButton.h"
-#import <objc/runtime.h>
-/*
-@interface NSButtonCell (art)
-- (void)_updateImageViewImageInView:(NSView *)view;
-- (void)_updateMouseInside:(BOOL)inside;
-@end
 
-@interface ARTImageView : NSImageView
-
-@end
-@implementation ARTImageView
-
-- (void)setImage:(NSImage *)image
-{
-    [super setImage:image];
-}
-
-@end
-
-
-@interface ARTButtonCell : NSButtonCell
-@property (nonatomic, weak) NSButton *button;
-@end
-
-@implementation ARTButtonCell
-
-- (void)mouseEntered:(NSEvent *)event
-{
-    [super mouseEntered:event];
-}
-
-- (void)mouseExited:(NSEvent *)event
-{
-    [super mouseExited:event];
-}
-
-- (void)_updateImageViewImageInView:(NSView *)view
-{
-    [super _updateImageViewImageInView:view];
-
-    Ivar ivar = class_getInstanceVariable(self.class, "_bcFlags2");
-    if (ivar) {
-        _BCFlags2 *_bcFlags2 = (void *)&((char *)(__bridge void *)self)[ivar_getOffset(ivar)];
-        BOOL mouseInside = _bcFlags2->mouseInside;
-        NSLog(@"@@@ %d", mouseInside);
-    }
-}
-
-- (void)_updateMouseInside:(BOOL)inside
-{
-    [super _updateMouseInside:inside];
-}
-
-@end
-*/
 @interface ARTButton ()
-@property (strong) NSTrackingArea *trackingArea;
+@property (nonatomic, assign) ARTButtonState state;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSAttributedString *> *titleMap;
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSImage *> *imageMap;
+@property (nonatomic, strong) NSMapTable<id, NSValue *> *sizeMap;
+@property (nonatomic, copy) void (^buttonEventHandler)(__kindof ARTControl *button, ARTControlEventType type, NSEvent *event);
 @end
 
 @implementation ARTButton
 @synthesize mouseIn = _mouseIn;
 
-//+ (void)load
-//{
-//    [self setCellClass:ARTButtonCell.class];
-//}
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-
-    [self initialize];
-}
-
 - (void)initialize
 {
-    self.enabled = self.enabled;
+    [super initialize];
+    
+    self.titleMap = [[NSMutableDictionary alloc] init];
+    self.imageMap = [[NSMutableDictionary alloc] init];
+    self.sizeMap = [NSMapTable strongToStrongObjectsMapTable];
 
-//    self.trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:nil];
-//    [self addTrackingArea:self.trackingArea];
+    __weak typeof(self) weakSelf = self;
+    [super setEventHandler:^(__kindof ARTControl *button, ARTControlEventType type, NSEvent *event) {
+
+        switch (type) {
+            case ARTControlEventTypeMouseIn:
+                weakSelf.state = ARTButtonStateMouseIn | weakSelf.state;
+                break;
+            case ARTControlEventTypeMouseOut:
+                weakSelf.state = ~ARTButtonStateMouseIn & weakSelf.state;
+                break;
+            case ARTControlEventTypeMouseDown:
+            case ARTControlEventTypeRightMouseDown:
+                weakSelf.state = ARTButtonStateHighlighted | weakSelf.state;
+                break;
+            case ARTControlEventTypeMouseUpOutside:
+            case ARTControlEventTypeRightMouseUpOutside:
+            case ARTControlEventTypeMouseUpInside:
+            case ARTControlEventTypeRightMouseUpInside:
+                weakSelf.state = ~ARTButtonStateHighlighted & weakSelf.state;
+                break;
+            default:
+                break;
+        }
+
+        if (weakSelf.buttonEventHandler) {
+            weakSelf.buttonEventHandler(weakSelf, type, event);
+        }
+    }];
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    if (_selected != selected) {
+        _selected = selected;
+        if (selected) {
+            self.state = ARTButtonStateSelected | self.state;
+        } else {
+            self.state = ~ARTButtonStateSelected & self.state;
+        }
+    }
 }
 
 - (void)setEnabled:(BOOL)enabled
 {
     [super setEnabled:enabled];
     if (enabled) {
-        self.image = self.enabledImage;
+        self.state = ~ARTButtonStateDisabled & self.state;
     } else {
-        self.image = self.disabledImage;
-    }
-}
-/*
-- (void)mouseDown:(NSEvent *)event
-{
-    [super mouseDown:event];
-
-    if (self.eventHandler) {
-        self.eventHandler(self, ARTButtonEventTypeMouseDown, event);
+        self.state = ARTButtonStateDisabled | self.state;
     }
 }
 
-- (void)mouseUp:(NSEvent *)event
+- (void)setEventHandler:(void (^)(__kindof ARTControl * _Nonnull, ARTControlEventType, NSEvent * _Nonnull))eventHandler
 {
-    [super mouseUp:event];
+    self.buttonEventHandler = eventHandler;
+}
 
-    if (self.eventHandler) {
-        if (_mouseIn) {
-            self.eventHandler(self, ARTButtonEventTypeMouseUpInside, event);
+- (void)setState:(ARTButtonState)state
+{
+    if (_state != state) {
+        ARTButtonState oldState = _state;
+        _state = state;
+        if (state & ARTButtonStateSelected) {
+            _selected = YES;
         } else {
-            self.eventHandler(self, ARTButtonEventTypeMouseUpOutside, event);
+            _selected = NO;
         }
+        self.needsDisplay = [self needsDisplayFromState:oldState toState:state];
     }
 }
 
-- (void)rightMouseDown:(NSEvent *)event
+- (BOOL)needsDisplayFromState:(ARTButtonState)fromState toState:(ARTButtonState)toState
 {
-    [super rightMouseDown:event];
+    if (self.titleMap.count) {
+        return [self titleForState:fromState] != [self titleForState:toState];
+    } else if (self.imageMap.count) {
+        return [self imageForState:fromState] != [self imageForState:toState];
+    }
+    return NO;
+}
 
-    if (self.eventHandler) {
-        self.eventHandler(self, ARTButtonEventTypeRightMouseDown, event);
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+
+    if (self.titleMap.count) {
+        NSAttributedString *title = [self titleForState:self.state];
+        NSSize size = [self.sizeMap objectForKey:title].sizeValue;
+        [title drawAtPoint:NSMakePoint((NSWidth(self.bounds) - size.width) * .5, (NSHeight(self.bounds) - size.height) * .5)];
+    } else if (self.imageMap.count) {
+        NSImage *image = [self imageForState:self.state];
+        [image.representations.firstObject drawAtPoint:NSMakePoint((NSWidth(self.bounds) - image.size.width) / 2, (NSHeight(self.bounds) - image.size.height) / 2)];
     }
 }
 
-- (void)rightMouseUp:(NSEvent *)event
+- (NSAttributedString *)titleForState:(ARTButtonState)state
 {
-    [super rightMouseUp:event];
-
-    if (self.eventHandler) {
-        if (_mouseIn) {
-            self.eventHandler(self, ARTButtonEventTypeRightMouseUpInside, event);
-        } else {
-            self.eventHandler(self, ARTButtonEventTypeRightMouseUpOutside, event);
+    NSAttributedString *title;/* = self.titleMap[@(self.state)];*/
+//    if (!title) {
+        ARTButtonState normal = state & (~ARTButtonStateHighlighted) & (~ARTButtonStateMouseIn);
+        if (state & ARTButtonStateMouseIn) {
+            if (state & ARTButtonStateHighlighted) {
+                title = self.titleMap[@(ARTButtonStateHighlighted)];
+            } else {
+                title = self.titleMap[@(ARTButtonStateMouseIn)];
+            }
         }
-    }
-}
-
-- (void)mouseEntered:(NSEvent *)event
-{
-    [super mouseEntered:event];
-
-    if (!_mouseIn) {
-        _mouseIn = YES;
-        if (self.eventHandler) {
-            self.eventHandler(self, ARTButtonEventTypeMouseIn, event);
+        if (!title) {
+            title = self.titleMap[@(normal)];
         }
-    }
-}
-
-- (void)mouseExited:(NSEvent *)event
-{
-    [super mouseExited:event];
-
-    if (_mouseIn) {
-        _mouseIn = NO;
-        if (self.eventHandler) {
-            self.eventHandler(self, ARTButtonEventTypeMouseOut, event);
-        }
-    }
-}
-
-- (void)updateTrackingAreas
-{
-//    if (!CGRectEqualToRect(self.trackingArea.rect, self.bounds)) {
-        [self removeTrackingArea:self.trackingArea];
-        self.trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:nil];
-        [self addTrackingArea:self.trackingArea];
-        [super updateTrackingAreas];
 //    }
+    return title;
 }
-*/
+
+- (NSImage *)imageForState:(ARTButtonState)state
+{
+    NSImage *image;/* = self.imageMap[@(self.state)];*/
+//    if (!image) {
+        ARTButtonState normal = state & (~ARTButtonStateHighlighted) & (~ARTButtonStateMouseIn);
+        if (state & ARTButtonStateMouseIn) {
+            if (state & ARTButtonStateHighlighted) {
+                image = self.imageMap[@(ARTButtonStateHighlighted)];
+            } else {
+                image = self.imageMap[@(ARTButtonStateMouseIn)];
+            }
+        }
+        if (!image) {
+            image = self.imageMap[@(normal)];
+        }
+//    }
+    return image;
+}
+
+#pragma mark - Public
+
+- (void)setAttributedTitle:(NSAttributedString *)title forState:(ARTButtonState)state
+{
+    self.titleMap[@(state)] = title;
+
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)title);
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, CGRectMake(0, 0, MAXFLOAT, MAXFLOAT));
+    CTFrameRef textFrame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0,0), path, NULL);
+    CGPathRelease(path);
+    CFRelease(framesetter);
+    CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(CTFrameGetLines(textFrame), 0);
+    CGFloat ascent;
+    CGFloat descent;
+    CGFloat leading;
+    CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+    CFRelease(textFrame);
+
+    [self.sizeMap setObject:[NSValue valueWithSize:NSMakeSize(title.size.width, ascent + descent)] forKey:title];
+}
+
+- (void)setImage:(NSImage *)image forState:(ARTButtonState)state
+{
+    self.imageMap[@(state)] = image;
+}
+
 @end

@@ -775,8 +775,40 @@
                                         <rect key="frame" x="0.0" y="0.0" width="474" height="630"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
+                                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BY5-vK-Zyz">
+                                                <rect key="frame" x="-1" y="600" width="476" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                <subviews>
+                                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RBk-4P-WSH" customClass="ARTButton">
+                                                        <rect key="frame" x="31" y="0.0" width="30" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="NO"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </customView>
+                                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nit-q1-7O0" customClass="ARTButton">
+                                                        <rect key="frame" x="61" y="0.0" width="50" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="NO"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </customView>
+                                                </subviews>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                        <real key="value" value="0.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderNSColor">
+                                                        <color key="value" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                                        <color key="value" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </customView>
                                             <containerView translatesAutoresizingMaskIntoConstraints="NO" id="RDE-Gi-eOQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="474" height="630"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="474" height="600"/>
                                                 <connections>
                                                     <segue destination="a7i-bA-zwu" kind="embed" id="Qvz-Eu-WeN"/>
                                                 </connections>
@@ -785,7 +817,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="RDE-Gi-eOQ" secondAttribute="trailing" id="WP1-pm-pzg"/>
                                             <constraint firstAttribute="bottom" secondItem="RDE-Gi-eOQ" secondAttribute="bottom" id="bre-vw-wvk"/>
-                                            <constraint firstItem="RDE-Gi-eOQ" firstAttribute="top" secondItem="888-hB-8x7" secondAttribute="top" id="nqO-WK-29I"/>
+                                            <constraint firstItem="RDE-Gi-eOQ" firstAttribute="top" secondItem="888-hB-8x7" secondAttribute="top" constant="30" id="nqO-WK-29I"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="375" id="qbw-XA-whT"/>
                                             <constraint firstItem="RDE-Gi-eOQ" firstAttribute="leading" secondItem="888-hB-8x7" secondAttribute="leading" id="svd-ZC-UT0"/>
                                         </constraints>
@@ -827,6 +859,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="classTreeButton" destination="RBk-4P-WSH" id="FxR-LO-EUa"/>
+                        <outlet property="relationshipTreeButton" destination="nit-q1-7O0" id="WDq-d1-Efb"/>
                         <outlet property="stateLabel" destination="TyV-c9-G0C" id="WHr-S9-eKu"/>
                     </connections>
                 </viewController>
@@ -842,31 +876,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GgW-z2-5KX">
-                                <rect key="frame" x="-1" y="270" width="452" height="31"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                        <real key="value" value="0.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderNSColor">
-                                        <color key="value" red="0.83921568629999999" green="0.83921568629999999" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                        <color key="value" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </customView>
                             <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="27" horizontalPageScroll="10" verticalLineScroll="27" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87Z-AL-vNS">
-                                <rect key="frame" x="0.0" y="0.0" width="451" height="270"/>
+                                <rect key="frame" x="0.0" y="0.0" width="451" height="300"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="QuL-TM-FVF">
-                                    <rect key="frame" x="0.0" y="0.0" width="451" height="270"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="451" height="300"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" headerView="nSr-IB-LEW" viewBased="YES" autoresizesOutlineColumn="YES" outlineTableColumn="wtx-py-wJz" id="XUt-Qg-Dzk">
-                                            <rect key="frame" x="0.0" y="0.0" width="451" height="247"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="451" height="277"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -934,56 +952,33 @@
                                 <rect key="frame" x="-1" y="270" width="468" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="24u-xd-fx0">
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4he-Rm-yUc" customClass="ARTButton">
                                         <rect key="frame" x="1" y="0.0" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Default_ARTTextViewController_showAllButtion" imagePosition="only" alignment="center" alternateImage="Default_ARTTextViewController_showAllButtion_highlighted" inset="2" id="Ght-3u-mng">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="enabledImage" value="Default_ARTTextViewController_showAllButtion"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="disabledImage" value="Default_ARTTextViewController_showAllButtion"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="YES"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="showLinkStackMenuAction:" target="fE2-vV-OtR" id="gMh-sb-81j"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xvR-uD-hoh" customClass="ARTButton">
-                                        <rect key="frame" x="30" y="0.0" width="30" height="30"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfl-Z6-1ec" customClass="ARTButton">
+                                        <rect key="frame" x="31" y="0.0" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" alternateImage="Default_ARTTextViewController_goBackButton_highlighted" inset="2" id="Ah4-cK-k2e">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                            <connections>
-                                                <binding destination="fE2-vV-OtR" name="enabled" keyPath="canGoBack" id="QdZ-sk-KQw"/>
-                                            </connections>
-                                        </buttonCell>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="enabledImage" value="Default_ARTTextViewController_goBackButton"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="disabledImage" value="Default_ARTTextViewController_goBackButton_disable"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="goBack:" target="fE2-vV-OtR" id="UmZ-Wu-U7H"/>
-                                            <binding destination="fE2-vV-OtR" name="enabled" keyPath="canGoBack" id="xyN-wj-d0t"/>
+                                            <action selector="goBack:" target="fE2-vV-OtR" id="uBQ-uP-8SB"/>
                                         </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BGn-9w-Gws" customClass="ARTButton">
-                                        <rect key="frame" x="60" y="0.0" width="30" height="30"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0By-Y4-Cc0" customClass="ARTButton">
+                                        <rect key="frame" x="61" y="0.0" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" alternateImage="Default_ARTTextViewController_goForwardButton_highlighted" inset="2" id="5vS-s7-MUR">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="enabledImage" value="Default_ARTTextViewController_goForwardButton"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="disabledImage" value="Default_ARTTextViewController_goForwardButton_disable"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="goForward:" target="fE2-vV-OtR" id="0AK-tk-MuV"/>
-                                            <binding destination="fE2-vV-OtR" name="enabled" keyPath="canGoForward" id="ART-5U-g5r"/>
+                                            <action selector="goForward:" target="fE2-vV-OtR" id="OI6-wG-uOX"/>
                                         </connections>
-                                    </button>
+                                    </customView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
@@ -1044,8 +1039,10 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="goBackButton" destination="yfl-Z6-1ec" id="nJo-b5-GU1"/>
+                        <outlet property="goForwardButton" destination="0By-Y4-Cc0" id="Xm9-Dw-7OU"/>
                         <outlet property="label" destination="YJe-ug-0il" id="Mn5-I9-xBw"/>
-                        <outlet property="menuButton" destination="24u-xd-fx0" id="96S-Hj-Pey"/>
+                        <outlet property="menuButton" destination="4he-Rm-yUc" id="zeb-8B-vom"/>
                         <outlet property="scrollView" destination="BHt-dF-W9N" id="8OV-DA-dgn"/>
                     </connections>
                 </viewController>
@@ -1055,14 +1052,4 @@
             <point key="canvasLocation" x="331" y="1928"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Default_ARTTextViewController_goBackButton" width="16" height="26"/>
-        <image name="Default_ARTTextViewController_goBackButton_disable" width="16" height="26"/>
-        <image name="Default_ARTTextViewController_goBackButton_highlighted" width="16" height="26"/>
-        <image name="Default_ARTTextViewController_goForwardButton" width="16" height="26"/>
-        <image name="Default_ARTTextViewController_goForwardButton_disable" width="16" height="26"/>
-        <image name="Default_ARTTextViewController_goForwardButton_highlighted" width="16" height="26"/>
-        <image name="Default_ARTTextViewController_showAllButtion" width="26" height="26"/>
-        <image name="Default_ARTTextViewController_showAllButtion_highlighted" width="26" height="26"/>
-    </resources>
 </document>

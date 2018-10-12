@@ -19,7 +19,7 @@
 {
     self = [super initWithFrame:frameRect];
     if (self) {
-        [self setup];
+        [self initialize];
     }
     return self;
 }
@@ -28,12 +28,12 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        [self setup];
+        [self initialize];
     }
     return self;
 }
 
-- (void)setup
+- (void)initialize
 {
     _mouseDown = NO;
     _mouseIn = NO;
@@ -43,25 +43,25 @@
     [self addTrackingArea:self.trackingArea];
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent *)event
 {
-    if (!_mouseDown) {
+    if (!_mouseDown && self.enabled) {
         _mouseDown = YES;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTControlEventTypeMouseDown);
+            self.eventHandler(self, ARTControlEventTypeMouseDown, event);
         }
     }
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)event
 {
     if (_mouseDown) {
         _mouseDown = NO;
         if (self.eventHandler) {
             if (_mouseIn) {
-                self.eventHandler(self, ARTControlEventTypeMouseUpInside);
+                self.eventHandler(self, ARTControlEventTypeMouseUpInside, event);
             } else {
-                self.eventHandler(self, ARTControlEventTypeMouseUpOutside);
+                self.eventHandler(self, ARTControlEventTypeMouseUpOutside, event);
             }
         }
     }
@@ -72,7 +72,7 @@
     if (!_rightMouseDown) {
         _rightMouseDown = YES;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTControlEventTypeRightMouseDown);
+            self.eventHandler(self, ARTControlEventTypeRightMouseDown, event);
         }
     }
 }
@@ -83,41 +83,40 @@
         _rightMouseDown = NO;
         if (self.eventHandler) {
             if (_mouseIn) {
-                self.eventHandler(self, ARTControlEventTypeRightMouseUpInside);
+                self.eventHandler(self, ARTControlEventTypeRightMouseUpInside, event);
             } else {
-                self.eventHandler(self, ARTControlEventTypeRightMouseUpOutside);
+                self.eventHandler(self, ARTControlEventTypeRightMouseUpOutside, event);
             }
         }
     }
 }
 
-- (void)mouseEntered:(NSEvent *)theEvent
+- (void)mouseEntered:(NSEvent *)event
 {
-    if (!_mouseIn) {
+    if (!_mouseIn && self.enabled) {
         _mouseIn = YES;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTControlEventTypeMouseIn);
+            self.eventHandler(self, ARTControlEventTypeMouseIn, event);
         }
     }
 }
 
-- (void)mouseExited:(NSEvent *)theEvent
+- (void)mouseExited:(NSEvent *)event
 {
     if (_mouseIn) {
         _mouseIn = NO;
         if (self.eventHandler) {
-            self.eventHandler(self, ARTControlEventTypeMouseOut);
+            self.eventHandler(self, ARTControlEventTypeMouseOut, event);
         }
     }
 }
 
 - (void)updateTrackingAreas
 {
-    if (!CGRectEqualToRect(self.trackingArea.rect, self.bounds)) {
+    if (self.trackingArea) {
         [self removeTrackingArea:self.trackingArea];
-        self.trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:nil];
+        self.trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
         [self addTrackingArea:self.trackingArea];
-        [super updateTrackingAreas];
     }
 }
 

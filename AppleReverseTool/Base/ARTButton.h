@@ -7,28 +7,26 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "ARTControl.h"
 
-typedef NS_ENUM(NSInteger, ARTButtonEventType) {
-    ARTButtonEventTypeMouseIn,
-    ARTButtonEventTypeMouseOut,
-    ARTButtonEventTypeMouseDown,
-    ARTButtonEventTypeMouseUpInside,
-    ARTButtonEventTypeMouseUpOutside,
-    ARTButtonEventTypeRightMouseDown,
-    ARTButtonEventTypeRightMouseUpInside,
-    ARTButtonEventTypeRightMouseUpOutside,
+typedef NS_ENUM(NSInteger, ARTButtonState) {
+    ARTButtonStateNormal        =   0,
+    ARTButtonStateMouseIn       =   1 << 0,
+    ARTButtonStateHighlighted   =   1 << 1,
+    ARTButtonStateSelected      =   1 << 2,
+    ARTButtonStateDisabled      =   1 << 3,
 };
 
 NS_ASSUME_NONNULL_BEGIN
 
 IB_DESIGNABLE
-@interface ARTButton : NSButton
+@interface ARTButton : ARTControl
 
-@property (nullable, strong) IBInspectable NSImage *enabledImage;
-@property (nullable, strong) IBInspectable NSImage *disabledImage;
+@property (readonly) ARTButtonState state;
+@property (nonatomic, assign) IBInspectable BOOL selected;
 
-@property (readonly) BOOL mouseIn;
-@property (nonatomic, copy) void (^eventHandler)(__kindof ARTButton *button, ARTButtonEventType type, NSEvent *event);
+- (void)setAttributedTitle:(nullable NSAttributedString *)title forState:(ARTButtonState)state;
+- (void)setImage:(nullable NSImage *)image forState:(ARTButtonState)state;
 
 @end
 

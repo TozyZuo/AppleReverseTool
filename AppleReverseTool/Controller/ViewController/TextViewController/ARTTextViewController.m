@@ -22,6 +22,8 @@
 @property (weak) IBOutlet NSScrollView *scrollView;
 @property (weak) IBOutlet RTLabel *label;
 @property (weak) IBOutlet ARTButton *menuButton;
+@property (weak) IBOutlet ARTButton *goBackButton;
+@property (weak) IBOutlet ARTButton *goForwardButton;
 
 @property (nonatomic, strong) NSMutableArray<NSString *> *menuStack;
 @property (nonatomic, strong) NSMutableArray<NSString *> *linkStack;
@@ -55,39 +57,50 @@
 
     self.label.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
     self.label.delegate = self;
-#if 0
-    self.menuButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTButtonEventType type, NSEvent * _Nonnull event)
+
+    __weak typeof(self) weakSelf = self;
+    [self.menuButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_showAllButtion"] forState:ARTButtonStateNormal];
+    [self.menuButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_showAllButtion_highlighted"] forState:ARTButtonStateHighlighted];
+    self.menuButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
     {
         switch (type) {
-            case ARTButtonEventTypeMouseIn:
-                NSLog(@"ARTButtonEventTypeMouseIn");
-                break;
-            case ARTButtonEventTypeMouseOut:
-                NSLog(@"ARTButtonEventTypeMouseOut");
-                break;
-            case ARTButtonEventTypeMouseDown:
-                NSLog(@"ARTButtonEventTypeMouseDown");
-                break;
-            case ARTButtonEventTypeRightMouseDown:
-                NSLog(@"ARTButtonEventTypeRightMouseDown");
-                break;
-            case ARTButtonEventTypeMouseUpOutside:
-                NSLog(@"ARTButtonEventTypeMouseUpOutside");
-                break;
-            case ARTButtonEventTypeRightMouseUpOutside:
-                NSLog(@"ARTButtonEventTypeRightMouseUpOutside");
-                break;
-            case ARTButtonEventTypeMouseUpInside:
-                NSLog(@"ARTButtonEventTypeMouseUpInside");
-                break;
-            case ARTButtonEventTypeRightMouseUpInside:
-                NSLog(@"ARTButtonEventTypeRightMouseUpInside");
+            case ARTControlEventTypeMouseUpInside:
+                [NSMenu popUpContextMenu:weakSelf.linkStackMenu withEvent:event forView:button];
                 break;
             default:
                 break;
         }
     };
-#endif
+
+    [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton"] forState:ARTButtonStateNormal];
+    [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton_highlighted"] forState:ARTButtonStateHighlighted];
+    [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton_disabled"] forState:ARTButtonStateDisabled];
+    [self.goBackButton bind:NSEnabledBinding toObject:self withKeyPath:NSStringFromSelector(@selector(canGoBack)) options:nil];
+    self.goBackButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
+    {
+        switch (type) {
+            case ARTControlEventTypeMouseUpInside:
+                [weakSelf goBack:button];
+                break;
+            default:
+                break;
+        }
+    };
+
+    [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton"] forState:ARTButtonStateNormal];
+    [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton_highlighted"] forState:ARTButtonStateHighlighted];
+    [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton_disabled"] forState:ARTButtonStateDisabled];
+    [self.goForwardButton bind:NSEnabledBinding toObject:self withKeyPath:NSStringFromSelector(@selector(canGoForward)) options:nil];
+    self.goForwardButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
+    {
+        switch (type) {
+            case ARTControlEventTypeMouseUpInside:
+                [weakSelf goForward:button];
+                break;
+            default:
+                break;
+        }
+    };
 }
 
 - (void)willChangeLinkStack
@@ -129,6 +142,8 @@
              title = [@"[S] " stringByAppendingString:url.path];
          } else if ([url.scheme isEqualToString:kSchemeUnion]) {
              title = [@"[U] " stringByAppendingString:url.path];
+         } else if ([url.scheme isEqualToString:kSchemeCategory]) {
+             title = [NSString stringWithFormat:@"[C] %@ (%@)", url.host, url.path];
          } else {
              title = [@"[C] " stringByAppendingString:url.host];
          }
@@ -227,7 +242,7 @@
     [self pushLink:link text:self.linkMap[link]];
 }
 
-- (IBAction)showLinkStackMenuAction:(NSButton *)sender
+- (IBAction)showLinkStackMenuAction:(ARTButton *)sender
 {
     [NSMenu popUpContextMenu:self.linkStackMenu withEvent:NSApp.currentEvent forView:sender];
 }
