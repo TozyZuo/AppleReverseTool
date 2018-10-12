@@ -1,26 +1,26 @@
 //
-//  ARTOutlineViewCell.m
+//  ARTClassTreeCell.m
 //  AppleReverseTool
 //
 //  Created by TozyZuo on 2018/10/2.
 //  Copyright © 2018年 TozyZuo. All rights reserved.
 //
 
-#import "ARTOutlineViewCell.h"
+#import "ARTClassTreeCell.h"
 #import "RTLabel.h"
 #import "ARTURL.h"
 #import "ClassDumpExtension.h"
 #import "CDOCClassReference.h"
 
 
-@interface ARTOutlineViewCell ()
+@interface ARTClassTreeCell ()
 <RTLabelDelegate>
 @property (nonatomic, strong) RTLabel *label;
 @property (nonatomic,  weak ) CDOCClass *aClass;
 @property (nonatomic,  weak ) CDOCCategory *category;
 @end
 
-@implementation ARTOutlineViewCell
+@implementation ARTClassTreeCell
 
 - (instancetype)initWithFrame:(NSRect)frame
 {

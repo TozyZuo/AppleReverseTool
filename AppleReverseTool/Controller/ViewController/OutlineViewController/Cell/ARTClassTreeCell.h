@@ -1,5 +1,5 @@
 //
-//  ARTOutlineViewCell.h
+//  ARTClassTreeCell.h
 //  AppleReverseTool
 //
 //  Created by TozyZuo on 2018/10/2.
@@ -10,15 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTOutlineViewCell, CDOCProtocol, CDOCClass, CDOCCategory;
+@class ARTClassTreeCell, CDOCProtocol, CDOCClass, CDOCCategory;
 
-@protocol ARTOutlineViewCellDelegate <NSObject>
+@protocol ARTClassTreeCellDelegate <NSObject>
 @optional
-- (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse;
+- (void)outlineViewCell:(ARTClassTreeCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse;
 @end
 
-@interface ARTOutlineViewCell : NSView
-@property (nonatomic,   weak  ) id<ARTOutlineViewCellDelegate> delegate;
+@interface ARTClassTreeCell : NSView
+@property (nonatomic,   weak  ) id<ARTClassTreeCellDelegate> delegate;
 @property (nonatomic,   weak  ) NSOutlineView *outlineView;
 @property (nonatomic, readonly) __kindof CDOCProtocol *data;
 - (void)updateDataWithClass:(CDOCClass *)class;

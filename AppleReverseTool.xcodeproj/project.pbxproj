@@ -10,9 +10,9 @@
 		BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */; };
 		BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7AF21624C1E007AEFEF /* ARTViewController.m */; };
 		BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7B221624C6C007AEFEF /* ARTMainViewController.m */; };
-		BA3BE7B921625BBD007AEFEF /* ARTOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7B721625BBD007AEFEF /* ARTOutlineViewController.m */; };
+		BA3BE7B921625BBD007AEFEF /* ARTClassTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7B721625BBD007AEFEF /* ARTClassTreeViewController.m */; };
 		BA3BE7BD21625BF1007AEFEF /* ARTTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7BC21625BF1007AEFEF /* ARTTextViewController.m */; };
-		BA3BE7C521632C95007AEFEF /* ARTOutlineViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7C421632C95007AEFEF /* ARTOutlineViewCell.m */; };
+		BA3BE7C521632C95007AEFEF /* ARTClassTreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7C421632C95007AEFEF /* ARTClassTreeCell.m */; };
 		BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7C621632CB0007AEFEF /* RTLabel.m */; };
 		BA3BE7CB21634B3B007AEFEF /* ARTControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7CA21634B3B007AEFEF /* ARTControl.m */; };
 		BA3BE7CE21635425007AEFEF /* NSColor+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7CD21635425007AEFEF /* NSColor+ART.m */; };
@@ -102,12 +102,12 @@
 		BA3BE7AF21624C1E007AEFEF /* ARTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTViewController.m; sourceTree = "<group>"; };
 		BA3BE7B121624C6C007AEFEF /* ARTMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTMainViewController.h; sourceTree = "<group>"; };
 		BA3BE7B221624C6C007AEFEF /* ARTMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTMainViewController.m; sourceTree = "<group>"; };
-		BA3BE7B621625BBD007AEFEF /* ARTOutlineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTOutlineViewController.h; sourceTree = "<group>"; };
-		BA3BE7B721625BBD007AEFEF /* ARTOutlineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTOutlineViewController.m; sourceTree = "<group>"; };
+		BA3BE7B621625BBD007AEFEF /* ARTClassTreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassTreeViewController.h; sourceTree = "<group>"; };
+		BA3BE7B721625BBD007AEFEF /* ARTClassTreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassTreeViewController.m; sourceTree = "<group>"; };
 		BA3BE7BB21625BF1007AEFEF /* ARTTextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTTextViewController.h; sourceTree = "<group>"; };
 		BA3BE7BC21625BF1007AEFEF /* ARTTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTTextViewController.m; sourceTree = "<group>"; };
-		BA3BE7C321632C95007AEFEF /* ARTOutlineViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTOutlineViewCell.h; sourceTree = "<group>"; };
-		BA3BE7C421632C95007AEFEF /* ARTOutlineViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTOutlineViewCell.m; sourceTree = "<group>"; };
+		BA3BE7C321632C95007AEFEF /* ARTClassTreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassTreeCell.h; sourceTree = "<group>"; };
+		BA3BE7C421632C95007AEFEF /* ARTClassTreeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassTreeCell.m; sourceTree = "<group>"; };
 		BA3BE7C621632CB0007AEFEF /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		BA3BE7C721632CB0007AEFEF /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		BA3BE7C921634B3B007AEFEF /* ARTControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTControl.h; sourceTree = "<group>"; };
@@ -200,8 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				BA3BE7C221632C73007AEFEF /* Cell */,
-				BA3BE7B621625BBD007AEFEF /* ARTOutlineViewController.h */,
-				BA3BE7B721625BBD007AEFEF /* ARTOutlineViewController.m */,
+				BA3BE7B621625BBD007AEFEF /* ARTClassTreeViewController.h */,
+				BA3BE7B721625BBD007AEFEF /* ARTClassTreeViewController.m */,
 			);
 			path = OutlineViewController;
 			sourceTree = "<group>";
@@ -220,8 +220,8 @@
 		BA3BE7C221632C73007AEFEF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				BA3BE7C321632C95007AEFEF /* ARTOutlineViewCell.h */,
-				BA3BE7C421632C95007AEFEF /* ARTOutlineViewCell.m */,
+				BA3BE7C321632C95007AEFEF /* ARTClassTreeCell.h */,
+				BA3BE7C421632C95007AEFEF /* ARTClassTreeCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -546,13 +546,13 @@
 				BA635CF0215E02D90048AB9A /* ARTController.m in Sources */,
 				BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */,
 				BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */,
-				BA3BE7B921625BBD007AEFEF /* ARTOutlineViewController.m in Sources */,
+				BA3BE7B921625BBD007AEFEF /* ARTClassTreeViewController.m in Sources */,
 				BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */,
 				BA635EBD215E09C70048AB9A /* CDStructureInfo.m in Sources */,
 				BA635EB9215E09C70048AB9A /* CDStructureTable.m in Sources */,
 				BA635CF3215E02E90048AB9A /* ARTDataController.m in Sources */,
 				BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */,
-				BA3BE7C521632C95007AEFEF /* ARTOutlineViewCell.m in Sources */,
+				BA3BE7C521632C95007AEFEF /* ARTClassTreeCell.m in Sources */,
 				BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */,
 				BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */,
 				BA3BE7CB21634B3B007AEFEF /* ARTControl.m in Sources */,

@@ -8,16 +8,16 @@
 
 #import "ARTMainViewController.h"
 #import "ARTDataController.h"
-#import "ARTOutlineViewController.h"
+#import "ARTClassTreeViewController.h"
 #import "ARTTextViewController.h"
 #import "ARTButton.h"
 #import "NSColor+ART.h"
 
 
 @interface ARTMainViewController ()
-<ARTOutlineViewControllerDelegate, ARTTextViewControllerDelegate>
+<ARTClassTreeViewControllerDelegate, ARTTextViewControllerDelegate>
 @property (nonatomic, strong) ARTDataController *dataController;
-@property (readonly) ARTOutlineViewController *outlineViewController;
+@property (readonly) ARTClassTreeViewController *outlineViewController;
 @property (readonly) ARTTextViewController *textViewController;
 @property (weak) IBOutlet NSTextField *stateLabel;
 @property (weak) IBOutlet ARTButton *classTreeButton;
@@ -28,12 +28,12 @@
 @synthesize outlineViewController = _outlineViewController;
 @synthesize textViewController = _textViewController;
 
-- (ARTOutlineViewController *)outlineViewController
+- (ARTClassTreeViewController *)outlineViewController
 {
     if (!_outlineViewController) {
         for (NSViewController *vc in self.childViewControllers) {
-            if ([vc isKindOfClass:ARTOutlineViewController.class]) {
-                _outlineViewController = (ARTOutlineViewController *)vc;
+            if ([vc isKindOfClass:ARTClassTreeViewController.class]) {
+                _outlineViewController = (ARTClassTreeViewController *)vc;
                 _outlineViewController.delegate = self;
             }
         }
@@ -140,7 +140,7 @@
     }
 }
 
-#pragma mark - ARTOutlineViewControllerDelegate
+#pragma mark - ARTClassTreeViewControllerDelegate
 
 - (void)outlineViewController:(id)outlineViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse
 {

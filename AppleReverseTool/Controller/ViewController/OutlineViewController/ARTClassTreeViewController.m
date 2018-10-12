@@ -1,20 +1,20 @@
 //
-//  ARTOutlineViewController.m
+//  ARTClassTreeViewController.m
 //  AppleReverseTool
 //
 //  Created by TozyZuo on 2018/10/1.
 //  Copyright © 2018年 TozyZuo. All rights reserved.
 //
 
-#import "ARTOutlineViewController.h"
+#import "ARTClassTreeViewController.h"
 #import "ClassDumpExtension.h"
-#import "ARTOutlineViewCell.h"
+#import "ARTClassTreeCell.h"
 #import "ARTURL.h"
 
-@interface CDOCClass (ARTOutlineViewController)
+@interface CDOCClass (ARTClassTreeViewController)
 @property (nonatomic, assign) BOOL isCategoryExpanded;
 @end
-@implementation CDOCClass (ARTOutlineViewController)
+@implementation CDOCClass (ARTClassTreeViewController)
 
 - (BOOL)isCategoryExpanded
 {
@@ -28,13 +28,13 @@
 
 @end
 
-@interface ARTOutlineViewController ()
-<NSOutlineViewDataSource, NSOutlineViewDelegate, ARTOutlineViewCellDelegate>
+@interface ARTClassTreeViewController ()
+<NSOutlineViewDataSource, NSOutlineViewDelegate, ARTClassTreeCellDelegate>
 @property (weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, strong) NSArray<CDOCClass *> *data;
 @end
 
-@implementation ARTOutlineViewController
+@implementation ARTClassTreeViewController
 
 - (void)awakeFromNib
 {
@@ -98,7 +98,7 @@
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(CDOCClass *)item NS_AVAILABLE_MAC(10_7)
 {
-    ARTOutlineViewCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
+    ARTClassTreeCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
     if ([item isKindOfClass:CDOCClass.class]) {
         [cell updateDataWithClass:item];
@@ -110,9 +110,9 @@
     return cell;
 }
 
-#pragma mark - ARTOutlineViewCellDelegate
+#pragma mark - ARTClassTreeCellDelegate
 
-- (void)outlineViewCell:(ARTOutlineViewCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)outlineViewCell:(ARTClassTreeCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     ARTURL *url = [[ARTURL alloc] initWithString:link];
     if ([url.scheme isEqualToString:kSchemeAction]) {

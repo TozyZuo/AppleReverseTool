@@ -868,10 +868,10 @@
             </objects>
             <point key="canvasLocation" x="64" y="1284"/>
         </scene>
-        <!--Outline View Controller-->
+        <!--Class Tree View Controller-->
         <scene sceneID="eTV-Sj-VE2">
             <objects>
-                <viewController id="a7i-bA-zwu" customClass="ARTOutlineViewController" sceneMemberID="viewController">
+                <viewController id="a7i-bA-zwu" customClass="ARTClassTreeViewController" sceneMemberID="viewController">
                     <view key="view" id="Lkm-2i-KUk">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -903,7 +903,7 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <customView identifier="CellID" id="Wo5-kY-Uj3" customClass="ARTOutlineViewCell">
+                                                        <customView identifier="CellID" id="Wo5-kY-Uj3" customClass="ARTClassTreeCell">
                                                             <rect key="frame" x="1" y="1" width="448" height="25"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </customView>
