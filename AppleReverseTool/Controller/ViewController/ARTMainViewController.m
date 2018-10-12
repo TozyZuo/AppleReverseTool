@@ -168,7 +168,7 @@
              [self.classTreeViewController updateData:dataController.classNodes];
 
              self.relationshipTreeViewController.dataController = dataController;
-//             [self.relationshipTreeViewController updateData:dataController.relationshipNodes];
+             [self.relationshipTreeViewController updateData:dataController.relationshipNodes];
          }];
     }
 }

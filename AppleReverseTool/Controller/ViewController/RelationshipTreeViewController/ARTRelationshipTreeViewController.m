@@ -10,10 +10,42 @@
 #import "ARTRelationshipTreeCell.h"
 #import "ARTDataController.h"
 #import "ARTURL.h"
+#import "ARTModel.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 #import "CDTypeLexer.h"
 #import "CDTypeName.h"
+
+@interface ARTRelationshipTreeModel : ARTModel
+@property (readonly) NSArray<ARTRelationshipTreeModel *> *subNodes;
+@property (nonatomic, strong) id data;
+- (instancetype)initWithData:(id)data;
+- (void)createSubNodes;
+- (ARTRelationshipTreeModel *)objectAtIndexedSubscript:(NSUInteger)idx;
+@end
+@implementation ARTRelationshipTreeModel
+@synthesize subNodes = _subNodes;
+
+- (instancetype)initWithData:(id)data
+{
+    self = [super init];
+    if (self) {
+        self.data = data;
+    }
+    return self;
+}
+
+- (void)createSubNodes
+{
+
+}
+
+- (ARTRelationshipTreeModel *)objectAtIndexedSubscript:(NSUInteger)idx
+{
+    return nil;
+}
+
+@end
 
 @interface ARTRelationshipTreeViewController ()
 <
@@ -37,7 +69,11 @@
 
 - (void)updateData:(NSArray<CDOCClass *> *)data
 {
-    self.data = data;
+//    NSMutableArray *copyData = [[NSMutableArray alloc] init];
+//    for (CDOCClass *class in data) {
+//        [copyData addObject:class.copy];
+//    }
+//    self.data = copyData;
     [self.outlineView reloadData];
 }
 
