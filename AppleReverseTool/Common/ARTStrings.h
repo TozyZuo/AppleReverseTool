@@ -19,6 +19,7 @@ extern ARTScheme kSchemeUnion;
 typedef NSString *ARTSchemeAction;
 extern ARTSchemeAction kExpandSubClassAction;
 extern ARTSchemeAction kExpandCategoryAction;
+extern ARTSchemeAction kExpandSubNodeAction;
 
 typedef NSString *ARTColorType;
 extern ARTColorType kColorClass;

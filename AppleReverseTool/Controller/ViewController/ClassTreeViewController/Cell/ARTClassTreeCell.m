@@ -129,26 +129,9 @@
 
 - (void)label:(RTLabel *)label didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
-//    ARTURL *url = [[ARTURL alloc] initWithString:link];
-//    if ([url.scheme isEqualToString:kSchemeAction]) {
-//        if ([url.host isEqualToString:kExpandSubClassAction]) {
-//            CDOCClass *data = self.data;
-//            if ([self.outlineView isItemExpanded:data]) {
-//                [self.outlineView collapseItem:data];
-//            } else {
-//                [self.outlineView expandItem:data];
-//            }
-//            [self updateData:self.data];
-//        }
-//        else if ([url.host isEqualToString:kExpandCategoryAction])
-//        {
-//
-//        }
-//    } else {
-        if ([self.delegate respondsToSelector:@selector(outlineViewCell:didClickLink:rightMouse:)]) {
-            [self.delegate outlineViewCell:self didClickLink:link rightMouse:rightMouse];
-        }
-//    }
+    if ([self.delegate respondsToSelector:@selector(classTreeCell:didClickLink:rightMouse:)]) {
+        [self.delegate classTreeCell:self didClickLink:link rightMouse:rightMouse];
+    }
 }
 
 @end

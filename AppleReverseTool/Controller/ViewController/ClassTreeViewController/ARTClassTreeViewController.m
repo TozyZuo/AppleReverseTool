@@ -29,22 +29,20 @@
 @end
 
 @interface ARTClassTreeViewController ()
-<NSOutlineViewDataSource, NSOutlineViewDelegate, ARTClassTreeCellDelegate>
+<
+    NSOutlineViewDataSource,
+    NSOutlineViewDelegate,
+    ARTClassTreeCellDelegate
+>
 @property (weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, strong) NSArray<CDOCClass *> *data;
 @end
 
 @implementation ARTClassTreeViewController
 
-- (void)awakeFromNib
-{
-
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do view setup here.
     self.outlineView.headerView = nil;
 }
 
@@ -53,7 +51,6 @@
 - (void)updateData:(NSArray<CDOCClass *> *)data
 {
     self.data = data;
-//    self.data = @[@1];
     [self.outlineView reloadData];
     [self.outlineView expandItem:nil expandChildren:YES];
 }
@@ -100,30 +97,30 @@
 {
     ARTClassTreeCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
+    cell.delegate = self;
     if ([item isKindOfClass:CDOCClass.class]) {
         [cell updateDataWithClass:item];
     } else {
         [cell updateDataWithCategory:(CDOCCategory *)item];
     }
-    cell.delegate = self;
 
     return cell;
 }
 
 #pragma mark - ARTClassTreeCellDelegate
 
-- (void)outlineViewCell:(ARTClassTreeCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)classTreeCell:(ARTClassTreeCell *)classTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     ARTURL *url = [[ARTURL alloc] initWithString:link];
     if ([url.scheme isEqualToString:kSchemeAction]) {
-        CDOCClass *data = outlineViewCell.data;
+        CDOCClass *data = classTreeCell.data;
         if ([url.host isEqualToString:kExpandSubClassAction]) {
             if ([self.outlineView isItemExpanded:data]) {
                 [self.outlineView collapseItem:data];
             } else {
                 [self.outlineView expandItem:data];
             }
-            [outlineViewCell updateDataWithClass:data];
+            [classTreeCell updateDataWithClass:data];
         }
         else if ([url.host isEqualToString:kExpandCategoryAction])
         {
@@ -137,13 +134,13 @@
             } else {
                 data.isCategoryExpanded = YES;
                 [self.outlineView expandItem:data];
-                [outlineViewCell updateDataWithClass:data];
+                [classTreeCell updateDataWithClass:data];
             }
         }
     } else {
-        if ([self.delegate respondsToSelector:@selector(outlineViewController:didClickItem:link:rightMouse:)])
+        if ([self.delegate respondsToSelector:@selector(classTreeViewController:didClickItem:link:rightMouse:)])
         {
-            [self.delegate outlineViewController:self didClickItem:outlineViewCell.data link:link rightMouse:rightMouse];
+            [self.delegate classTreeViewController:self didClickItem:classTreeCell.data link:link rightMouse:rightMouse];
         }
     }
 }

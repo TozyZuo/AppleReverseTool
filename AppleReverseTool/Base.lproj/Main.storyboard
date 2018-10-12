@@ -813,6 +813,13 @@
                                                     <segue destination="a7i-bA-zwu" kind="embed" id="Qvz-Eu-WeN"/>
                                                 </connections>
                                             </containerView>
+                                            <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsi-5q-Izg">
+                                                <rect key="frame" x="0.0" y="0.0" width="474" height="600"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <connections>
+                                                    <segue destination="UxB-VK-DLt" kind="embed" id="uJO-sI-hxz"/>
+                                                </connections>
+                                            </containerView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="RDE-Gi-eOQ" secondAttribute="trailing" id="WP1-pm-pzg"/>
@@ -938,7 +945,7 @@
                 </viewController>
                 <customObject id="onl-2M-8IM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-183" y="1928"/>
+            <point key="canvasLocation" x="-452" y="1947"/>
         </scene>
         <!--Text View Controller-->
         <scene sceneID="Jae-jV-xnv">
@@ -1049,7 +1056,79 @@
                 <customObject id="MPO-da-X0V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController id="qLV-m0-qIH"/>
             </objects>
-            <point key="canvasLocation" x="331" y="1928"/>
+            <point key="canvasLocation" x="585" y="1947"/>
+        </scene>
+        <!--Relationship Tree View Controller-->
+        <scene sceneID="KkF-Ga-LYg">
+            <objects>
+                <viewController id="UxB-VK-DLt" customClass="ARTRelationshipTreeViewController" sceneMemberID="viewController">
+                    <view key="view" id="2vM-Yy-7pT">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="27" horizontalPageScroll="10" verticalLineScroll="27" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOZ-qL-qPS">
+                                <rect key="frame" x="-1" y="0.0" width="451" height="300"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="fx4-XX-VB7">
+                                    <rect key="frame" x="0.0" y="0.0" width="451" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" headerView="6Wq-fF-ubn" viewBased="YES" autoresizesOutlineColumn="YES" outlineTableColumn="t43-6z-KFf" id="65b-gF-DEw">
+                                            <rect key="frame" x="0.0" y="0.0" width="451" height="277"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn editable="NO" width="448" minWidth="40" maxWidth="1000" id="t43-6z-KFf">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" id="0Ep-dJ-b5v">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                    <prototypeCellViews>
+                                                        <customView identifier="CellID" id="rXd-3v-yYi" customClass="ARTRelationshipTreeCell">
+                                                            <rect key="frame" x="1" y="1" width="448" height="25"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </customView>
+                                                    </prototypeCellViews>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <outlet property="dataSource" destination="UxB-VK-DLt" id="Zps-mH-Vb2"/>
+                                                <outlet property="delegate" destination="UxB-VK-DLt" id="Ajq-US-NyF"/>
+                                            </connections>
+                                        </outlineView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ZeF-Vf-gT4">
+                                    <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hxl-z3-V34">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <tableHeaderView key="headerView" id="6Wq-fF-ubn">
+                                    <rect key="frame" x="0.0" y="0.0" width="451" height="23"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableHeaderView>
+                            </scrollView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="outlineView" destination="65b-gF-DEw" id="ZGU-as-Kjy"/>
+                    </connections>
+                </viewController>
+                <customObject id="Glo-fC-sDW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="64" y="1947"/>
         </scene>
     </scenes>
 </document>

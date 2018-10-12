@@ -21,6 +21,7 @@ ARTScheme kSchemeUnion = @"Union";
 
 ARTSchemeAction kExpandSubClassAction = @"kExpandSubClassAction";
 ARTSchemeAction kExpandCategoryAction = @"kExpandCategoryAction";
+ARTSchemeAction kExpandSubNodeAction = @"kExpandSubNodeAction";
 
 #pragma mark - color
 

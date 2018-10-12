@@ -9,15 +9,21 @@
 #import "ARTMainViewController.h"
 #import "ARTDataController.h"
 #import "ARTClassTreeViewController.h"
+#import "ARTRelationshipTreeViewController.h"
 #import "ARTTextViewController.h"
 #import "ARTButton.h"
 #import "NSColor+ART.h"
 
 
 @interface ARTMainViewController ()
-<ARTClassTreeViewControllerDelegate, ARTTextViewControllerDelegate>
+<
+    ARTClassTreeViewControllerDelegate,
+    ARTRelationshipTreeViewControllerDelegate,
+    ARTTextViewControllerDelegate
+>
 @property (nonatomic, strong) ARTDataController *dataController;
-@property (readonly) ARTClassTreeViewController *outlineViewController;
+@property (readonly) ARTClassTreeViewController *classTreeViewController;
+@property (readonly) ARTRelationshipTreeViewController *relationshipTreeViewController;
 @property (readonly) ARTTextViewController *textViewController;
 @property (weak) IBOutlet NSTextField *stateLabel;
 @property (weak) IBOutlet ARTButton *classTreeButton;
@@ -25,20 +31,34 @@
 @end
 
 @implementation ARTMainViewController
-@synthesize outlineViewController = _outlineViewController;
+@synthesize classTreeViewController = _classTreeViewController;
+@synthesize relationshipTreeViewController = _relationshipTreeViewController;
 @synthesize textViewController = _textViewController;
 
-- (ARTClassTreeViewController *)outlineViewController
+- (ARTClassTreeViewController *)classTreeViewController
 {
-    if (!_outlineViewController) {
+    if (!_classTreeViewController) {
         for (NSViewController *vc in self.childViewControllers) {
             if ([vc isKindOfClass:ARTClassTreeViewController.class]) {
-                _outlineViewController = (ARTClassTreeViewController *)vc;
-                _outlineViewController.delegate = self;
+                _classTreeViewController = (ARTClassTreeViewController *)vc;
+                _classTreeViewController.delegate = self;
             }
         }
     }
-    return _outlineViewController;
+    return _classTreeViewController;
+}
+
+- (ARTRelationshipTreeViewController *)relationshipTreeViewController
+{
+    if (!_relationshipTreeViewController) {
+        for (NSViewController *vc in self.childViewControllers) {
+            if ([vc isKindOfClass:ARTRelationshipTreeViewController.class]) {
+                _relationshipTreeViewController = (ARTRelationshipTreeViewController *)vc;
+                _relationshipTreeViewController.delegate = self;
+            }
+        }
+    }
+    return _relationshipTreeViewController;
 }
 
 - (ARTTextViewController *)textViewController
@@ -53,6 +73,14 @@
         }
     }
     return _textViewController;
+}
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self.classTreeViewController.view bind:NSHiddenBinding toObject:self.classTreeButton withKeyPath:@"selected" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+    [self.relationshipTreeViewController.view bind:NSHiddenBinding toObject:self.relationshipTreeButton withKeyPath:@"selected" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
 }
 
 - (void)viewDidLoad
@@ -101,7 +129,7 @@
     if (!_fileURL && fileURL) {
         _fileURL = fileURL;
 
-//        [self.outlineViewController updateData:nil];
+//        [self.classTreeViewController updateData:nil];
 //        self.classTreeButton.enabled = YES;
 //        self.classTreeButton.selected = YES;
 //        self.relationshipTreeButton.enabled = YES;
@@ -131,18 +159,34 @@
                      break;
              }
          } completion:^(ARTDataController * _Nonnull dataController) {
+             self.stateLabel.stringValue = @"";
+
              self.classTreeButton.enabled = YES;
              self.relationshipTreeButton.enabled = YES;
-             self.classTreeButton.selected = YES;
-             self.stateLabel.stringValue = @"";
-             [self.outlineViewController updateData:dataController.classNodes];
+             [self classTreeButtonAction:self.classTreeButton];
+
+             [self.classTreeViewController updateData:dataController.classNodes];
+
+             self.relationshipTreeViewController.dataController = dataController;
+//             [self.relationshipTreeViewController updateData:dataController.relationshipNodes];
          }];
     }
 }
 
 #pragma mark - ARTClassTreeViewControllerDelegate
 
-- (void)outlineViewController:(id)outlineViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)classTreeViewController:(id)classTreeViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse
+{
+    if (rightMouse) {
+        // TODO
+    } else {
+        [self.textViewController updateDataWithLink:link];
+    }
+}
+
+#pragma mark - ARTRelationshipTreeViewControllerDelegate
+
+- (void)relationshipTreeViewController:(ARTRelationshipTreeViewController *)relationshipTreeViewController didClickItem:(id)item link:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     if (rightMouse) {
         // TODO

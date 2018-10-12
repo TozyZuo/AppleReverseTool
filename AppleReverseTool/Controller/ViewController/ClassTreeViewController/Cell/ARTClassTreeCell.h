@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ARTClassTreeCellDelegate <NSObject>
 @optional
-- (void)outlineViewCell:(ARTClassTreeCell *)outlineViewCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse;
+- (void)classTreeCell:(ARTClassTreeCell *)classTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse;
 @end
 
 @interface ARTClassTreeCell : NSView

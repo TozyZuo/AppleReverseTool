@@ -51,8 +51,10 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 
 @interface CDOCClass (ARTExtension)
 <ARTNode>
+@property (readonly) NSArray<CDOCClass *> *referrers;
 @property (readonly) NSArray<CDOCCategory *> *categories;
 - (void)addCategory:(CDOCCategory *)category;
+- (void)addReferrer:(CDOCClass *)referrer;
 @end
 
 @interface CDType (ARTExtension)

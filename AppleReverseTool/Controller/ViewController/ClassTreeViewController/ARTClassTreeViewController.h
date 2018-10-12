@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ARTClassTreeViewControllerDelegate <NSObject>
 @optional
-- (void)outlineViewController:(ARTClassTreeViewController *)outlineViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse;
+- (void)classTreeViewController:(ARTClassTreeViewController *)classTreeViewController didClickItem:(CDOCClass *)item link:(NSString *)link rightMouse:(BOOL)rightMouse;
 @end
 
 @interface ARTClassTreeViewController : ARTViewController

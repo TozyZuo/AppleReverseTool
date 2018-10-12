@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic,  weak ) ARTVisitor *visitor;
 @property (nonatomic, strong) CDTypeController *typeController;
+@property (nonatomic, strong) NSArray<CDOCClass *> *relationshipNodes;
 @property (nonatomic, strong) NSArray<CDOCClass *> *classNodes;
 @property (nonatomic, strong) NSDictionary<NSString *, CDOCClass *> *allClasses;
 @property (nonatomic, strong) NSDictionary<NSString *, CDOCClass *> *allClassesInMainFile;
@@ -171,6 +172,19 @@ static BOOL _isInDataProcessing = NO;
             self.allClassesInMainFile = visitor.classesByClassStringInMainFile;
             self.allProtocols = visitor.protocolsByProtocolString;
             self.classNodes = (NSArray<CDOCClass *> *)NodesWithProvider(self);
+
+            NSMutableArray *classesLeft = self.allClassesInMainFile.allValues.mutableCopy;
+            for (CDOCClass *class in self.allClasses.allValues) {
+                for (CDOCInstanceVariable *var in class.instanceVariables) {
+                    CDOCClass *referredClass = self.classForName(var.type.typeName.name);
+                    if (referredClass.isInsideMainBundle) {
+                        [referredClass addReferrer:class];
+                        [classesLeft removeObject:referredClass];
+                    }
+                }
+            }
+
+            self.relationshipNodes = classesLeft.copy;
         }
 
         if (completion) {

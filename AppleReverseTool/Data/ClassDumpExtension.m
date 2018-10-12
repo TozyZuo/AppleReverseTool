@@ -100,6 +100,26 @@ NSString *ARTStringCreate(NSString *string, ...)
     return interalCategories;
 }
 
+- (NSArray<CDOCClass *> *)referrers
+{
+    return self.interalReferrers;
+}
+
+- (void)addReferrer:(CDOCClass *)referrer
+{
+    [self.interalReferrers addObject:referrer];
+}
+
+- (NSMutableArray *)interalReferrers
+{
+    NSMutableArray *interalCategories = self[ARTAssociatedKeyForSelector(_cmd)];
+    if (!interalCategories) {
+        interalCategories = [[NSMutableArray alloc] init];
+        self[ARTAssociatedKeyForSelector(_cmd)] = interalCategories;
+    }
+    return interalCategories;
+}
+
 @end
 
 @interface CDType (ARTExtension_Private)
