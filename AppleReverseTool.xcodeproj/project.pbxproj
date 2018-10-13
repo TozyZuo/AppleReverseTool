@@ -42,6 +42,7 @@
 		BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
+		BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */; };
 		BACFB3EA2170BCBE004CAD2E /* ARTRelationshipTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */; };
 		BACFB3EE2170BCFA004CAD2E /* ARTRelationshipTreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3ED2170BCFA004CAD2E /* ARTRelationshipTreeCell.m */; };
 		BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F1216C6F69002207CF /* CALayer+ART.m */; };
@@ -160,6 +161,8 @@
 		BA8434052168AD13007E55B0 /* ARTURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTURL.m; sourceTree = "<group>"; };
 		BA856D17216B5AA5009944A3 /* NSAlert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAlert+ART.h"; sourceTree = "<group>"; };
 		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
+		BAB66BB72171F178004D50E1 /* ARTRelationshipTreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeModel.h; sourceTree = "<group>"; };
+		BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRelationshipTreeModel.m; sourceTree = "<group>"; };
 		BACFB3E82170BCBE004CAD2E /* ARTRelationshipTreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeViewController.h; sourceTree = "<group>"; };
 		BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRelationshipTreeViewController.m; sourceTree = "<group>"; };
 		BACFB3EC2170BCFA004CAD2E /* ARTRelationshipTreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeCell.h; sourceTree = "<group>"; };
@@ -366,6 +369,15 @@
 			path = Categary;
 			sourceTree = "<group>";
 		};
+		BAB66BB62171F162004D50E1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BAB66BB72171F178004D50E1 /* ARTRelationshipTreeModel.h */,
+				BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BAB6E5DC216A0F67005BA8C9 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +392,7 @@
 		BACFB3E72170BC84004CAD2E /* RelationshipTreeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				BAB66BB62171F162004D50E1 /* Model */,
 				BACFB3EB2170BCD6004CAD2E /* Cell */,
 				BACFB3E82170BCBE004CAD2E /* ARTRelationshipTreeViewController.h */,
 				BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */,
@@ -588,6 +601,7 @@
 				BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */,
 				BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */,
 				BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */,
+				BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */,
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
 				BA635CEC215E02930048AB9A /* ARTSingleInstance.m in Sources */,

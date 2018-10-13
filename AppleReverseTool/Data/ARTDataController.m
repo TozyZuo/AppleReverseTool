@@ -96,9 +96,10 @@ static BOOL _isInDataProcessing = NO;
 
     dispatch_async(queue, ^{
 
-        CDSearchPathState *searchPathState = [[CDSearchPathState alloc] init];
-        searchPathState.executablePath = path.stringByDeletingLastPathComponent;
-        CDFile * file = [CDFile fileWithContentsOfFile:path searchPathState:searchPathState];
+        CDClassDump *classDump = [[CDClassDump alloc] init];
+        classDump.searchPathState.executablePath = path.stringByDeletingLastPathComponent;
+
+        CDFile * file = [CDFile fileWithContentsOfFile:path searchPathState:classDump.searchPathState];
 
         if ([file isKindOfClass:[CDFatFile class]] ) {
             [NSAlert showModalAlertWithTitle:@"暂不支持fat file, 请手动用lipo切割(后续会加上)" message:nil];
@@ -106,8 +107,6 @@ static BOOL _isInDataProcessing = NO;
         }
 
         CDMachOFile * machOFile = (CDMachOFile *)file;
-
-        CDClassDump *classDump = [[CDClassDump alloc] init];
 
         ARTTypeController *typeController = [[ARTTypeController alloc] initWithClassDump:classDump];
         typeController.ivarTypeFormatter.dataController = self;

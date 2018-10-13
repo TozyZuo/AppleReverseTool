@@ -58,8 +58,6 @@
         node = (CDOCClass *)node.superNode;
     }
 
-
-
     return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
 }
 

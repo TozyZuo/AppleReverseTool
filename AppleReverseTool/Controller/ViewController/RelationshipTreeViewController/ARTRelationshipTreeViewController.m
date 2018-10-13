@@ -10,42 +10,12 @@
 #import "ARTRelationshipTreeCell.h"
 #import "ARTDataController.h"
 #import "ARTURL.h"
-#import "ARTModel.h"
+#import "ARTRelationshipTreeModel.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 #import "CDTypeLexer.h"
 #import "CDTypeName.h"
 
-@interface ARTRelationshipTreeModel : ARTModel
-@property (readonly) NSArray<ARTRelationshipTreeModel *> *subNodes;
-@property (nonatomic, strong) id data;
-- (instancetype)initWithData:(id)data;
-- (void)createSubNodes;
-- (ARTRelationshipTreeModel *)objectAtIndexedSubscript:(NSUInteger)idx;
-@end
-@implementation ARTRelationshipTreeModel
-@synthesize subNodes = _subNodes;
-
-- (instancetype)initWithData:(id)data
-{
-    self = [super init];
-    if (self) {
-        self.data = data;
-    }
-    return self;
-}
-
-- (void)createSubNodes
-{
-
-}
-
-- (ARTRelationshipTreeModel *)objectAtIndexedSubscript:(NSUInteger)idx
-{
-    return nil;
-}
-
-@end
 
 @interface ARTRelationshipTreeViewController ()
 <
@@ -54,7 +24,7 @@
     ARTRelationshipTreeCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
-@property (nonatomic, strong) NSArray<CDOCClass *> *data;
+@property (nonatomic, strong) NSArray<ARTRelationshipTreeModel *> *data;
 @end
 
 @implementation ARTRelationshipTreeViewController
@@ -69,66 +39,51 @@
 
 - (void)updateData:(NSArray<CDOCClass *> *)data
 {
-//    NSMutableArray *copyData = [[NSMutableArray alloc] init];
-//    for (CDOCClass *class in data) {
-//        [copyData addObject:class.copy];
-//    }
-//    self.data = copyData;
+    NSMutableArray *modelData = [[NSMutableArray alloc] init];
+    for (CDOCClass *class in data) {
+        [modelData addObject:[[ARTRelationshipTreeModel alloc] initWithData:class dataController:self.dataController]];
+    }
+    [modelData sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2)
+    {
+        return obj1.canBeExpanded ? NSOrderedAscending : NSOrderedDescending;
+    }];
+    self.data = modelData;
     [self.outlineView reloadData];
 }
 
 #pragma mark - NSOutlineViewDataSource
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable ARTRelationshipTreeModel *)item
 {
     if (item) {
-        if ([item isKindOfClass:CDOCClass.class]) {
-            CDOCClass *class = (CDOCClass *)item;
-            return class.instanceVariables.count;
-        } else {
-            CDOCInstanceVariable *var = (CDOCInstanceVariable *)item;
-            CDOCClass *varClass = self.dataController.classForName(var.type.typeName.name);
-            return varClass ? varClass.instanceVariables.count : 0;
-        }
+        return item.subNodes.count;
     } else {
         return self.data.count;
     }
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable ARTRelationshipTreeModel *)item
 {
     if (item) {
-        CDOCClass *class;
-        if ([item isKindOfClass:CDOCClass.class]) {
-            class = (CDOCClass *)item;
-        } else {
-            class = self.dataController.classForName(((CDOCInstanceVariable *)item).type.typeName.name);
-        }
-        return class.instanceVariables[index];
+        return item.subNodes[index];
     } else {
         return self.data[index];
     }
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(ARTRelationshipTreeModel *)item
 {
-    if ([item isKindOfClass:CDOCClass.class]) {
-        CDOCClass *class = (CDOCClass *)item;
-        return class.instanceVariables.count > 0;
-    } else {
-        CDOCInstanceVariable *var = (CDOCInstanceVariable *)item;
-        CDOCClass *varClass = self.dataController.classForName(var.type.typeName.name);
-        return varClass ? varClass.instanceVariables.count > 0 : NO;
-    }
+    return item.canBeExpanded;
 }
 
 #pragma mark - NSOutlineViewDelegate
 
-- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item NS_AVAILABLE_MAC(10_7)
+- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(ARTRelationshipTreeModel *)item NS_AVAILABLE_MAC(10_7)
 {
     ARTRelationshipTreeCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
     cell.delegate = self;
+    cell.dataController = self.dataController;
     [cell updateData:item];
 
     return cell;
@@ -138,23 +93,24 @@
 
 - (void)relationshipTreeCell:(ARTRelationshipTreeCell *)relationshipTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
-//    ARTURL *url = [[ARTURL alloc] initWithString:link];
-//    if ([url.scheme isEqualToString:kSchemeAction]) {
-//        CDOCClass *data = classTreeCell.data;
-//        if ([url.host isEqualToString:kExpandSubNodeAction]) {
-//            if ([self.outlineView isItemExpanded:data]) {
-//                [self.outlineView collapseItem:data];
-//            } else {
-//                [self.outlineView expandItem:data];
-//            }
-//            [classTreeCell updateDataWithClass:data];
-//        }
-//    } else {
+    ARTURL *url = [[ARTURL alloc] initWithString:link];
+    if ([url.scheme isEqualToString:kSchemeAction]) {
+        ARTRelationshipTreeModel *data = relationshipTreeCell.data;
+        if ([url.host isEqualToString:kExpandSubNodeAction]) {
+            if ([self.outlineView isItemExpanded:data]) {
+                [self.outlineView collapseItem:data];
+            } else {
+                [relationshipTreeCell.data createSubNodes];
+                [self.outlineView expandItem:data];
+            }
+            [relationshipTreeCell updateData:data];
+        }
+    } else {
         if ([self.delegate respondsToSelector:@selector(relationshipTreeViewController:didClickItem:link:rightMouse:)])
         {
             [self.delegate relationshipTreeViewController:self didClickItem:relationshipTreeCell.data link:link rightMouse:rightMouse];
         }
-//    }
+    }
 }
 
 @end

@@ -71,7 +71,7 @@
     self.frameworkName = frameworkName;
 
     for (NSString *mainFileRunPath in self.mainFileRunPaths) {
-        if ([processor.machOFile.filename hasPrefix:mainFileRunPath]) {
+        if ([processor.machOFile.filename.stringByStandardizingPath hasPrefix:mainFileRunPath]) {
             self.isCurrentFrameworkInsideMainFile = YES;
             break;
         }
