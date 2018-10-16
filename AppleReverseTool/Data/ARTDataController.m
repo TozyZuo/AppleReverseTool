@@ -170,10 +170,33 @@ static BOOL _isInDataProcessing = NO;
             self.allClasses = visitor.classesByClassString;
             self.allClassesInMainFile = visitor.classesByClassStringInMainFile;
             self.allProtocols = visitor.protocolsByProtocolString;
-            self.classNodes = (NSArray<CDOCClass *> *)NodesWithProvider(self);
+            self.classNodes = [(NSArray<CDOCClass *> *)NodesWithProvider(self) sortedArrayUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
+                return [obj1.name compare:obj2.name];
+            }];
 
             NSMutableArray *classesLeft = self.allClassesInMainFile.allValues.mutableCopy;
             for (CDOCClass *class in self.allClasses.allValues) {
+
+                // sort instanceVariables
+                class.instanceVariables = [class.instanceVariables sortedArrayUsingComparator:^NSComparisonResult(CDOCInstanceVariable * _Nonnull obj1, CDOCInstanceVariable * _Nonnull obj2)
+                {
+                    CDDetailedType detailedType1 = obj1.type.detailedType;
+                    CDDetailedType detailedType2 = obj2.type.detailedType;
+                    if (detailedType1 == detailedType2) {
+                        if (detailedType1 == CDDetailedTypeNamedObject) {
+                            CDOCClass *c1 = self.classForName(obj1.type.typeName.name);
+                            CDOCClass *c2 = self.classForName(obj2.type.typeName.name);
+                            if (c1.isInsideMainBundle != c2.isInsideMainBundle) {
+                                return c2.isInsideMainBundle ? NSOrderedAscending : NSOrderedDescending;
+                            }
+                        }
+                        return [obj1.name compare:obj2.name];
+                    } else {
+                        return detailedType1 < detailedType2 ? NSOrderedAscending : NSOrderedDescending;
+                    }
+                }];
+
+                // manage referredClass
                 for (CDOCInstanceVariable *var in class.instanceVariables) {
                     CDOCClass *referredClass = self.classForName(var.type.typeName.name);
                     if (referredClass.isInsideMainBundle) {
@@ -183,7 +206,13 @@ static BOOL _isInDataProcessing = NO;
                 }
             }
 
+            [classesLeft sortUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
+                return [obj1.name compare:obj2.name];
+            }];
             self.relationshipNodes = classesLeft.copy;
+
+            // sort CDOCClass.subClasses
+            [self.classNodes makeObjectsPerformSelector:@selector(sort)];
         }
 
         if (completion) {

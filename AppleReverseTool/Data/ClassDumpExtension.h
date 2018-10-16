@@ -55,10 +55,25 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 @property (readonly) NSArray<CDOCCategory *> *categories;
 - (void)addCategory:(CDOCCategory *)category;
 - (void)addReferrer:(CDOCClass *)referrer;
+- (void)sort;
 @end
 
+typedef NS_ENUM(NSInteger, CDDetailedType) {
+    CDDetailedTypeSimple,
+    CDDetailedTypeArray,
+    CDDetailedTypeBitFields,
+    CDDetailedTypeUnion,
+    CDDetailedTypeStruct,
+    CDDetailedTypePointer,
+    CDDetailedTypeFunctionPointer,
+    CDDetailedTypeBlock,
+    CDDetailedTypeID,
+    CDDetailedTypeNamedObject,
+};
+
 @interface CDType (ARTExtension)
-@property (nonatomic, assign) BOOL isInsideMainBundle;
+@property (nonatomic,  assign ) BOOL isInsideMainBundle; // TODO struct
+@property (nonatomic, readonly) CDDetailedType detailedType;
 - (void)setIsParsing:(BOOL)isParsing; // compiled trick, never be invoked
 - (void)setDataController:(ARTDataController *)dataController; // compiled trick, never be invoked
 @end

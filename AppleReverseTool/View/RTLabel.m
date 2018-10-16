@@ -781,7 +781,7 @@ NSSet *RTLabelValidTags;
 {
     NSColor *color = [self colorFromAttributesValue:value];
     if (color) {
-        [self applyCGColor:[self colorFromAttributesValue:value].CGColor toText:text atPosition:position withLength:length];
+        [self applyCGColor:color.CGColor toText:text atPosition:position withLength:length];
     }
 }
 

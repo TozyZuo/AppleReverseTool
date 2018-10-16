@@ -120,6 +120,26 @@ NSString *ARTStringCreate(NSString *string, ...)
     return interalCategories;
 }
 
+- (void)sort
+{
+    NSMutableArray *interalSubNodes = self.interalSubNodes;
+    [interalSubNodes sortUsingComparator:^NSComparisonResult(id<ARTNode>  _Nonnull obj1, id<ARTNode>  _Nonnull obj2) {
+        return [obj1.name compare:obj2.name];
+    }];
+
+    [self.interalCategories sortUsingComparator:^NSComparisonResult(CDOCCategory * _Nonnull obj1, CDOCCategory * _Nonnull obj2) {
+        return [obj1.name compare:obj2.name];
+    }];
+
+    [self.interalReferrers sortUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
+        return [obj1.name compare:obj2.name];
+    }];
+
+    for (CDOCClass *subClass in interalSubNodes) {
+        [subClass sort];
+    }
+}
+
 @end
 
 @interface CDType (ARTExtension_Private)
@@ -150,6 +170,50 @@ TZWarningIgnoreEnd
 - (void)setIsInsideMainBundle:(BOOL)isInsideMainBundle
 {
     self[ARTAssociatedKeyForSelector(@selector(isInsideMainBundle))] = @(isInsideMainBundle);
+}
+
+- (CDDetailedType)detailedType
+{
+    NSNumber *detailedType = self[ARTAssociatedKeyForSelector(_cmd)];
+
+    if (!detailedType) {
+        switch (self.primitiveType) {
+            case '[':
+                detailedType = @(CDDetailedTypeArray);
+                break;
+            case 'b':
+                detailedType = @(CDDetailedTypeBitFields);
+                break;
+            case '(':
+                detailedType = @(CDDetailedTypeUnion);
+                break;
+            case '{':
+                detailedType = @(CDDetailedTypeStruct);
+                break;
+            case '^':
+                detailedType = @(CDDetailedTypePointer);
+                break;
+            case T_FUNCTION_POINTER_TYPE:
+                detailedType = @(CDDetailedTypeFunctionPointer);
+                break;
+            case T_BLOCK_TYPE:
+                detailedType = @(CDDetailedTypeBlock);
+                break;
+            case '@':
+                detailedType = @(CDDetailedTypeID);
+                break;
+            case T_NAMED_OBJECT:
+                detailedType = @(CDDetailedTypeNamedObject);
+                break;
+            default:
+                detailedType = @(CDDetailedTypeSimple);
+                break;
+        }
+
+        self[ARTAssociatedKeyForSelector(_cmd)] = detailedType;
+    }
+
+    return detailedType.integerValue;
 }
 
 - (void)setIsParsing:(BOOL)isParsing

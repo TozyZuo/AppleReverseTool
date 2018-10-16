@@ -44,6 +44,22 @@
             model.superNode = self;
             [subNodes addObject:model];
         }
+        [subNodes sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2) {
+            CDDetailedType detailedType1 = obj1.iVarData.type.detailedType;
+            CDDetailedType detailedType2 = obj2.iVarData.type.detailedType;
+            if (detailedType1 == detailedType2) {
+                if (detailedType1 == CDDetailedTypeNamedObject) {
+                    CDOCClass *c1 = self.dataController.classForName(obj1.iVarData.type.typeName.name);
+                    CDOCClass *c2 = self.dataController.classForName(obj2.iVarData.type.typeName.name);
+                    if (c1.isInsideMainBundle != c2.isInsideMainBundle) {
+                        return c2.isInsideMainBundle ? NSOrderedAscending : NSOrderedDescending;
+                    }
+                }
+                return [obj1.iVarData.name compare:obj2.iVarData.name];
+            } else {
+                return detailedType1 < detailedType2 ? NSOrderedAscending : NSOrderedDescending;
+            }
+        }];
         _subNodes = subNodes;
     }
 }

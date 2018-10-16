@@ -12,7 +12,6 @@
 #import "CDOCClassReference.h"
 #import "CDTypeLexer.h"
 #import "ARTDataController.h"
-#import <objc/runtime.h>
 
 void *_dispatch_queue_userInfo_key = &_dispatch_queue_userInfo_key;
 
