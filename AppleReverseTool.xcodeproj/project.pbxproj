@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA0A512621770FDE00FD9CB8 /* ARTRichTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */; };
 		BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */; };
 		BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7AF21624C1E007AEFEF /* ARTViewController.m */; };
 		BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7B221624C6C007AEFEF /* ARTMainViewController.m */; };
@@ -98,6 +99,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARTRichTextController.h; sourceTree = "<group>"; };
+		BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTRichTextController.m; sourceTree = "<group>"; };
 		BA21C91B2161C387008E8F97 /* ARTProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTProtocol.h; sourceTree = "<group>"; };
 		BA3BE7A521621B7A007AEFEF /* ClassDumpHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassDumpHook.h; sourceTree = "<group>"; };
 		BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassDumpHook.m; sourceTree = "<group>"; };
@@ -192,6 +195,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA0A511E21770FC800FD9CB8 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */,
+				BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		BA3BE7AD21624BEF007AEFEF /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +269,7 @@
 		BA635C9B215DFBEE0048AB9A /* AppleReverseTool */ = {
 			isa = PBXGroup;
 			children = (
+				BA0A511E21770FC800FD9CB8 /* Util */,
 				BAB6E5DC216A0F67005BA8C9 /* View */,
 				BA635CE9215E02930048AB9A /* Base */,
 				BAF2FEC72160BAAE0082A508 /* Common */,
@@ -284,6 +297,8 @@
 				BA635CEB215E02930048AB9A /* ARTSingleInstance.m */,
 				BA6C1AA42166579100ABC059 /* ARTView.h */,
 				BA6C1AA52166579100ABC059 /* ARTView.m */,
+				BA3BE7C921634B3B007AEFEF /* ARTControl.h */,
+				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 				BAD5F5F8216C85CC002207CF /* ARTButton.h */,
 				BAD5F5F9216C85CC002207CF /* ARTButton.m */,
 			);
@@ -383,8 +398,6 @@
 			children = (
 				BA3BE7C721632CB0007AEFEF /* RTLabel.h */,
 				BA3BE7C621632CB0007AEFEF /* RTLabel.m */,
-				BA3BE7C921634B3B007AEFEF /* ARTControl.h */,
-				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -589,6 +602,7 @@
 				BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */,
 				BA635EBD215E09C70048AB9A /* CDStructureInfo.m in Sources */,
 				BA635EB9215E09C70048AB9A /* CDStructureTable.m in Sources */,
+				BA0A512621770FDE00FD9CB8 /* ARTRichTextController.m in Sources */,
 				BA635CF3215E02E90048AB9A /* ARTDataController.m in Sources */,
 				BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */,
 				BA3BE7C521632C95007AEFEF /* ARTClassTreeCell.m in Sources */,
