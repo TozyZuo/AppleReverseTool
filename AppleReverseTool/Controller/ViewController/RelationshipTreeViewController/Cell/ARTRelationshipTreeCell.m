@@ -7,16 +7,16 @@
 //
 
 #import "ARTRelationshipTreeCell.h"
-#import "RTLabel.h"
+#import "ARTRichTextController.h"
 #import "ARTRelationshipTreeModel.h"
 #import "ARTDataController.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 
-
 @interface ARTRelationshipTreeCell ()
-<RTLabelDelegate>
-@property (nonatomic, strong) RTLabel *label;
+<ARTRichTextControllerDelegate>
+@property (weak) IBOutlet NSTextView *textView;
+@property (nonatomic, strong) ARTRichTextController *richTextController;
 @property (nonatomic, strong) ARTRelationshipTreeModel *data;
 @end
 
@@ -38,12 +38,17 @@
 
 - (void)initialize
 {
-    self.label = [[RTLabel alloc] initWithFrame:self.bounds];
-    self.label.delegate = self;
-    self.label.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
-    self.label.lineBreakMode = RTTextLineBreakModeCharWrapping;
-    self.label.autoresizingMask = NSViewWidthSizable| NSViewHeightSizable;
-    [self addSubview:self.label];
+    NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
+    textView.autoresizingMask = NSViewWidthSizable| NSViewHeightSizable;
+    textView.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+    textView.selectable = YES;
+    textView.editable = NO;
+    textView.textContainer.lineBreakMode = NSLineBreakByClipping;
+    [self addSubview:textView];
+    self.textView = textView;
+
+    self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
+    self.richTextController.delegate = self;
 }
 
 #pragma mark - Public
@@ -53,9 +58,9 @@
     self.data = data;
 
     if (data.iVarData) {
-        self.label.text = _S([self prefixFromData:data], [self textFromiVarData:data.iVarData], nil);
+        self.richTextController.text = _S([self prefixFromData:data], [self textFromiVarData:data.iVarData], nil);
     } else if (data.classData) {
-        self.label.text = _S([self prefixFromData:data], [self textFromClassData:data.classData], nil);
+        self.richTextController.text = _S([self prefixFromData:data], [self textFromClassData:data.classData], nil);
     }
 }
 
@@ -117,9 +122,9 @@
     return text;
 }
 
-#pragma mark - RTLabelDelegate
+#pragma mark - ARTRichTextControllerDelegate
 
-- (void)label:(RTLabel *)label didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     if ([self.delegate respondsToSelector:@selector(relationshipTreeCell:didClickLink:rightMouse:)]) {
         [self.delegate relationshipTreeCell:self didClickLink:link rightMouse:rightMouse];

@@ -233,6 +233,10 @@
 
 - (void)updateDataWithLink:(NSString *)link
 {
+    if (self.currentLinkIndex >= 0 && [self.linkStack[self.currentLinkIndex] isEqualToString:link]) {
+        return;
+    }
+
     // check cache
     if (self.linkMap[link]) {
         [self pushLink:link text:self.linkMap[link]];

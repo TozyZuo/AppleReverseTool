@@ -501,7 +501,7 @@
     if (event.window == self.view.window) {
         NSPoint p = [self.view convertPoint:event.locationInWindow fromView:event.window.contentView];
         NSEventType type = event.type;
-        if (CGRectContainsPoint(self.view.bounds, p) &&
+        if ([self.view hitTest:p] &&
             (type == NSEventTypeLeftMouseDown ||
              type == NSEventTypeLeftMouseUp ||
              type == NSEventTypeRightMouseDown ||

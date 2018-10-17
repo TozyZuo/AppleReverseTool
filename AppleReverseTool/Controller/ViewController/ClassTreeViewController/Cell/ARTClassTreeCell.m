@@ -7,17 +7,15 @@
 //
 
 #import "ARTClassTreeCell.h"
-#import "RTLabel.h"
 #import "ARTURL.h"
+#import "ARTRichTextController.h"
 #import "ClassDumpExtension.h"
 #import "CDOCClassReference.h"
-#import "ARTRichTextController.h"
 
 @interface ARTClassTreeCell ()
-<RTLabelDelegate>
-@property (nonatomic, strong) NSTextView *textView;
-//@property (nonatomic, strong) ARTRichTextController *label;
-@property (nonatomic, strong) RTLabel *label;
+<ARTRichTextControllerDelegate>
+@property (weak) IBOutlet NSTextView *textView;
+@property (nonatomic, strong) ARTRichTextController *richTextController;
 @property (nonatomic,  weak ) CDOCClass *aClass;
 @property (nonatomic,  weak ) CDOCCategory *category;
 @end
@@ -40,13 +38,17 @@
 
 - (void)initialize
 {
-//    self.textView = [[NSTextView alloc] initWithFrame:self.bounds];
-    self.label = [[RTLabel alloc] initWithFrame:self.bounds];
-    self.label.delegate = self;
-    self.label.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
-    self.label.lineBreakMode = RTTextLineBreakModeCharWrapping;
-    self.label.autoresizingMask = NSViewWidthSizable| NSViewHeightSizable;
-    [self addSubview:self.label];
+    NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
+    textView.autoresizingMask = NSViewWidthSizable| NSViewHeightSizable;
+    textView.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+    textView.selectable = YES;
+    textView.editable = NO;
+    textView.textContainer.lineBreakMode = NSLineBreakByClipping;
+    [self addSubview:textView];
+    self.textView = textView;
+
+    self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
+    self.richTextController.delegate = self;
 }
 
 - (NSString *)prefixWithCategory:(CDOCCategory *)category
@@ -118,17 +120,17 @@
 {
     self.aClass = class;
 
-    self.label.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>%@", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name, [self categoryLinkButtonWithData:class]];
+    self.richTextController.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>%@", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name, [self categoryLinkButtonWithData:class]];
 }
 
 - (void)updateDataWithCategory:(CDOCCategory *)category
 {
-    self.label.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name];
+    self.richTextController.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name];
 }
 
-#pragma mark - RTLabelDelegate
+#pragma mark - ARTRichTextControllerDelegate
 
-- (void)label:(RTLabel *)label didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     if ([self.delegate respondsToSelector:@selector(classTreeCell:didClickLink:rightMouse:)]) {
         [self.delegate classTreeCell:self didClickLink:link rightMouse:rightMouse];
