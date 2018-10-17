@@ -290,8 +290,13 @@
 {
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:plainText];
 
-    [attrString addAttribute:NSForegroundColorAttributeName value:self.view.textColor range:NSMakeRange(0, plainText.length)];
+    // color
+    [attrString addAttribute:NSForegroundColorAttributeName value:self.view.textColor ?: NSColor.blackColor range:NSMakeRange(0, plainText.length)];
+
+    // font
     [attrString addAttribute:NSFontAttributeName value:self.view.font range:NSMakeRange(0, attrString.length)];
+
+    // paragraph
     [self applyParagraphStyleToText:attrString attributes:nil atPosition:0 withLength:attrString.length];
 
     NSMutableArray *links = [NSMutableArray array];
@@ -380,11 +385,12 @@
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self.attributedText);
 
     CGSize suggestFrameSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, self.plainText.length), nil, CGSizeMake(insetsSize.width, CGFLOAT_MAX), NULL);
-    self.optimumSize = NSMakeSize(suggestFrameSize.width + insets.left + insets.right, suggestFrameSize.height + insets.top + insets.bottom);
+    CGSize optimumSize = NSMakeSize(suggestFrameSize.width + insets.left + insets.right, suggestFrameSize.height + insets.top + insets.bottom);
+    self.optimumSize = optimumSize;
 
     // Initialize a rectangular path.
     CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, NSMakeRect(0, 0, insetsSize.width, insetsSize.height));
+    CGPathAddRect(path, NULL, NSMakeRect(0, 0, insetsSize.width, suggestFrameSize.height));
 
     // Create the frame and draw it into the graphics context
     //CTFrameRef
@@ -428,7 +434,7 @@
 #ifdef TrackingAreaDebug
                 NSView *view = [[NSView alloc] initWithFrame:rect];
                 view.wantsLayer = YES;
-                view.layer.backgroundColor = [NSColor.redColor colorWithAlphaComponent:.5].CGColor;
+                view.layer.backgroundColor = [self.view.textColor colorWithAlphaComponent:.5].CGColor;
                 [self.view addSubview:view];
                 NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:rect options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:@{@"component": linkableComponent, @"view": view}];
 #else
@@ -439,6 +445,7 @@
             }
 
             y = y + ascent + descent + leading + self.lineSpacing + self.extraLineSpacing;
+            y = ceil(y);
         }
     }
 

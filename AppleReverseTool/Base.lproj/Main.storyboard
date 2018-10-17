@@ -1000,46 +1000,26 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
-                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHt-dF-W9N">
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DsH-sj-C0s">
                                 <rect key="frame" x="0.0" y="0.0" width="466" height="270"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <clipView key="contentView" ambiguous="YES" id="hCm-Vq-Hj1">
-                                    <rect key="frame" x="0.0" y="0.0" width="466" height="270"/>
+                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="dj4-kt-HTy">
+                                    <rect key="frame" x="0.0" y="0.0" width="451" height="270"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JNE-Qx-ZOn">
-                                            <rect key="frame" x="0.0" y="0.0" width="466" height="300"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <subviews>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YJe-ug-0il" customClass="RTLabel">
-                                                    <rect key="frame" x="20" y="20" width="426" height="260"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                                            <color key="value" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </customView>
-                                            </subviews>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                                    <color key="value" red="0.0" green="1" blue="0.102636424" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                    <real key="value" value="0.5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </view>
+                                        <textView ambiguous="YES" editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="2P9-iM-p0t">
+                                            <rect key="frame" x="0.0" y="0.0" width="451" height="270"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="minSize" width="451" height="270"/>
+                                            <size key="maxSize" width="466" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
                                     </subviews>
                                 </clipView>
-                                <edgeInsets key="contentInsets" left="20" right="20" top="20" bottom="20"/>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="obM-jS-afF">
-                                    <rect key="frame" x="-100" y="-100" width="395" height="15"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.7142857142857143" horizontal="NO" id="HGP-AS-fhp">
-                                    <rect key="frame" x="431" y="20" width="15" height="230"/>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="CFw-pu-F4p">
+                                    <rect key="frame" x="451" y="0.0" width="15" height="270"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -1048,9 +1028,8 @@
                     <connections>
                         <outlet property="goBackButton" destination="yfl-Z6-1ec" id="nJo-b5-GU1"/>
                         <outlet property="goForwardButton" destination="0By-Y4-Cc0" id="Xm9-Dw-7OU"/>
-                        <outlet property="label" destination="YJe-ug-0il" id="Mn5-I9-xBw"/>
                         <outlet property="menuButton" destination="4he-Rm-yUc" id="zeb-8B-vom"/>
-                        <outlet property="scrollView" destination="BHt-dF-W9N" id="8OV-DA-dgn"/>
+                        <outlet property="textView" destination="2P9-iM-p0t" id="r0b-Di-46t"/>
                     </connections>
                 </viewController>
                 <customObject id="MPO-da-X0V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

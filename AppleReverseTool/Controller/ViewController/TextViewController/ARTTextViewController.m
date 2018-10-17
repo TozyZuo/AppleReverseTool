@@ -12,19 +12,19 @@
 #import "ARTView.h"
 #import "ARTButton.h"
 #import "ARTURL.h"
+#import "ARTRichTextController.h"
 #import "ClassDumpExtension.h"
 #import "CDClassDump.h"
-#import "RTLabel.h"
 #import "NSAlert+ART.h"
 
 @interface ARTTextViewController ()
-<RTLabelDelegate>
-@property (weak) IBOutlet NSScrollView *scrollView;
-@property (weak) IBOutlet RTLabel *label;
+<ARTRichTextControllerDelegate>
+@property (weak) IBOutlet NSTextView *textView;
 @property (weak) IBOutlet ARTButton *menuButton;
 @property (weak) IBOutlet ARTButton *goBackButton;
 @property (weak) IBOutlet ARTButton *goForwardButton;
 
+@property (nonatomic, strong) ARTRichTextController *richTextController;
 @property (nonatomic, strong) NSMutableArray<NSString *> *menuStack;
 @property (nonatomic, strong) NSMutableArray<NSString *> *linkStack;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *linkMap;
@@ -37,11 +37,6 @@
 
 @implementation ARTTextViewController
 
-- (void)viewDidResize:(NSView *)view
-{
-    [self resizeLabel];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,11 +47,11 @@
     self.maxCount = ULONG_MAX;
     self.currentLinkIndex = -1;
 
-    self.scrollView.documentView = self.label;
-    self.scrollView.contentView.documentView = self.label;
+    // storyboard does not work?
+    self.textView.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
 
-    self.label.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
-    self.label.delegate = self;
+    self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
+    self.richTextController.delegate = self;
 
     __weak typeof(self) weakSelf = self;
     [self.menuButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_showAllButtion"] forState:ARTButtonStateNormal];
@@ -105,13 +100,11 @@
 
 - (void)willChangeLinkStack
 {
-
+    self.textView.textColor = NSColor.blackColor;
 }
 
 - (void)didChangeLinkStack
 {
-    [self resizeLabel];
-    [self.label scrollToTop];
     // trigger button state change
     self.canGoBack = self.canGoBack;
     self.canGoForward = self.canGoForward;
@@ -137,7 +130,7 @@
      {
          ARTURL *url = [[ARTURL alloc] initWithString:link];
          NSString *title;
-//        NSImage *image;
+//        NSImage *image; TODO
          if ([url.scheme isEqualToString:kSchemeStruct]) {
              title = [@"[S] " stringByAppendingString:url.path];
          } else if ([url.scheme isEqualToString:kSchemeUnion]) {
@@ -173,7 +166,7 @@
         self.currentLinkIndex = self.currentLinkIndex - 1;
         NSString *link = self.linkStack[self.currentLinkIndex];
         [self menuStackHandleLink:link];
-        self.label.text = self.linkMap[link];
+        self.richTextController.text = self.linkMap[link];
 
         [self didChangeLinkStack];
     }
@@ -187,7 +180,7 @@
         self.currentLinkIndex = self.currentLinkIndex + 1;
         NSString *link = self.linkStack[self.currentLinkIndex];
         [self menuStackHandleLink:link];
-        self.label.text = self.linkMap[link];
+        self.richTextController.text = self.linkMap[link];
 
         [self didChangeLinkStack];
     }
@@ -210,7 +203,7 @@
 //    self.currentLinkIndex = self.currentLinkIndex + 1;
     self.currentLinkIndex = self.linkStack.count - 1;
 
-    self.label.text = text;
+    self.richTextController.text = text;
     [self didChangeLinkStack];
 }
 
@@ -228,12 +221,6 @@
             });
         });
     }
-}
-
-- (void)resizeLabel
-{
-    self.label.height = MAX(self.label.optimumSize.height, self.scrollView.height - 40);
-    self.canGoBack = self.canGoBack;
 }
 
 - (void)linkStackMenuAction:(NSMenuItem *)item
@@ -261,7 +248,7 @@
         NSString *className = host;
         CDOCClass *class = self.dataController.classForName(className);
         if (class) {
-            self.label.text = _SC(@"Loading...", kColorComments);
+            self.richTextController.text = _SC(@"Loading...", kColorComments);
             [self stringFromData:class completion:^(NSString *text) {
                 [self pushLink:link text:text];
             }];
@@ -274,7 +261,7 @@
         NSString *protocolName = host;
         CDOCProtocol *protocol = self.dataController.allProtocols[protocolName];
         if (protocol) {
-            self.label.text = _SC(@"Loading...", kColorComments);
+            self.richTextController.text = _SC(@"Loading...", kColorComments);
             [self stringFromData:protocol completion:^(NSString *text) {
                 [self pushLink:link text:text];
             }];
@@ -296,7 +283,7 @@
                 }
             }
             if (category) {
-                self.label.text = _SC(@"Loading...", kColorComments);
+                self.richTextController.text = _SC(@"Loading...", kColorComments);
                 [self stringFromData:category completion:^(NSString *text) {
                     [self pushLink:link text:text];
                 }];
@@ -337,9 +324,9 @@
     }
 }
 
-#pragma mark - RTLabelDelegate
+#pragma mark - ARTRichTextControllerDelegate
 
-- (void)label:(RTLabel *)label didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     if ([self.delegate respondsToSelector:@selector(textViewController:didClickLink:rightMouse:)]) {
         [self.delegate textViewController:self didClickLink:link rightMouse:rightMouse];

@@ -11,10 +11,12 @@
 #import "ARTURL.h"
 #import "ClassDumpExtension.h"
 #import "CDOCClassReference.h"
-
+#import "ARTRichTextController.h"
 
 @interface ARTClassTreeCell ()
 <RTLabelDelegate>
+@property (nonatomic, strong) NSTextView *textView;
+//@property (nonatomic, strong) ARTRichTextController *label;
 @property (nonatomic, strong) RTLabel *label;
 @property (nonatomic,  weak ) CDOCClass *aClass;
 @property (nonatomic,  weak ) CDOCCategory *category;
@@ -38,6 +40,7 @@
 
 - (void)initialize
 {
+//    self.textView = [[NSTextView alloc] initWithFrame:self.bounds];
     self.label = [[RTLabel alloc] initWithFrame:self.bounds];
     self.label.delegate = self;
     self.label.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
