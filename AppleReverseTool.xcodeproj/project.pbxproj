@@ -43,6 +43,10 @@
 		BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
+		BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CDB217760CB003FD6CB /* ARTManager.m */; };
+		BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */; };
+		BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */; };
+		BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE921776449003FD6CB /* NSObject+ART.m */; };
 		BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */; };
 		BACFB3EA2170BCBE004CAD2E /* ARTRelationshipTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */; };
 		BACFB3EE2170BCFA004CAD2E /* ARTRelationshipTreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3ED2170BCFA004CAD2E /* ARTRelationshipTreeCell.m */; };
@@ -164,6 +168,14 @@
 		BA8434052168AD13007E55B0 /* ARTURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTURL.m; sourceTree = "<group>"; };
 		BA856D17216B5AA5009944A3 /* NSAlert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAlert+ART.h"; sourceTree = "<group>"; };
 		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
+		BA9F9CDA217760CB003FD6CB /* ARTManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTManager.h; sourceTree = "<group>"; };
+		BA9F9CDB217760CB003FD6CB /* ARTManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTManager.m; sourceTree = "<group>"; };
+		BA9F9CE2217760FE003FD6CB /* ARTFontManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTFontManager.h; sourceTree = "<group>"; };
+		BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTFontManager.m; sourceTree = "<group>"; };
+		BA9F9CE521776412003FD6CB /* ARTWeakObjectWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTWeakObjectWrapper.h; sourceTree = "<group>"; };
+		BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTWeakObjectWrapper.m; sourceTree = "<group>"; };
+		BA9F9CE821776449003FD6CB /* NSObject+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ART.h"; sourceTree = "<group>"; };
+		BA9F9CE921776449003FD6CB /* NSObject+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ART.m"; sourceTree = "<group>"; };
 		BAB66BB72171F178004D50E1 /* ARTRelationshipTreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeModel.h; sourceTree = "<group>"; };
 		BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRelationshipTreeModel.m; sourceTree = "<group>"; };
 		BACFB3E82170BCBE004CAD2E /* ARTRelationshipTreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeViewController.h; sourceTree = "<group>"; };
@@ -200,6 +212,8 @@
 			children = (
 				BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */,
 				BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */,
+				BA9F9CE2217760FE003FD6CB /* ARTFontManager.h */,
+				BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -295,6 +309,8 @@
 				BA6C1AAC2166597D00ABC059 /* Categary */,
 				BA635CEA215E02930048AB9A /* ARTSingleInstance.h */,
 				BA635CEB215E02930048AB9A /* ARTSingleInstance.m */,
+				BA9F9CDA217760CB003FD6CB /* ARTManager.h */,
+				BA9F9CDB217760CB003FD6CB /* ARTManager.m */,
 				BA6C1AA42166579100ABC059 /* ARTView.h */,
 				BA6C1AA52166579100ABC059 /* ARTView.m */,
 				BA3BE7C921634B3B007AEFEF /* ARTControl.h */,
@@ -380,6 +396,8 @@
 				BA856D18216B5AA5009944A3 /* NSAlert+ART.m */,
 				BAD5F5F0216C6F69002207CF /* CALayer+ART.h */,
 				BAD5F5F1216C6F69002207CF /* CALayer+ART.m */,
+				BA9F9CE821776449003FD6CB /* NSObject+ART.h */,
+				BA9F9CE921776449003FD6CB /* NSObject+ART.m */,
 			);
 			path = Categary;
 			sourceTree = "<group>";
@@ -447,6 +465,8 @@
 			children = (
 				BAF2FEC42160B07B0082A508 /* ARTModel.h */,
 				BAF2FEC52160B07B0082A508 /* ARTModel.m */,
+				BA9F9CE521776412003FD6CB /* ARTWeakObjectWrapper.h */,
+				BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -591,13 +611,16 @@
 				BA635CAC215DFBEF0048AB9A /* main.m in Sources */,
 				BA8434062168AD13007E55B0 /* ARTURL.m in Sources */,
 				BA635EC9215E25D30048AB9A /* CDClassFrameworkVisitor.m in Sources */,
+				BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */,
 				BA3BE7CE21635425007AEFEF /* NSColor+ART.m in Sources */,
 				BA635EB3215E09530048AB9A /* CDClassDump.m in Sources */,
 				BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */,
+				BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */,
 				BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */,
 				BA635CF0215E02D90048AB9A /* ARTController.m in Sources */,
 				BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */,
 				BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */,
+				BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */,
 				BA3BE7B921625BBD007AEFEF /* ARTClassTreeViewController.m in Sources */,
 				BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */,
 				BA635EBD215E09C70048AB9A /* CDStructureInfo.m in Sources */,
@@ -608,6 +631,7 @@
 				BA3BE7C521632C95007AEFEF /* ARTClassTreeCell.m in Sources */,
 				BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */,
 				BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */,
+				BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */,
 				BACFB3EE2170BCFA004CAD2E /* ARTRelationshipTreeCell.m in Sources */,
 				BA3BE7CB21634B3B007AEFEF /* ARTControl.m in Sources */,
 				BA3BE8122164C4DA007AEFEF /* ClassDumpExtension.m in Sources */,

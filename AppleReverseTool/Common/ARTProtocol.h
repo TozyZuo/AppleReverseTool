@@ -22,8 +22,5 @@ NS_INLINE NSString *ARTAssociatedKeyForSelector(SEL sel)
 - (void)setWeakObject:(nullable id)obj forKey:(NSString *)key;
 @end
 
-@interface NSObject (ARTProtocol)
-<ARTProtocol>
-@end
 
 NS_ASSUME_NONNULL_END

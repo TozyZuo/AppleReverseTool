@@ -13,6 +13,7 @@
 #import "ARTButton.h"
 #import "ARTURL.h"
 #import "ARTRichTextController.h"
+#import "ARTFontManager.h"
 #import "ClassDumpExtension.h"
 #import "CDClassDump.h"
 #import "NSAlert+ART.h"
@@ -96,6 +97,10 @@
                 break;
         }
     };
+
+    [[NSFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
+        weakSelf.textView.font = updateFontBlock(weakSelf.textView.font);
+    }];
 }
 
 - (void)willChangeLinkStack
