@@ -26,6 +26,7 @@
 
 @interface ARTRichTextController ()
 @property (nonatomic, strong) NSString *plainText;
+@property (nonatomic, strong) NSColor *textColor;
 @property (nonatomic, strong) NSArray<ARTTextComponent *> *textComponents;
 @property (nonatomic, strong) NSArray<ARTTextComponent *> *linkComponents;
 @property (nonatomic, strong) NSMutableArray<NSTrackingArea *> *trackingAreas;
@@ -58,6 +59,7 @@
     if (self) {
         self.linkComponents = [[NSMutableArray alloc] init];
         self.trackingAreas = [[NSMutableArray alloc] init];
+        self.textColor = view.textColor;
         self.view = view;
 
         __weak typeof(self) weakSelf = self;
@@ -291,7 +293,7 @@
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:plainText];
 
     // color
-    [attrString addAttribute:NSForegroundColorAttributeName value:self.view.textColor ?: NSColor.blackColor range:NSMakeRange(0, plainText.length)];
+    [attrString addAttribute:NSForegroundColorAttributeName value:self.textColor ?: NSColor.blackColor range:NSMakeRange(0, plainText.length)];
 
     // font
     [attrString addAttribute:NSFontAttributeName value:self.view.font range:NSMakeRange(0, attrString.length)];
@@ -434,7 +436,7 @@
 #ifdef TrackingAreaDebug
                 NSView *view = [[NSView alloc] initWithFrame:rect];
                 view.wantsLayer = YES;
-                view.layer.backgroundColor = [self.view.textColor colorWithAlphaComponent:.5].CGColor;
+                view.layer.backgroundColor = [self.textColor colorWithAlphaComponent:.5].CGColor;
                 [self.view addSubview:view];
                 NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:rect options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:@{@"component": linkableComponent, @"view": view}];
 #else

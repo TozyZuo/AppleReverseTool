@@ -105,7 +105,7 @@
 
 - (void)willChangeLinkStack
 {
-    self.textView.textColor = NSColor.blackColor;
+
 }
 
 - (void)didChangeLinkStack
