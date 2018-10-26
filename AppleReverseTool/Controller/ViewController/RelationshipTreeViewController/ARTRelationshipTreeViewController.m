@@ -24,6 +24,7 @@
     ARTRelationshipTreeCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
+@property (nonatomic, strong) NSFont *font;
 @property (nonatomic, strong) NSArray<ARTRelationshipTreeModel *> *data;
 @end
 
@@ -33,6 +34,14 @@
 {
     [super viewDidLoad];
     self.outlineView.headerView = nil;
+
+    self.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+
+    __weak typeof(self) weakSelf = self;
+    [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
+        weakSelf.font = updateFontBlock(weakSelf.font);
+        [weakSelf.outlineView reloadData];
+    }];
 }
 
 #pragma mark - Public
@@ -52,6 +61,11 @@
 }
 
 #pragma mark - NSOutlineViewDataSource
+
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+{
+    return self.font.pointSize + 10;
+}
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable ARTRelationshipTreeModel *)item
 {
@@ -84,6 +98,7 @@
     cell.outlineView = outlineView;
     cell.delegate = self;
     cell.dataController = self.dataController;
+    cell.textView.font = self.font;
     [cell updateData:item];
 
     return cell;

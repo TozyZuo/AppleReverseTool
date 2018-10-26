@@ -10,12 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSFontManager (ART)
+@interface ARTFontManager : NSFontManager
+@property (class, readonly, strong) ARTFontManager *sharedFontManager;
 - (void)addObserver:(id)observer fontChangeBlock:(void (^)(NSFont *(^updateFontBlock)(NSFont *)))block;
-@end
-
-@interface ARTFontManager : ARTManager
-
 @end
 
 NS_ASSUME_NONNULL_END

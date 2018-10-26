@@ -35,6 +35,7 @@
     ARTClassTreeCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
+@property (nonatomic, strong) NSFont *font;
 @property (nonatomic, strong) NSArray<CDOCClass *> *data;
 @end
 
@@ -44,6 +45,14 @@
 {
     [super viewDidLoad];
     self.outlineView.headerView = nil;
+
+    self.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+
+    __weak typeof(self) weakSelf = self;
+    [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
+        weakSelf.font = updateFontBlock(weakSelf.font);
+        [weakSelf.outlineView reloadData];
+    }];
 }
 
 #pragma mark - Public
@@ -56,6 +65,11 @@
 }
 
 #pragma mark - NSOutlineViewDataSource
+
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
+{
+    return self.font.pointSize + 10;
+}
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable CDOCClass *)item
 {
@@ -98,6 +112,7 @@
     ARTClassTreeCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
     cell.delegate = self;
+    cell.textView.font = self.font;
     if ([item isKindOfClass:CDOCClass.class]) {
         [cell updateDataWithClass:item];
     } else {

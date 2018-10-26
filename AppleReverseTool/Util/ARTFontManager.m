@@ -11,20 +11,34 @@
 
 static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontChangeBlockKey";
 
-@interface NSFontManager (ARTPrivate)
-@property (readonly) NSMutableArray<ARTWeakObjectWrapper *> *observers;
+@interface NSFontManager (ART)
+- (id)_init;
 @end
 
-@implementation NSFontManager (ART)
+@interface ARTFontManager ()
+@property (strong) NSMutableArray<ARTWeakObjectWrapper *> *observers;
+@end
 
-- (NSMutableArray *)observers
+@implementation ARTFontManager
+@dynamic sharedFontManager;
+
++ (void)load
 {
-    NSMutableArray *observers = self[ARTAssociatedKeyForSelector(_cmd)];
-    if (!observers) {
-        observers = [[NSMutableArray alloc] init];
-        self[ARTAssociatedKeyForSelector(_cmd)] = observers;
+    [NSFontManager setFontManagerFactory:self];
+}
+
+- (instancetype)_init
+{
+    self = [super _init];
+    if (self) {
+        self.observers = [[NSMutableArray alloc] init];
     }
-    return observers;
+    return self;
+}
+
+- (void)setTarget:(id)target
+{
+
 }
 
 - (void)addObserver:(id)observer fontChangeBlock:(void (^)(NSFont * _Nonnull (^ _Nonnull)(NSFont * _Nonnull)))block
@@ -35,13 +49,12 @@ static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontCha
 
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            self.target = self;
-            self.action = @selector(handleFontChange:);
+            super.target = self;
         });
     }
 }
 
-- (void)handleFontChange:(id)sender
+- (void)changeFont:(id)sender
 {
     static NSFont *(^updateFontBlock)(NSFont *);
     static dispatch_once_t onceToken;
@@ -61,9 +74,5 @@ static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontCha
         }
     }
 }
-
-@end
-
-@implementation ARTFontManager
 
 @end

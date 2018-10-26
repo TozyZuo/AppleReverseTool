@@ -944,7 +944,9 @@
 
 - (void)setAttributedStringValue:(NSAttributedString *)attributedStringValue
 {
-    self.textStorage.attributedString = attributedStringValue;
+    if (attributedStringValue) {
+        self.textStorage.attributedString = attributedStringValue;
+    }
 }
 
 - (NSLineBreakMode)lineBreakMode

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,   weak  ) id<ARTClassTreeCellDelegate> delegate;
 @property (nonatomic,   weak  ) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, readonly) __kindof CDOCProtocol *data;
+@property (   weak  , readonly) NSTextView *textView;
 - (void)updateDataWithClass:(CDOCClass *)class;
 - (void)updateDataWithCategory:(CDOCCategory *)category;
 @end

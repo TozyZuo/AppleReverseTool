@@ -98,7 +98,7 @@
         }
     };
 
-    [[NSFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
+    [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
         weakSelf.textView.font = updateFontBlock(weakSelf.textView.font);
     }];
 }
