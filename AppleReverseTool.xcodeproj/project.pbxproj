@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BA0A512621770FDE00FD9CB8 /* ARTRichTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */; };
+		BA2E220D2189DA0700480731 /* RFOverlayScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E220C2189DA0700480731 /* RFOverlayScroller.m */; };
+		BA2E2210218AA82400480731 /* RFOverlayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E220F218AA82400480731 /* RFOverlayScrollView.m */; };
 		BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */; };
 		BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7AF21624C1E007AEFEF /* ARTViewController.m */; };
 		BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7B221624C6C007AEFEF /* ARTMainViewController.m */; };
@@ -43,6 +45,7 @@
 		BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
+		BA9CA3BD21901CC000BD7B78 /* AppKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */; };
 		BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CDB217760CB003FD6CB /* ARTManager.m */; };
 		BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */; };
 		BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */; };
@@ -106,6 +109,10 @@
 		BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARTRichTextController.h; sourceTree = "<group>"; };
 		BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTRichTextController.m; sourceTree = "<group>"; };
 		BA21C91B2161C387008E8F97 /* ARTProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTProtocol.h; sourceTree = "<group>"; };
+		BA2E22062189DA0600480731 /* RFOverlayScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFOverlayScroller.h; sourceTree = "<group>"; };
+		BA2E220C2189DA0700480731 /* RFOverlayScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFOverlayScroller.m; sourceTree = "<group>"; };
+		BA2E220E218AA82400480731 /* RFOverlayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFOverlayScrollView.h; sourceTree = "<group>"; };
+		BA2E220F218AA82400480731 /* RFOverlayScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFOverlayScrollView.m; sourceTree = "<group>"; };
 		BA3BE7A521621B7A007AEFEF /* ClassDumpHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassDumpHook.h; sourceTree = "<group>"; };
 		BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassDumpHook.m; sourceTree = "<group>"; };
 		BA3BE7AE21624C1E007AEFEF /* ARTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTViewController.h; sourceTree = "<group>"; };
@@ -168,6 +175,7 @@
 		BA8434052168AD13007E55B0 /* ARTURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTURL.m; sourceTree = "<group>"; };
 		BA856D17216B5AA5009944A3 /* NSAlert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAlert+ART.h"; sourceTree = "<group>"; };
 		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
+		BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppKitExtension.m; path = AppleReverseTool/Util/AppKitExtension.m; sourceTree = SOURCE_ROOT; };
 		BA9F9CDA217760CB003FD6CB /* ARTManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTManager.h; sourceTree = "<group>"; };
 		BA9F9CDB217760CB003FD6CB /* ARTManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTManager.m; sourceTree = "<group>"; };
 		BA9F9CE2217760FE003FD6CB /* ARTFontManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTFontManager.h; sourceTree = "<group>"; };
@@ -210,6 +218,7 @@
 		BA0A511E21770FC800FD9CB8 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */,
 				BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */,
 				BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */,
 				BA9F9CE2217760FE003FD6CB /* ARTFontManager.h */,
@@ -414,6 +423,10 @@
 		BAB6E5DC216A0F67005BA8C9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA2E22062189DA0600480731 /* RFOverlayScroller.h */,
+				BA2E220C2189DA0700480731 /* RFOverlayScroller.m */,
+				BA2E220E218AA82400480731 /* RFOverlayScrollView.h */,
+				BA2E220F218AA82400480731 /* RFOverlayScrollView.m */,
 				BA3BE7C721632CB0007AEFEF /* RTLabel.h */,
 				BA3BE7C621632CB0007AEFEF /* RTLabel.m */,
 			);
@@ -603,7 +616,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA2E220D2189DA0700480731 /* RFOverlayScroller.m in Sources */,
 				BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */,
+				BA9CA3BD21901CC000BD7B78 /* AppKitExtension.m in Sources */,
 				BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */,
 				BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */,
 				BA635EC4215E0F1C0048AB9A /* CRNode.m in Sources */,
@@ -632,6 +647,7 @@
 				BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */,
 				BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */,
 				BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */,
+				BA2E2210218AA82400480731 /* RFOverlayScrollView.m in Sources */,
 				BACFB3EE2170BCFA004CAD2E /* ARTRelationshipTreeCell.m in Sources */,
 				BA3BE7CB21634B3B007AEFEF /* ARTControl.m in Sources */,
 				BA3BE8122164C4DA007AEFEF /* ClassDumpExtension.m in Sources */,

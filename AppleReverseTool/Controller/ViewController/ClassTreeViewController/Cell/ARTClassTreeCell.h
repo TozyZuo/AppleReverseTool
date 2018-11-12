@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTClassTreeCell, CDOCProtocol, CDOCClass, CDOCCategory;
+@class ARTClassTreeCell, CDOCProtocol, CDOCClass, CDOCCategory, ARTRichTextController;
 
 @protocol ARTClassTreeCellDelegate <NSObject>
 @optional
@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,   weak  ) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, readonly) __kindof CDOCProtocol *data;
 @property (   weak  , readonly) NSTextView *textView;
+@property (nonatomic, readonly) ARTRichTextController *richTextController;
 - (void)updateDataWithClass:(CDOCClass *)class;
 - (void)updateDataWithCategory:(CDOCCategory *)category;
 @end

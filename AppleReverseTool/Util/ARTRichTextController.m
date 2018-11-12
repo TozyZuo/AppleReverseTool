@@ -140,11 +140,19 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"frame"]) {
-        [self calculateTrackingArea];
+        CGRect new = [change[NSKeyValueChangeNewKey] rectValue];
+        CGRect old = [change[NSKeyValueChangeOldKey] rectValue];
+        if (!CGRectEqualToRect(new, old)) {
+            [self calculateTrackingArea];
+        }
     } else if ([keyPath isEqualToString:@"font"]) {
-        NSMutableAttributedString *attributedText = self.attributedText.mutableCopy;
-        [attributedText addAttribute:NSFontAttributeName value:self.view.font range:NSMakeRange(0, self.attributedText.length)];
-        self.attributedText = attributedText;
+        NSFont *new = change[NSKeyValueChangeNewKey];
+        NSFont *old = change[NSKeyValueChangeOldKey];
+        if (![new isEqual:old]) {
+            NSMutableAttributedString *attributedText = self.attributedText.mutableCopy;
+            [attributedText addAttribute:NSFontAttributeName value:self.view.font range:NSMakeRange(0, self.attributedText.length)];
+            self.attributedText = attributedText;
+        }
     }
 }
 
@@ -500,10 +508,12 @@
 
 - (NSEvent *)handleMonitorEvent:(NSEvent *)event
 {
-    if (event.window == self.view.window) {
-        NSPoint p = [self.view convertPoint:event.locationInWindow fromView:event.window.contentView];
+    NSView<ARTRichTextViewProtocol> *view = self.view;
+    if (event.window == view.window && !CGRectEqualToRect(view.visibleRect, CGRectZero)) {
+        NSPoint p = [view convertPoint:event.locationInWindow fromView:nil];
         NSEventType type = event.type;
-        if ([self.view hitTest:p] &&
+        if ([view mouse:p inRect:view.visibleRect] &&
+//            [view hitTest:[view.superview convertPoint:event.locationInWindow fromView:nil]] &&
             (type == NSEventTypeLeftMouseDown ||
              type == NSEventTypeLeftMouseUp ||
              type == NSEventTypeRightMouseDown ||
@@ -533,7 +543,7 @@
                         if (colorValue) {
                             NSMutableAttributedString *string = self.attributedText.mutableCopy;
                             [self applyNSColor:[[self colorFromAttributesValue:colorValue] blendedColorWithFraction:.3 ofColor:NSColor.blackColor] toText:string atPosition:component.position withLength:component.text.length];
-                            self.view.attributedStringValue = string;
+                            view.attributedStringValue = string;
                         }
                         self.mouseDownComponent = component;
                     }
@@ -554,7 +564,7 @@
                             if (colorValue) {
                                 NSMutableAttributedString *string = self.attributedText.mutableCopy;
                                 [self applyNSColor:[self colorFromAttributesValue:colorValue] toText:string atPosition:component.position withLength:component.text.length];
-                                self.view.attributedStringValue = string;
+                                view.attributedStringValue = string;
                             }
                             if ([self.delegate respondsToSelector:@selector(richTextController:didSelectLink:rightMouse:)]) {
                                 [self.delegate richTextController:self didSelectLink:component.attributes[@"href"] rightMouse:type == NSEventTypeRightMouseUp];

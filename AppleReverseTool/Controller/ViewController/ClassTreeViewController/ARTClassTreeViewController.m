@@ -10,6 +10,7 @@
 #import "ClassDumpExtension.h"
 #import "ARTClassTreeCell.h"
 #import "ARTURL.h"
+#import "ARTRichTextController.h"
 
 @interface CDOCClass (ARTClassTreeViewController)
 @property (nonatomic, assign) BOOL isCategoryExpanded;
@@ -32,19 +33,28 @@
 <
     NSOutlineViewDataSource,
     NSOutlineViewDelegate,
+    NSTextFieldDelegate,
     ARTClassTreeCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, strong) NSFont *font;
 @property (nonatomic, strong) NSArray<CDOCClass *> *data;
+@property (nonatomic, strong) NSCache<CDOCClass *, ARTClassTreeCell *> *cellCache;
 @end
 
 @implementation ARTClassTreeViewController
 
+//- (void)awakeFromNib
+//{
+//    [super awakeFromNib];
+//    self.outlineView.headerView = nil;
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.outlineView.headerView = nil;
+
+    self.cellCache = [[NSCache alloc] init];
 
     self.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
 
@@ -54,6 +64,11 @@
         [weakSelf.outlineView reloadData];
     }];
 }
+
+#pragma mark - Private
+#pragma mark Filter
+
+
 
 #pragma mark - Public
 
@@ -107,8 +122,13 @@
 
 #pragma mark - NSOutlineViewDelegate
 
-- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(CDOCClass *)item NS_AVAILABLE_MAC(10_7)
+- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(CDOCClass *)item
 {
+//    ARTClassTreeCell *cell = [self.cellCache objectForKey:item];
+//    if (cell) {
+//        return cell;
+//    }
+//    cell = [[ARTClassTreeCell alloc] init];
     ARTClassTreeCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
     cell.delegate = self;
@@ -117,6 +137,14 @@
         [cell updateDataWithClass:item];
     } else {
         [cell updateDataWithCategory:(CDOCCategory *)item];
+    }
+
+//    [self.cellCache setObject:cell forKey:item];
+
+    NSTableColumn *column = outlineView.tableColumns.firstObject;
+    if (column.width < cell.richTextController.optimumSize.width) {
+        column.width = cell.richTextController.optimumSize.width;
+        column.minWidth = column.width;
     }
 
     return cell;

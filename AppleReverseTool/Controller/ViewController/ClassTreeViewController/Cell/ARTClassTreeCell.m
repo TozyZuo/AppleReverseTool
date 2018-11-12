@@ -36,12 +36,24 @@
     [self initialize];
 }
 
+- (void)setFrame:(NSRect)frame
+{
+    [super setFrame:frame];
+    self.textView.frame = self.bounds;
+}
+
 - (void)initialize
 {
     NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
-    textView.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable;
+//    textView.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable|
+//    NSViewMinXMargin|
+//    NSViewMaxXMargin|
+//    NSViewMinYMargin|
+//    NSViewMaxYMargin;
+
     textView.selectable = YES;
     textView.editable = NO;
+    textView.backgroundColor = NSColor.clearColor;
     textView.textContainer.lineBreakMode = NSLineBreakByClipping;
     [self addSubview:textView];
     self.textView = textView;
