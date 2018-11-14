@@ -103,6 +103,15 @@
     }];
 }
 
+- (void)swipeWithEvent:(NSEvent *)event
+{
+    if (event.deltaX < 0) {
+        [self goForward:nil];
+    } else if (event.deltaX > 0) {
+        [self goBack:nil];
+    }
+}
+
 - (void)willChangeLinkStack
 {
 
