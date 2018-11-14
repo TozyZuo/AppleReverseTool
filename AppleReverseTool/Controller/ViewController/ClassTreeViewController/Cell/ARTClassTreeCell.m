@@ -74,7 +74,14 @@
         node = (CDOCClass *)node.superNode;
     }
 
-    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
+    BOOL isLastCategory = NO;
+    if (class.filteredCategories) {
+        isLastCategory = [class.filteredCategories indexOfObject:category] == (class.filteredCategories.count - 1);
+    } else {
+        isLastCategory = [class.categories indexOfObject:category] == (class.categories.count - 1);
+    }
+
+    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", isLastCategory ? @"└" : @"├"];
 }
 
 - (NSString *)prefixWithClass:(CDOCClass *)data
@@ -117,7 +124,7 @@
 
 - (NSString *)categoryLinkButtonWithData:(CDOCClass *)data
 {
-    return data.categories.count ? [NSString stringWithFormat:@" (<a href='%@://%@' color=%@>%ld</a>)", kSchemeAction, kExpandCategoryAction, kColorNumbers, data.categories.count] : @"";
+    return data.categories.count ? [NSString stringWithFormat:@" (<a href='%@://%@' color=%@>%@</a>)", kSchemeAction, kExpandCategoryAction, kColorNumbers, data.filteredCategories ? [NSString stringWithFormat:@"%ld/%ld", data.filteredCategories.count, data.categories.count] : [NSString stringWithFormat:@"%ld", data.categories.count]] : @"";
 }
 
 #pragma mark - Public
@@ -146,6 +153,21 @@
     if ([self.delegate respondsToSelector:@selector(classTreeCell:didClickLink:rightMouse:)]) {
         [self.delegate classTreeCell:self didClickLink:link rightMouse:rightMouse];
     }
+}
+
+@end
+
+
+@implementation CDOCClass (ARTClassTreeCell)
+
+- (NSMutableArray<CDOCCategory *> *)filteredCategories
+{
+    return self[ARTAssociatedKeyForSelector(_cmd)];
+}
+
+- (void)setFilteredCategories:(NSMutableArray<CDOCCategory *> *)filteredCategories
+{
+    self[ARTAssociatedKeyForSelector(@selector(filteredCategories))] = filteredCategories;
 }
 
 @end

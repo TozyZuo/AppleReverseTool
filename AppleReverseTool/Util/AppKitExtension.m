@@ -40,11 +40,15 @@ BOOL ClassImplementedSelector(Class aClass, SEL aSelector)
 
 @implementation NSView (AppKitExtension)
 
+static BOOL _NSViewImplementedDescription;
+
 + (void)load
 {
     if ([self instancesImplementedSelector:@selector(description)]) {
+        _NSViewImplementedDescription = YES;
         method_exchangeImplementations(class_getInstanceMethod(self, @selector(description)), class_getInstanceMethod(self, @selector(description_AppKitExtension)));
     } else {
+        _NSViewImplementedDescription = NO;
         Method description_AppKitExtension = class_getInstanceMethod(self, @selector(description_AppKitExtension));
         class_addMethod(self, @selector(description), method_getImplementation(description_AppKitExtension), method_getTypeEncoding(description_AppKitExtension));
     }
@@ -52,26 +56,7 @@ BOOL ClassImplementedSelector(Class aClass, SEL aSelector)
 
 - (NSString *)description_AppKitExtension
 {
-    static NSMutableDictionary<Class, NSNumber *> *cache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [[NSMutableDictionary alloc] init];
-    });
-
-    NSNumber *implementedDescription = cache[self.class];
-
-    if (!implementedDescription) {
-        implementedDescription = @(method_getImplementation(class_getInstanceMethod(self.class, @selector(description))) != method_getImplementation(class_getInstanceMethod(self.class, @selector(description_AppKitExtension))));
-        cache[(id)self.class] = implementedDescription;
-    }
-
-    NSMutableString *str;
-
-    if (implementedDescription.boolValue) {
-        str = [self description_AppKitExtension].mutableCopy;
-    } else {
-        str = super.description.mutableCopy;
-    }
+    NSMutableString *str = _NSViewImplementedDescription ? self.description_AppKitExtension.mutableCopy : super.description.mutableCopy;
 
     [str appendString:@"["];
     [str appendFormat:@"frame = %@; ", NSStringFromRect(self.frame)];

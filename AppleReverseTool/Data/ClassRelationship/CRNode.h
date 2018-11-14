@@ -30,4 +30,5 @@
 
 NSArray<id<ARTNode>> *NodesInBundle(NSBundle *bundle);
 NSArray<id<ARTNode>> *NodesWithProvider(id<ARTNodeProvider> provider);
+NSArray<id<ARTNode>> *NodesWithProviderBlock(NSArray<id<ARTNode>> *(^nodes)(void), id<ARTNode> (^superNodeForNode)(id<ARTNode> node));
 NSString *DescriptionWithNodes(NSArray<id<ARTNode>> *nodes);

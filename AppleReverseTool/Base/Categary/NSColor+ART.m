@@ -51,4 +51,9 @@
     return RGBColor(41, 52, 212);
 }
 
++ (NSColor *)filteredCharacterBackgroundColor
+{
+    return RGBColor(251, 244, 208);
+}
+
 @end

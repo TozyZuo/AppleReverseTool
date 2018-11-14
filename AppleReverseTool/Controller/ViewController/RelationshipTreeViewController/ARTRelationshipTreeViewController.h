@@ -18,9 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface ARTRelationshipTreeViewController : ARTViewController
-@property (nonatomic, weak) ARTDataController *dataController;
 @property (nonatomic, weak) id<ARTRelationshipTreeViewControllerDelegate> delegate;
-- (void)updateData:(NSArray<CDOCClass *> *)data;
+- (void)updateData:(ARTDataController *)dataController;
 @end
 
 NS_ASSUME_NONNULL_END

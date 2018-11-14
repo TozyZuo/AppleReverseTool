@@ -863,9 +863,79 @@
 
 #pragma mark - Public
 
++ (BOOL)isString:(NSString *)string metTheFilterCondition:(NSString *)conditionText
+{
+    if (!(string.length && conditionText.length)) {
+        return NO;
+    }
+
+    NSInteger index = 0;
+
+    for (int i = 0; i < conditionText.length; i++) {
+        NSRange range = [string rangeOfString:[conditionText substringWithRange:NSMakeRange(i, 1)] options:NSCaseInsensitiveSearch range:NSMakeRange(index, string.length - index)];
+        index = NSMaxRange(range);
+        if (range.location == NSNotFound) {
+            return NO;
+        }
+    }
+
+    return YES;
+}
+
++ (NSIndexSet *)fuzzySearchWithString:(NSString *)string conditionText:(NSString *)conditionText
+{
+    if (!(string.length && conditionText.length)) {
+        return nil;
+    }
+
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+
+    NSInteger index = 0;
+
+    for (int i = 0; i < conditionText.length; i++) {
+        NSRange range = [string rangeOfString:[conditionText substringWithRange:NSMakeRange(i, 1)] options:NSCaseInsensitiveSearch range:NSMakeRange(index, string.length - index)];
+        index = NSMaxRange(range);
+        if (range.location != NSNotFound) {
+            [indexSet addIndex:range.location];
+//            NSString *tempStr = [string substringWithRange:NSMakeRange(0, range.location + 1)];
+//            NSLog(@"%d %@", i, tempStr);
+        }
+    }
+
+    return indexSet.count == conditionText.length ? indexSet : nil;
+}
+
+- (void)setFilterConditionText:(NSString *)filterConditionText
+{
+    if (![_filterConditionText isEqualToString:filterConditionText])
+    {
+        NSMutableAttributedString *attributedText = self.attributedText.mutableCopy;
+
+        [[ARTRichTextController fuzzySearchWithString:self.attributedText.string conditionText:_filterConditionText] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop)
+        {
+            [attributedText removeAttribute:NSBackgroundColorAttributeName range:NSMakeRange(idx, 1)];
+        }];
+
+        _filterConditionText = nil;
+
+        if ([ARTRichTextController isString:self.plainText metTheFilterCondition:filterConditionText]) {
+
+            _filterConditionText = filterConditionText;
+
+            [[ARTRichTextController fuzzySearchWithString:self.attributedText.string conditionText:_filterConditionText] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop)
+             {
+                 [attributedText addAttribute:NSBackgroundColorAttributeName value:[self colorFromAttributesValue:@"filteredCharacterBackground"] range:NSMakeRange(idx, 1)];
+             }];
+        }
+
+        self.attributedText = attributedText;
+    }
+}
+
 - (void)setText:(NSString *)text
 {
     if (![_text isEqualToString:text]) {
+        _filterConditionText = nil;
         _text = [text stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
         [self parseText:_text paragraphReplacement:@"\n"];
         self.attributedText = [self attributedTextWithComponents:self.textComponents plainText:self.plainText];

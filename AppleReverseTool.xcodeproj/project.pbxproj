@@ -23,6 +23,7 @@
 		BA3BE8122164C4DA007AEFEF /* ClassDumpExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8112164C4DA007AEFEF /* ClassDumpExtension.m */; };
 		BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8132164DA40007AEFEF /* ARTProtocol.m */; };
 		BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */; };
+		BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */; };
 		BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635C9D215DFBEE0048AB9A /* AppDelegate.m */; };
 		BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635CA3215DFBEE0048AB9A /* ARTDocument.m */; };
 		BA635CA6215DFBEF0048AB9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA635CA5215DFBEF0048AB9A /* Assets.xcassets */; };
@@ -138,6 +139,7 @@
 		BA3BE8132164DA40007AEFEF /* ARTProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTProtocol.m; sourceTree = "<group>"; };
 		BA3BE8152164FC7D007AEFEF /* ARTTextViewControllerVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTTextViewControllerVisitor.h; sourceTree = "<group>"; };
 		BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTTextViewControllerVisitor.m; sourceTree = "<group>"; };
+		BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Foundation_Log.m; sourceTree = "<group>"; };
 		BA635C99215DFBEE0048AB9A /* Rcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rcode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA635C9C215DFBEE0048AB9A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BA635C9D215DFBEE0048AB9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 		BA0A511E21770FC800FD9CB8 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */,
 				BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */,
 				BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */,
 				BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */,
@@ -632,6 +635,7 @@
 				BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */,
 				BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */,
 				BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */,
+				BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */,
 				BA635CF0215E02D90048AB9A /* ARTController.m in Sources */,
 				BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */,
 				BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */,

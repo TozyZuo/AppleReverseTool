@@ -125,11 +125,8 @@ id<ARTNode> NodeForName(NSString *nodeName, id<ARTNodeProvider> provider, NSMuta
     return node;
 }
 
-void CacheNode(id<ARTNode> node, id<ARTNodeProvider> provider, NSMutableArray *result)
+void __attribute__((overloadable)) CacheNode(id<ARTNode> node, id<ARTNodeProvider> provider, NSMutableArray *result)
 {
-    if ([node.name isEqualToString:@"HAHConfigParser"]) {
-
-    }
     id<ARTNode> superNode = [provider superNodeForNode:node];
 
     if (!superNode || [superNode isEqual:node]) {
@@ -140,6 +137,25 @@ void CacheNode(id<ARTNode> node, id<ARTNodeProvider> provider, NSMutableArray *r
 
     if (!_nodeMap[superNode.name]) {
         CacheNode(superNode, provider, result);
+    }
+
+    node.superNode = superNode;
+    [superNode addSubNode:node];
+    _nodeMap[node.name] = node;
+}
+
+void __attribute__((overloadable)) CacheNode(id<ARTNode> node, id<ARTNode> (^superNodeForNode)(id<ARTNode> node), NSMutableArray *result)
+{
+    id<ARTNode> superNode = superNodeForNode(node);
+
+    if (!superNode || [superNode isEqual:node]) {
+        _nodeMap[node.name] = node;
+        [result addObject:node];
+        return;
+    }
+
+    if (!_nodeMap[superNode.name]) {
+        CacheNode(superNode, superNodeForNode, result);
     }
 
     node.superNode = superNode;
@@ -169,6 +185,24 @@ NSArray<id<ARTNode>> *NodesWithProvider(id<ARTNodeProvider> provider)
             if (!_nodeMap[node.name]) {
                 CacheNode(node, provider, result);
             }
+        }
+    }
+
+    [_nodeMap removeAllObjects];
+    _nodeMap = nil;
+
+    return result.copy;
+}
+
+NSArray<id<ARTNode>> *NodesWithProviderBlock(NSArray<id<ARTNode>> *(^nodes)(void), id<ARTNode> (^superNodeForNode)(id<ARTNode> node))
+{
+    _nodeMap = [[NSMutableDictionary alloc] init];
+
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+
+    for (id<ARTNode> node in nodes()) {
+        if (!_nodeMap[node.name]) {
+            CacheNode(node, superNodeForNode, result);
         }
     }
 

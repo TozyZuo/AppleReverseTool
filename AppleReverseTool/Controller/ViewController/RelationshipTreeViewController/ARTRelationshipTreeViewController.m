@@ -24,6 +24,7 @@
     ARTRelationshipTreeCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
+@property (nonatomic,  weak ) ARTDataController *dataController;
 @property (nonatomic, strong) NSFont *font;
 @property (nonatomic, strong) NSArray<ARTRelationshipTreeModel *> *data;
 @end
@@ -46,10 +47,12 @@
 
 #pragma mark - Public
 
-- (void)updateData:(NSArray<CDOCClass *> *)data
+- (void)updateData:(ARTDataController *)dataController
 {
+    self.dataController = dataController;
+
     NSMutableArray *modelData = [[NSMutableArray alloc] init];
-    for (CDOCClass *class in data) {
+    for (CDOCClass *class in dataController.relationshipNodes) {
         [modelData addObject:[[ARTRelationshipTreeModel alloc] initWithData:class dataController:self.dataController]];
     }
     [modelData sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2)

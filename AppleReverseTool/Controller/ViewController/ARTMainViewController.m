@@ -165,10 +165,8 @@
              self.relationshipTreeButton.enabled = YES;
              [self classTreeButtonAction:self.classTreeButton];
 
-             [self.classTreeViewController updateData:dataController.classNodes];
-
-             self.relationshipTreeViewController.dataController = dataController;
-             [self.relationshipTreeViewController updateData:dataController.relationshipNodes];
+             [self.classTreeViewController updateData:dataController];
+             [self.relationshipTreeViewController updateData:dataController];
          }];
     }
 }

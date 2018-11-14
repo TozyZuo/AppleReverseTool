@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTClassTreeViewController, CDOCClass;
+@class ARTClassTreeViewController, CDOCClass, ARTDataController;
 
 @protocol ARTClassTreeViewControllerDelegate <NSObject>
 @optional
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ARTClassTreeViewController : ARTViewController
 @property (nonatomic, weak) id<ARTClassTreeViewControllerDelegate> delegate;
-- (void)updateData:(NSArray<CDOCClass *> *)data;
+- (void)updateData:(ARTDataController *)dataController;
 @end
 
 NS_ASSUME_NONNULL_END

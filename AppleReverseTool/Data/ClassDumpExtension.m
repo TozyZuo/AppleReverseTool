@@ -46,6 +46,21 @@ NSString *ARTStringCreate(NSString *string, ...)
     self[ARTAssociatedKeyForSelector(@selector(isInsideMainBundle))] = @(isInsideMainBundle);
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    CDOCProtocol *copy = [[self.class alloc] init];
+    copy.name = self.name;
+    copy.isInsideMainBundle = self.isInsideMainBundle;
+    copy[@"protocols"] = self.protocols;
+    copy[@"classMethods"] = self.classMethods;
+    copy[@"instanceMethods"] = self.instanceMethods;
+    copy[@"optionalClassMethods"] = self.optionalClassMethods;
+    copy[@"optionalInstanceMethods"] = self.optionalInstanceMethods;
+    copy[@"properties"] = self.properties;
+    copy[@"adoptedProtocolNames"] = self[@"adoptedProtocolNames"];
+    return copy;
+}
+
 @end
 
 @implementation CDOCClass (ARTExtension)
@@ -138,6 +153,49 @@ NSString *ARTStringCreate(NSString *string, ...)
     for (CDOCClass *subClass in interalSubNodes) {
         [subClass sort];
     }
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    CDOCClass *copy = [super copyWithZone:zone];
+    if (copy) {
+        copy.isExported = self.isExported;
+        copy.isSwiftClass = self.isSwiftClass;
+        copy[@"instanceVariables"] = self.instanceVariables;
+        copy.superClassRef = [[CDOCClassReference alloc] initWithClassName:self.superClassRef.className];
+        for (CDOCClass *referrer in self.referrers) {
+            [copy addReferrer:referrer];
+        }
+        for (CDOCCategory *category in self.categories) {
+            [copy addCategory:category/*.copy*/];
+        }
+    }
+    return copy;
+}
+
+@end
+
+@implementation CDOCCategory (ARTExtension)
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    CDOCCategory *copy = [super copyWithZone:zone];
+    if (copy) {
+        copy.classRef = self.classRef.copy;
+    }
+    return copy;
+}
+
+@end
+
+@implementation CDOCClassReference (ARTExtension)
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    CDOCClassReference *copy = [[CDOCClassReference alloc] initWithClassName:self.className];
+    copy.classObject = self.classObject;
+    copy.classSymbol = self.classSymbol;
+    return copy;
 }
 
 @end

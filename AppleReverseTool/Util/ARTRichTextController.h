@@ -37,7 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGSize optimumSize;
 @property (nonatomic,  weak ) NSView<ARTRichTextViewProtocol> *view;
 @property (nonatomic,  weak ) id<ARTRichTextControllerDelegate> delegate;
+
+@property (nonatomic, strong) NSString *filterConditionText;
+
 - (instancetype)initWithView:(NSView<ARTRichTextViewProtocol> * _Nullable)view NS_DESIGNATED_INITIALIZER;
+
++ (BOOL)isString:(NSString *)string metTheFilterCondition:(NSString *)conditionText;
++ (nullable NSIndexSet *)fuzzySearchWithString:(NSString *)string conditionText:(NSString *)conditionText;
+
 @end
 
 // TODO

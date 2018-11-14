@@ -10,6 +10,7 @@
 #import "CRNode.h"
 #import "CDOCClass.h"
 #import "CDOCCategory.h"
+#import "CDOCClassReference.h"
 #import "CDType.h"
 #import "CDTypeName.h"
 #import "CDTypeFormatter.h"
@@ -46,6 +47,7 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 #pragma mark -
 
 @interface CDOCProtocol (ARTExtension)
+<NSCopying>
 @property (nonatomic, assign) BOOL isInsideMainBundle;
 @end
 
@@ -56,6 +58,14 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 - (void)addCategory:(CDOCCategory *)category;
 - (void)addReferrer:(CDOCClass *)referrer;
 - (void)sort;
+@end
+
+@interface CDOCCategory (ARTExtension)
+<NSCopying>
+@end
+
+@interface CDOCClassReference (ARTExtension)
+<NSCopying>
 @end
 
 typedef NS_ENUM(NSInteger, CDDetailedType) {
