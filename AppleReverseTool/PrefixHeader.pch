@@ -18,6 +18,7 @@
 #import "ARTProtocol.h"
 #import "ARTStrings.h"
 #import "NSView_TZCategory.h"
+#import "NSMenu+TZCategory.h"
 #import "NSObject+ART.h"
 #import "ARTFontManager.h"
 #endif /* PrefixHeader_pch */

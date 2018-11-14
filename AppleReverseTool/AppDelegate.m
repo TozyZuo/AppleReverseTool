@@ -22,10 +22,23 @@
     }
 }
 
-
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
 
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender
+{
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    for (NSDocument *document in NSDocumentController.sharedDocumentController.documents) {
+        if (!document.windowControllers.firstObject.window.visible) {
+            [items addObject:[[NSMenuItem alloc] initWithTitle:document.displayName userInfo:document block:^(NSMenuItem * _Nonnull item)
+            {
+                NSDocument *document = item.representedObject;
+                [document.windowControllers.firstObject.window orderFront:nil];
+            }]];
+        }
+    }
+    return [NSMenu menuWithTitle:@"" items:items];
+}
 
 @end

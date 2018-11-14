@@ -10,10 +10,16 @@
 #import "ARTMainWindowController.h"
 
 @interface ARTDocument ()
+<NSWindowDelegate>
 @property (nonatomic, strong) ARTMainWindowController *windowController;
 @end
 
 @implementation ARTDocument
+
+- (void)dealloc
+{
+
+}
 
 - (instancetype)init {
     self = [super init];
@@ -31,9 +37,12 @@
     // Override to return the Storyboard file name of the document.
     if (self.fileURL) {
         ARTMainWindowController *wc = [ARTMainWindowController windowController];
+        wc.window.delegate = self;
         [self addWindowController:wc];
         self.windowController = wc;
         wc.fileURL = self.fileURL;
+    } else {
+        [NSDocumentController.sharedDocumentController removeDocument:self];
     }
 }
 
@@ -49,5 +58,13 @@
     self.fileURL = url;
     return YES;
 }
+
+#pragma mark - NSWindowDelegate
+
+//- (BOOL)windowShouldClose:(NSWindow *)sender
+//{
+//    [sender orderOut:nil];
+//    return NO;
+//}
 
 @end

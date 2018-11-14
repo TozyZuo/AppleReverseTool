@@ -24,6 +24,9 @@
 		BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8132164DA40007AEFEF /* ARTProtocol.m */; };
 		BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */; };
 		BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */; };
+		BA53CBFB219C10B000AA2F19 /* NSMenu+TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */; };
+		BA53CC00219C110100AA2F19 /* NSMenu+Pretty.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFD219C110100AA2F19 /* NSMenu+Pretty.m */; };
+		BA53CC01219C110100AA2F19 /* NSMenuItem+Pretty.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFF219C110100AA2F19 /* NSMenuItem+Pretty.m */; };
 		BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635C9D215DFBEE0048AB9A /* AppDelegate.m */; };
 		BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635CA3215DFBEE0048AB9A /* ARTDocument.m */; };
 		BA635CA6215DFBEF0048AB9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA635CA5215DFBEF0048AB9A /* Assets.xcassets */; };
@@ -140,6 +143,12 @@
 		BA3BE8152164FC7D007AEFEF /* ARTTextViewControllerVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTTextViewControllerVisitor.h; sourceTree = "<group>"; };
 		BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTTextViewControllerVisitor.m; sourceTree = "<group>"; };
 		BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Foundation_Log.m; sourceTree = "<group>"; };
+		BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+TZCategory.h"; sourceTree = "<group>"; };
+		BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+TZCategory.m"; sourceTree = "<group>"; };
+		BA53CBFC219C110000AA2F19 /* NSMenuItem+Pretty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+Pretty.h"; sourceTree = "<group>"; };
+		BA53CBFD219C110100AA2F19 /* NSMenu+Pretty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+Pretty.m"; sourceTree = "<group>"; };
+		BA53CBFE219C110100AA2F19 /* NSMenu+Pretty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenu+Pretty.h"; sourceTree = "<group>"; };
+		BA53CBFF219C110100AA2F19 /* NSMenuItem+Pretty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+Pretty.m"; sourceTree = "<group>"; };
 		BA635C99215DFBEE0048AB9A /* Rcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rcode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA635C9C215DFBEE0048AB9A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BA635C9D215DFBEE0048AB9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -277,6 +286,10 @@
 		BA635C90215DFBEE0048AB9A = {
 			isa = PBXGroup;
 			children = (
+				BA53CBFE219C110100AA2F19 /* NSMenu+Pretty.h */,
+				BA53CBFD219C110100AA2F19 /* NSMenu+Pretty.m */,
+				BA53CBFC219C110000AA2F19 /* NSMenuItem+Pretty.h */,
+				BA53CBFF219C110100AA2F19 /* NSMenuItem+Pretty.m */,
 				BA635E9E215E091C0048AB9A /* class-dump-ref */,
 				BA635C9B215DFBEE0048AB9A /* AppleReverseTool */,
 				BA635C9A215DFBEE0048AB9A /* Products */,
@@ -400,6 +413,8 @@
 		BA6C1AAC2166597D00ABC059 /* Categary */ = {
 			isa = PBXGroup;
 			children = (
+				BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */,
+				BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */,
 				BA6C1AB0216659F500ABC059 /* NSView_TZCategory.h */,
 				BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */,
 				BA3BE7CC21635425007AEFEF /* NSColor+ART.h */,
@@ -628,6 +643,7 @@
 				BA635EBC215E09C70048AB9A /* CDTypeController.m in Sources */,
 				BA635CAC215DFBEF0048AB9A /* main.m in Sources */,
 				BA8434062168AD13007E55B0 /* ARTURL.m in Sources */,
+				BA53CBFB219C10B000AA2F19 /* NSMenu+TZCategory.m in Sources */,
 				BA635EC9215E25D30048AB9A /* CDClassFrameworkVisitor.m in Sources */,
 				BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */,
 				BA3BE7CE21635425007AEFEF /* NSColor+ART.m in Sources */,
@@ -648,6 +664,7 @@
 				BA635CF3215E02E90048AB9A /* ARTDataController.m in Sources */,
 				BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */,
 				BA3BE7C521632C95007AEFEF /* ARTClassTreeCell.m in Sources */,
+				BA53CC00219C110100AA2F19 /* NSMenu+Pretty.m in Sources */,
 				BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */,
 				BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */,
 				BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */,
@@ -659,6 +676,7 @@
 				BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */,
 				BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */,
 				BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */,
+				BA53CC01219C110100AA2F19 /* NSMenuItem+Pretty.m in Sources */,
 				BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */,
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
