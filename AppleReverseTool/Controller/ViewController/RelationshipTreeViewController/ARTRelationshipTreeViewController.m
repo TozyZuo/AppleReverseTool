@@ -11,6 +11,7 @@
 #import "ARTDataController.h"
 #import "ARTURL.h"
 #import "ARTRelationshipTreeModel.h"
+#import "ARTRichTextController.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 #import "CDTypeLexer.h"
@@ -104,6 +105,11 @@
     cell.textView.font = self.font;
     [cell updateData:item];
 
+    NSTableColumn *column = outlineView.tableColumns.firstObject;
+    if (column.width < cell.richTextController.optimumSize.width) {
+        column.width = cell.richTextController.optimumSize.width;
+        column.minWidth = column.width;
+    }
     return cell;
 }
 

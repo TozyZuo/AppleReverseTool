@@ -174,9 +174,9 @@ NSString *ARTStringCreate(NSString *string, ...)
         copy.isSwiftClass = self.isSwiftClass;
         copy[@"instanceVariables"] = self.instanceVariables;
         copy.superClassRef = [[CDOCClassReference alloc] initWithClassName:self.superClassRef.className];
-        for (CDOCClass *referrer in self.referrers) {
-            [copy addReferrer:referrer];
-        }
+//        for (CDOCClass *referrer in self.referrers) {
+//            [copy addReferrer:referrer];
+//        }
         for (CDOCCategory *category in self.categories) {
             [copy addCategory:category/*.copy*/];
         }

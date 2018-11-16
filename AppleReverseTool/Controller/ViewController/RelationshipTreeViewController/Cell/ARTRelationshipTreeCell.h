@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTRelationshipTreeCell, ARTRelationshipTreeModel, ARTDataController;
+@class ARTRelationshipTreeCell, ARTRelationshipTreeModel, ARTDataController, ARTRichTextController;
 
 @protocol ARTRelationshipTreeCellDelegate <NSObject>
 @optional
@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,   weak  ) id<ARTRelationshipTreeCellDelegate> delegate;
 @property (nonatomic,   weak  ) IBOutlet NSOutlineView *outlineView;
 @property (   weak  , readonly) NSTextView *textView;
+@property (nonatomic, readonly) ARTRichTextController *richTextController;
 @property (nonatomic,   weak  ) ARTDataController *dataController;
 @property (nonatomic, readonly) ARTRelationshipTreeModel *data;
 - (void)updateData:(ARTRelationshipTreeModel *)data;

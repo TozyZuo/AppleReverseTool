@@ -146,7 +146,7 @@
         for (CDOCCategory *category in class.categories) {
             if ([self isCategory:category metTheFilterCondition:conditionText]) {
                 [filteredCategories addObject:category.copy];
-                NSLog(@"%@ match category %@ %@", conditionText, category.name, class.name);
+//                NSLog(@"%@ match category %@ %@", conditionText, category.name, class.name);
                 isClassMetCondition = YES;
             }
         }
@@ -162,7 +162,7 @@
         }
     }
     if ([self isString:class.name metTheFilterCondition:conditionText]) {
-        NSLog(@"%@ match class %@", conditionText, class.name);
+//        NSLog(@"%@ match class %@", conditionText, class.name);
         [result addObject:class.copy];
     }
 }
