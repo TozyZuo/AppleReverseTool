@@ -879,7 +879,7 @@
         <scene sceneID="eTV-Sj-VE2">
             <objects>
                 <viewController id="a7i-bA-zwu" customClass="ARTClassTreeViewController" sceneMemberID="viewController">
-                    <view key="view" id="Lkm-2i-KUk">
+                    <view key="view" id="Lkm-2i-KUk" customClass="MyView">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -896,7 +896,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <outlet property="delegate" destination="a7i-bA-zwu" id="3df-DB-e0I"/>
+                                            <outlet property="delegate" destination="a7i-bA-zwu" id="aCO-lc-xOU"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -969,7 +969,7 @@
         <scene sceneID="Jae-jV-xnv">
             <objects>
                 <viewController id="fE2-vV-OtR" customClass="ARTTextViewController" sceneMemberID="viewController">
-                    <view key="view" id="bvE-BR-1xt" customClass="ARTView">
+                    <view key="view" id="bvE-BR-1xt">
                         <rect key="frame" x="0.0" y="0.0" width="466" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1083,7 +1083,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </customView>
-                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="27" horizontalPageScroll="10" verticalLineScroll="27" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOZ-qL-qPS">
+                            <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="27" horizontalPageScroll="10" verticalLineScroll="27" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOZ-qL-qPS" customClass="RFOverlayScrollView">
                                 <rect key="frame" x="0.0" y="28" width="450" height="272"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="fx4-XX-VB7">
@@ -1124,11 +1124,11 @@
                                         </outlineView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ZeF-Vf-gT4">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ZeF-Vf-gT4" customClass="RFOverlayScroller">
                                     <rect key="frame" x="1" y="119" width="223" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hxl-z3-V34">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="hxl-z3-V34" customClass="RFOverlayScroller">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

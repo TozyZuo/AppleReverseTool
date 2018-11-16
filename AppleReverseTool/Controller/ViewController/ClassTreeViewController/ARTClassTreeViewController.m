@@ -155,7 +155,7 @@
             classCopy.isCategoryExpanded = YES;
             classCopy.filteredCategories = filteredCategories;
             for (CDOCCategory *category in filteredCategories) {
-                category.classRef.classObject = classCopy;
+                category.classReference = classCopy;
             }
             [result addObject:classCopy];
             return;
@@ -165,7 +165,6 @@
         NSLog(@"%@ match class %@", conditionText, class.name);
         [result addObject:class.copy];
     }
-
 }
 
 - (BOOL)isCategory:(CDOCCategory *)category metTheFilterCondition:(NSString *)conditionText

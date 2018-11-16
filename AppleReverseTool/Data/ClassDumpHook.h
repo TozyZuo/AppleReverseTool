@@ -13,12 +13,13 @@
 #import "CDMethodType.h"
 #import "CDTypeParser.h"
 #import "CDTypeController.h"
+#import "CDOCClassReference.h"
 
 extern void *_dispatch_queue_userInfo_key;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class CDOCClassReference;
+#pragma mark - ARTDataController
 
 @interface CDObjectiveCProcessor (ARTDataController)
 - (void)hook_process;
@@ -44,6 +45,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CDTypeController (ARTDataController)
 - (void)hook_workSomeMagic;
+@end
+
+#pragma mark - ART
+
+@interface CDOCClassReference (ART)
+- (instancetype)hook_initWithClassObject:(CDOCClass *)classObject;
 @end
 
 NS_ASSUME_NONNULL_END

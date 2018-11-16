@@ -14,7 +14,6 @@
 #import "ARTButton.h"
 #import "NSColor+ART.h"
 
-
 @interface ARTMainViewController ()
 <
     ARTClassTreeViewControllerDelegate,
@@ -129,10 +128,15 @@
     if (!_fileURL && fileURL) {
         _fileURL = fileURL;
 
-//        [self.classTreeViewController updateData:nil];
+//        id c = [[NSClassFromString(@"CDOCClass") alloc] init];
+//        [(NSImage *)c setName:@"NSObject"];
+//        ARTDataController *dc = [[ARTDataController alloc] init];
+//        dc[@"classNodes"] = @[c];
+//        [self.classTreeViewController updateData:dc];
 //        self.classTreeButton.enabled = YES;
 //        self.classTreeButton.selected = YES;
 //        self.relationshipTreeButton.enabled = YES;
+//        self.dataController = dc;
 //        return;
 
         self.dataController = [[ARTDataController alloc] init];
@@ -164,6 +168,7 @@
              self.classTreeButton.enabled = YES;
              self.relationshipTreeButton.enabled = YES;
              [self classTreeButtonAction:self.classTreeButton];
+//             [self relationshipTreeButtonAction:self.relationshipTreeButton];
 
              [self.classTreeViewController updateData:dataController];
              [self.relationshipTreeViewController updateData:dataController];

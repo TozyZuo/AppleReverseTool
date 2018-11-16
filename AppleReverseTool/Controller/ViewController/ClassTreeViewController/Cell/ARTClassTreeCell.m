@@ -65,7 +65,7 @@
 - (NSString *)prefixWithCategory:(CDOCCategory *)category
 {
     NSString *prefix = @"";
-    CDOCClass *class = category.classRef.classObject;
+    CDOCClass *class = category.classReference;
     CDOCClass *node = class;
 
     while (node) {
@@ -131,7 +131,7 @@
 
 - (CDOCProtocol *)data
 {
-    return self.aClass ?: self.category.classRef.classObject;
+    return self.aClass ?: self.category.classReference;
 }
 
 - (void)updateDataWithClass:(CDOCClass *)class

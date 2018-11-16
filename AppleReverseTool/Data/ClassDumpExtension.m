@@ -11,6 +11,7 @@
 #import "CDTypeParser.h"
 #import "CDMethodType.h"
 #import "ARTDataController.h"
+#import "ARTWeakObjectWrapper.h"
 #import <objc/runtime.h>
 
 
@@ -95,6 +96,16 @@ NSString *ARTStringCreate(NSString *string, ...)
     return interalSubNodes;
 }
 
+- (CDOCClass *)superClass
+{
+    return (CDOCClass *)self.superNode;
+}
+
+- (void)setSuperClass:(CDOCClass *)superClass
+{
+    self.superNode = superClass;
+}
+
 - (NSArray<CDOCCategory *> *)categories
 {
     return self.interalCategories;
@@ -117,7 +128,7 @@ NSString *ARTStringCreate(NSString *string, ...)
 
 - (NSArray<CDOCClass *> *)referrers
 {
-    return self.interalReferrers;
+    return self.interalReferrers.allObjects;
 }
 
 - (void)addReferrer:(CDOCClass *)referrer
@@ -125,14 +136,14 @@ NSString *ARTStringCreate(NSString *string, ...)
     [self.interalReferrers addObject:referrer];
 }
 
-- (NSMutableArray *)interalReferrers
+- (NSHashTable *)interalReferrers
 {
-    NSMutableArray *interalCategories = self[ARTAssociatedKeyForSelector(_cmd)];
-    if (!interalCategories) {
-        interalCategories = [[NSMutableArray alloc] init];
-        self[ARTAssociatedKeyForSelector(_cmd)] = interalCategories;
+    NSHashTable *interalReferrers = self[ARTAssociatedKeyForSelector(_cmd)];
+    if (!interalReferrers) {
+        interalReferrers = [NSHashTable weakObjectsHashTable];
+        self[ARTAssociatedKeyForSelector(_cmd)] = interalReferrers;
     }
-    return interalCategories;
+    return interalReferrers;
 }
 
 - (void)sort
@@ -146,9 +157,9 @@ NSString *ARTStringCreate(NSString *string, ...)
         return [obj1.name compare:obj2.name];
     }];
 
-    [self.interalReferrers sortUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
-        return [obj1.name compare:obj2.name];
-    }];
+//    [self.interalReferrers sortUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
+//        return [obj1.name compare:obj2.name];
+//    }];
 
     for (CDOCClass *subClass in interalSubNodes) {
         [subClass sort];
@@ -184,6 +195,16 @@ NSString *ARTStringCreate(NSString *string, ...)
         copy.classRef = self.classRef.copy;
     }
     return copy;
+}
+
+- (CDOCClass *)classReference
+{
+    return self[ARTAssociatedKeyForSelector(_cmd)];
+}
+
+- (void)setClassReference:(CDOCClass *)classReference
+{
+    [self setWeakObject:classReference forKey:ARTAssociatedKeyForSelector(@selector(classReference))];
 }
 
 @end

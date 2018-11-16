@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BA0A512621770FDE00FD9CB8 /* ARTRichTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */; };
+		BA0BE692219D802300166FD3 /* TZDebugUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CC03219C538B00AA2F19 /* TZDebugUtil.m */; };
 		BA2E220D2189DA0700480731 /* RFOverlayScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E220C2189DA0700480731 /* RFOverlayScroller.m */; };
 		BA2E2210218AA82400480731 /* RFOverlayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E220F218AA82400480731 /* RFOverlayScrollView.m */; };
 		BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */; };
@@ -25,8 +26,6 @@
 		BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */; };
 		BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */; };
 		BA53CBFB219C10B000AA2F19 /* NSMenu+TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */; };
-		BA53CC00219C110100AA2F19 /* NSMenu+Pretty.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFD219C110100AA2F19 /* NSMenu+Pretty.m */; };
-		BA53CC01219C110100AA2F19 /* NSMenuItem+Pretty.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFF219C110100AA2F19 /* NSMenuItem+Pretty.m */; };
 		BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635C9D215DFBEE0048AB9A /* AppDelegate.m */; };
 		BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635CA3215DFBEE0048AB9A /* ARTDocument.m */; };
 		BA635CA6215DFBEF0048AB9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA635CA5215DFBEF0048AB9A /* Assets.xcassets */; };
@@ -109,9 +108,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BA0BE6E6219D976700166FD3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARTRichTextController.h; sourceTree = "<group>"; };
 		BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTRichTextController.m; sourceTree = "<group>"; };
+		BA0BE68A219D7E1000166FD3 /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
+		BA0BE690219D7E1000166FD3 /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		BA21C91B2161C387008E8F97 /* ARTProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTProtocol.h; sourceTree = "<group>"; };
 		BA2E22062189DA0600480731 /* RFOverlayScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFOverlayScroller.h; sourceTree = "<group>"; };
 		BA2E220C2189DA0700480731 /* RFOverlayScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFOverlayScroller.m; sourceTree = "<group>"; };
@@ -145,10 +159,10 @@
 		BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Foundation_Log.m; sourceTree = "<group>"; };
 		BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+TZCategory.h"; sourceTree = "<group>"; };
 		BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+TZCategory.m"; sourceTree = "<group>"; };
-		BA53CBFC219C110000AA2F19 /* NSMenuItem+Pretty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenuItem+Pretty.h"; sourceTree = "<group>"; };
-		BA53CBFD219C110100AA2F19 /* NSMenu+Pretty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+Pretty.m"; sourceTree = "<group>"; };
-		BA53CBFE219C110100AA2F19 /* NSMenu+Pretty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMenu+Pretty.h"; sourceTree = "<group>"; };
-		BA53CBFF219C110100AA2F19 /* NSMenuItem+Pretty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMenuItem+Pretty.m"; sourceTree = "<group>"; };
+		BA53CC02219C538B00AA2F19 /* TZDebugUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TZDebugUtil.h; sourceTree = "<group>"; };
+		BA53CC03219C538B00AA2F19 /* TZDebugUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TZDebugUtil.m; sourceTree = "<group>"; };
+		BA53CC06219D190F00AA2F19 /* ANYMethodLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANYMethodLog.m; sourceTree = "<group>"; };
+		BA53CC07219D190F00AA2F19 /* ANYMethodLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANYMethodLog.h; sourceTree = "<group>"; };
 		BA635C99215DFBEE0048AB9A /* Rcode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rcode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA635C9C215DFBEE0048AB9A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BA635C9D215DFBEE0048AB9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -229,6 +243,7 @@
 		BA0A511E21770FC800FD9CB8 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				BA53CC05219D18FB00AA2F19 /* DebugUtil */,
 				BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */,
 				BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */,
 				BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */,
@@ -283,13 +298,22 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		BA53CC05219D18FB00AA2F19 /* DebugUtil */ = {
+			isa = PBXGroup;
+			children = (
+				BA0BE690219D7E1000166FD3 /* fishhook.c */,
+				BA0BE68A219D7E1000166FD3 /* fishhook.h */,
+				BA53CC07219D190F00AA2F19 /* ANYMethodLog.h */,
+				BA53CC06219D190F00AA2F19 /* ANYMethodLog.m */,
+				BA53CC02219C538B00AA2F19 /* TZDebugUtil.h */,
+				BA53CC03219C538B00AA2F19 /* TZDebugUtil.m */,
+			);
+			path = DebugUtil;
+			sourceTree = "<group>";
+		};
 		BA635C90215DFBEE0048AB9A = {
 			isa = PBXGroup;
 			children = (
-				BA53CBFE219C110100AA2F19 /* NSMenu+Pretty.h */,
-				BA53CBFD219C110100AA2F19 /* NSMenu+Pretty.m */,
-				BA53CBFC219C110000AA2F19 /* NSMenuItem+Pretty.h */,
-				BA53CBFF219C110100AA2F19 /* NSMenuItem+Pretty.m */,
 				BA635E9E215E091C0048AB9A /* class-dump-ref */,
 				BA635C9B215DFBEE0048AB9A /* AppleReverseTool */,
 				BA635C9A215DFBEE0048AB9A /* Products */,
@@ -524,6 +548,7 @@
 				BA635C95215DFBEE0048AB9A /* Sources */,
 				BA635C96215DFBEE0048AB9A /* Frameworks */,
 				BA635C97215DFBEE0048AB9A /* Resources */,
+				BA0BE6E6219D976700166FD3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -654,6 +679,7 @@
 				BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */,
 				BA635CF0215E02D90048AB9A /* ARTController.m in Sources */,
 				BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */,
+				BA0BE692219D802300166FD3 /* TZDebugUtil.m in Sources */,
 				BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */,
 				BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */,
 				BA3BE7B921625BBD007AEFEF /* ARTClassTreeViewController.m in Sources */,
@@ -664,7 +690,6 @@
 				BA635CF3215E02E90048AB9A /* ARTDataController.m in Sources */,
 				BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */,
 				BA3BE7C521632C95007AEFEF /* ARTClassTreeCell.m in Sources */,
-				BA53CC00219C110100AA2F19 /* NSMenu+Pretty.m in Sources */,
 				BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */,
 				BA3BE7B021624C1E007AEFEF /* ARTViewController.m in Sources */,
 				BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */,
@@ -676,7 +701,6 @@
 				BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */,
 				BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */,
 				BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */,
-				BA53CC01219C110100AA2F19 /* NSMenuItem+Pretty.m in Sources */,
 				BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */,
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
@@ -829,8 +853,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6D9Z3495Q;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppleReverseTool/PrefixHeader.pch;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = AppleReverseTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -850,8 +876,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6D9Z3495Q;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = AppleReverseTool/PrefixHeader.pch;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = AppleReverseTool/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

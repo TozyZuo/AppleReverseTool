@@ -182,7 +182,7 @@
     // merge all
     [self.classesByClassString enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CDOCClass * _Nonnull class, BOOL * _Nonnull stop)
     {
-        class.superClassRef.classObject = self.classesByClassString[class.superClassName];
+        class.superClass = self.classesByClassString[class.superClassName];
         if (class.protocols.count) {
             NSMutableArray *protocols = [[NSMutableArray alloc] init];
             for (CDOCProtocol *protocol in class.protocols) {
@@ -193,7 +193,8 @@
 
         [self.categoriesByClassString[class.name] enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull name, CDOCCategory * _Nonnull category, BOOL * _Nonnull stop)
         {
-            category.classRef.classObject = class;
+            category.classReference = class;
+            category.classRef = nil;
             [class addCategory:category];
         }];
     }];

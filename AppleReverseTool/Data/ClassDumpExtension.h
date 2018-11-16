@@ -53,6 +53,7 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 
 @interface CDOCClass (ARTExtension)
 <ARTNode>
+@property (  weak  ) CDOCClass *superClass;
 @property (readonly) NSArray<CDOCClass *> *referrers;
 @property (readonly) NSArray<CDOCCategory *> *categories;
 - (void)addCategory:(CDOCCategory *)category;
@@ -62,6 +63,7 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 
 @interface CDOCCategory (ARTExtension)
 <NSCopying>
+@property (weak) CDOCClass *classReference;
 @end
 
 @interface CDOCClassReference (ARTExtension)

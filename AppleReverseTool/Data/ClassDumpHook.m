@@ -12,6 +12,7 @@
 #import "CDOCClassReference.h"
 #import "CDTypeLexer.h"
 #import "ARTDataController.h"
+#import <objc/runtime.h>
 
 void *_dispatch_queue_userInfo_key = &_dispatch_queue_userInfo_key;
 
@@ -149,6 +150,25 @@ void *_dispatch_queue_userInfo_key = &_dispatch_queue_userInfo_key;
     }
 
     return [self hook_workSomeMagic];
+}
+
+@end
+
+@implementation CDOCClassReference (ART)
+
++ (void)load
+{
+    method_exchangeImplementations(class_getInstanceMethod(self, @selector(initWithClassObject:)), class_getInstanceMethod(self, @selector(hook_initWithClassObject:)));
+}
+
+- (instancetype)hook_initWithClassObject:(CDOCClass *)classObject
+{
+    typeof(self) _self = [super init];
+    if (_self) {
+        _self.className = classObject.name;
+    }
+
+    return _self;
 }
 
 @end

@@ -46,7 +46,11 @@ static void *NSObjectAssociatedObjectDictionaryKey = &NSObjectAssociatedObjectDi
 
 - (void)setWeakObject:(id)obj forKey:(NSString *)key
 {
-    self[key] = [[ARTWeakObjectWrapper alloc] initWithTarget:obj];
+    if (obj) {
+        self[key] = [[ARTWeakObjectWrapper alloc] initWithTarget:obj];
+    } else {
+        self[key] = nil;
+    }
 }
 
 @end

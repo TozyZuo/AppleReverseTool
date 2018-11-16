@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TZDebugUtil.h"
 
 @interface AppDelegate ()
 
@@ -20,6 +21,13 @@
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ApplePersistenceIgnoreState"];
     }
+    
+//    [TZDebugUtil addDeallocLogToClasses:[[TZDebugUtil classesInBundle:[NSBundle mainBundle]] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(Class  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings)
+//    {
+//        return [NSStringFromClass(evaluatedObject) hasPrefix:@"ART"];
+//    }]]];
+//    [TZDebugUtil addDeallocLogToClasses:[TZDebugUtil classesInBundle:[NSBundle mainBundle]]];
+//    TZDebugUtil.deallocLogEnable = YES;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

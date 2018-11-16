@@ -156,7 +156,7 @@
     }
 }
 
-- (void)parseText:(NSString*)data paragraphReplacement:(NSString*)paragraphReplacement
+- (void)parseText:(NSString *)data paragraphReplacement:(NSString *)paragraphReplacement
 {
     NSString *originString = data;
     NSString *tag = nil;
@@ -387,6 +387,10 @@
     }
     [self.trackingAreas removeAllObjects];
 
+    if (!self.plainText.length) {
+        return;
+    }
+
     NSSize size = self.view.bounds.size;
     NSEdgeInsets insets = self.textInsets;
     NSSize insetsSize = NSMakeSize(size.width - insets.left - insets.right, size.height - insets.top - insets.bottom);
@@ -460,6 +464,10 @@
     }
 
     //    self.visibleRange = CTFrameGetVisibleStringRange(frame);
+
+    CFRelease(framesetter);
+    CFRelease(path);
+    CFRelease(frame);
 }
 
 #pragma mark  Event
