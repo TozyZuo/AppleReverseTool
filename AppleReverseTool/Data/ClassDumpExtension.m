@@ -177,9 +177,9 @@ NSString *ARTStringCreate(NSString *string, ...)
 //        for (CDOCClass *referrer in self.referrers) {
 //            [copy addReferrer:referrer];
 //        }
-        for (CDOCCategory *category in self.categories) {
-            [copy addCategory:category/*.copy*/];
-        }
+//        for (CDOCCategory *category in self.categories) {
+//            [copy addCategory:category/*.copy*/];
+//        }
     }
     return copy;
 }

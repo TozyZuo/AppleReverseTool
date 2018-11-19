@@ -43,23 +43,14 @@
 @property (nonatomic, strong) NSArray<CDOCClass *> *data;
 @property (nonatomic, strong) NSArray<CDOCClass *> *filteredData;
 @property (nonatomic, strong) NSString *filterConditionText;
-//@property (nonatomic, strong) NSCache<CDOCClass *, ARTClassTreeCell *> *cellCache;
 @property (nonatomic, strong) NSOperationQueue *filterQueue;
 @end
 
 @implementation ARTClassTreeViewController
 
-//- (void)awakeFromNib
-//{
-//    [super awakeFromNib];
-//    self.outlineView.headerView = nil;
-//}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//    self.cellCache = [[NSCache alloc] init];
 
     self.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
 
@@ -97,7 +88,7 @@
         [self.filterQueue cancelAllOperations];
         __weak typeof(self) weakSelf = self;
 
-        __block NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
             NSMutableArray<CDOCClass */*classCopy*/> *result = [[NSMutableArray alloc] init];
             for (CDOCClass *class in weakSelf.data) {
                 [weakSelf filterClass:class conditionText:text result:result];
@@ -153,9 +144,9 @@
         if (isClassMetCondition) {
             CDOCClass *classCopy = class.copy;
             classCopy.isCategoryExpanded = YES;
-            classCopy.filteredCategories = filteredCategories;
             for (CDOCCategory *category in filteredCategories) {
                 category.classReference = classCopy;
+                [classCopy addCategory:category];
             }
             [result addObject:classCopy];
             return;
@@ -196,7 +187,7 @@
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable CDOCClass *)item
 {
     if (item) {
-        return item.subNodes.count + (item.isCategoryExpanded ? self.filteredData ? item.filteredCategories.count : item.categories.count : 0);
+        return item.subNodes.count + (item.isCategoryExpanded ? item.categories.count : 0);
     } else {
         return self.filteredData ? self.filteredData.count : self.data.count;
     }
@@ -206,18 +197,10 @@
 {
     if (item) {
         if (item.isCategoryExpanded) {
-            if (item.filteredCategories) {
-                if (index < item.filteredCategories.count) {
-                    return item.filteredCategories[index];
-                } else {
-                    return item.subNodes[index - item.filteredCategories.count];
-                }
+            if (index < item.categories.count) {
+                return item.categories[index];
             } else {
-                if (index < item.categories.count) {
-                    return item.categories[index];
-                } else {
-                    return item.subNodes[index - item.categories.count];
-                }
+                return item.subNodes[index - item.categories.count];
             }
         } else {
             return item.subNodes[index];
@@ -236,40 +219,28 @@
     if (item.subNodes.count) {
         return YES;
     } else {
-        if (self.filteredData) {
-            return item.filteredCategories.count > 0;
-        } else {
-            return item.categories.count > 0;
-        }
+        return item.categories.count > 0;
     }
-    return NO;
+//    return item.subNodes.count > 0 ?: item.categories.count > 0; // unknown crash
 }
 
 #pragma mark - NSOutlineViewDelegate
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(CDOCClass *)item
 {
-//    ARTClassTreeCell *cell = [self.cellCache objectForKey:item];
-//    if (cell) {
-//        return cell;
-//    }
-//    cell = [[ARTClassTreeCell alloc] init];
     ARTClassTreeCell *cell = [outlineView makeViewWithIdentifier:@"CellID" owner:self];
     cell.outlineView = outlineView;
     cell.delegate = self;
     cell.textView.font = self.font;
     if ([item isKindOfClass:CDOCClass.class]) {
-        [cell updateDataWithClass:item];
+        [cell updateDataWithClass:item filterConditionText:self.filterConditionText totalCategoriesCount:self.dataController.classForName(item.name).categories.count];
     } else {
-        [cell updateDataWithCategory:(CDOCCategory *)item];
+        [cell updateDataWithCategory:(CDOCCategory *)item filterConditionText:self.filterConditionText];
     }
-    cell.richTextController.filterConditionText = self.filterConditionText;
-
-//    [self.cellCache setObject:cell forKey:item];
 
     NSTableColumn *column = outlineView.tableColumns.firstObject;
-    if (column.width < cell.richTextController.optimumSize.width) {
-        column.width = cell.richTextController.optimumSize.width;
+    if (column.width < cell.optimumSize.width) {
+        column.width = cell.optimumSize.width;
         column.minWidth = column.width;
     }
 
@@ -289,29 +260,21 @@
             } else {
                 [self.outlineView expandItem:data];
             }
-            [classTreeCell updateDataWithClass:data];
+            [classTreeCell updateDataWithClass:data filterConditionText:self.filterConditionText totalCategoriesCount:self.dataController.classForName(data.name).categories.count];
         }
         else if ([url.host isEqualToString:kExpandCategoryAction])
         {
             if ([self.outlineView isItemExpanded:data]) {
                 data.isCategoryExpanded = !data.isCategoryExpanded;
                 if (data.isCategoryExpanded) {
-                    if (data.filteredCategories) {
-                        [self.outlineView insertItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.filteredCategories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
-                    } else {
-                        [self.outlineView insertItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.categories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
-                    }
+                    [self.outlineView insertItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.categories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
                 } else {
-                    if (data.filteredCategories) {
-                        [self.outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.filteredCategories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
-                    } else {
-                        [self.outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.categories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
-                    }
+                    [self.outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.categories.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
                 }
             } else {
                 data.isCategoryExpanded = YES;
                 [self.outlineView expandItem:data];
-                [classTreeCell updateDataWithClass:data];
+                [classTreeCell updateDataWithClass:data filterConditionText:self.filterConditionText totalCategoriesCount:self.dataController.classForName(data.name).categories.count];
             }
         }
     } else {

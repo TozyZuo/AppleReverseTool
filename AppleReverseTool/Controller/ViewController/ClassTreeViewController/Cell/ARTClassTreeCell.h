@@ -23,14 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,   weak  ) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, readonly) __kindof CDOCProtocol *data;
 @property (   weak  , readonly) NSTextView *textView;
-@property (nonatomic, readonly) ARTRichTextController *richTextController;
-- (void)updateDataWithClass:(CDOCClass *)class;
-- (void)updateDataWithCategory:(CDOCCategory *)category;
-@end
-
-
-@interface CDOCClass (ARTClassTreeCell)
-@property (nonatomic) NSMutableArray<CDOCCategory *> *filteredCategories;
+@property (nonatomic, readonly) CGSize optimumSize;
+- (void)updateDataWithClass:(CDOCClass *)class filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount;
+- (void)updateDataWithCategory:(CDOCCategory *)category filterConditionText:(NSString *)filterConditionText;
 @end
 
 NS_ASSUME_NONNULL_END

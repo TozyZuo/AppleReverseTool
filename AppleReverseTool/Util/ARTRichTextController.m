@@ -915,7 +915,8 @@
 
 - (void)setFilterConditionText:(NSString *)filterConditionText
 {
-    if (![_filterConditionText isEqualToString:filterConditionText])
+    if ((filterConditionText || _filterConditionText) &&
+        ![_filterConditionText isEqualToString:filterConditionText])
     {
         NSMutableAttributedString *attributedText = self.attributedText.mutableCopy;
 

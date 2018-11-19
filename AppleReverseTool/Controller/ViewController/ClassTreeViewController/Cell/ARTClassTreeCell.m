@@ -74,14 +74,7 @@
         node = (CDOCClass *)node.superNode;
     }
 
-    BOOL isLastCategory = NO;
-    if (class.filteredCategories) {
-        isLastCategory = [class.filteredCategories indexOfObject:category] == (class.filteredCategories.count - 1);
-    } else {
-        isLastCategory = [class.categories indexOfObject:category] == (class.categories.count - 1);
-    }
-
-    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", isLastCategory ? @"└" : @"├"];
+    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
 }
 
 - (NSString *)prefixWithClass:(CDOCClass *)data
@@ -122,9 +115,9 @@
     }
 }
 
-- (NSString *)categoryLinkButtonWithData:(CDOCClass *)data
+- (NSString *)categoryLinkButtonWithData:(CDOCClass *)data isFiltered:(BOOL)isFiltered totalCount:(NSUInteger)totalCount
 {
-    return data.categories.count ? [NSString stringWithFormat:@" (<a href='%@://%@' color=%@>%@</a>)", kSchemeAction, kExpandCategoryAction, kColorNumbers, data.filteredCategories ? [NSString stringWithFormat:@"%ld/%ld", data.filteredCategories.count, data.categories.count] : [NSString stringWithFormat:@"%ld", data.categories.count]] : @"";
+    return data.categories.count ? [NSString stringWithFormat:@" (<a href='%@://%@' color=%@>%@</a>)", kSchemeAction, kExpandCategoryAction, kColorNumbers, isFiltered ? [NSString stringWithFormat:@"%ld/%ld", data.categories.count, totalCount] : [NSString stringWithFormat:@"%ld", data.categories.count]] : @"";
 }
 
 #pragma mark - Public
@@ -134,16 +127,25 @@
     return self.aClass ?: self.category.classReference;
 }
 
-- (void)updateDataWithClass:(CDOCClass *)class
+- (CGSize)optimumSize
+{
+    return self.richTextController.optimumSize;
+}
+
+- (void)updateDataWithClass:(CDOCClass *)class filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount
 {
     self.aClass = class;
 
-    self.richTextController.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>%@", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name, [self categoryLinkButtonWithData:class]];
+    self.richTextController.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>%@", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name, [self categoryLinkButtonWithData:class isFiltered:filterConditionText.length totalCount:totalCategoriesCount]];
+
+    self.richTextController.filterConditionText = filterConditionText;
 }
 
-- (void)updateDataWithCategory:(CDOCCategory *)category
+- (void)updateDataWithCategory:(CDOCCategory *)category filterConditionText:(NSString *)filterConditionText
 {
     self.richTextController.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name];
+
+    self.richTextController.filterConditionText = filterConditionText;
 }
 
 #pragma mark - ARTRichTextControllerDelegate
@@ -153,21 +155,6 @@
     if ([self.delegate respondsToSelector:@selector(classTreeCell:didClickLink:rightMouse:)]) {
         [self.delegate classTreeCell:self didClickLink:link rightMouse:rightMouse];
     }
-}
-
-@end
-
-
-@implementation CDOCClass (ARTClassTreeCell)
-
-- (NSMutableArray<CDOCCategory *> *)filteredCategories
-{
-    return self[ARTAssociatedKeyForSelector(_cmd)];
-}
-
-- (void)setFilteredCategories:(NSMutableArray<CDOCCategory *> *)filteredCategories
-{
-    self[ARTAssociatedKeyForSelector(@selector(filteredCategories))] = filteredCategories;
 }
 
 @end

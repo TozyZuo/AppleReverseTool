@@ -172,3 +172,17 @@ void *_dispatch_queue_userInfo_key = &_dispatch_queue_userInfo_key;
 }
 
 @end
+
+@implementation CDOCCategory (ART)
+
++ (void)load
+{
+    method_exchangeImplementations(class_getInstanceMethod(self, @selector(className)), class_getInstanceMethod(self, @selector(hook_className)));
+}
+
+- (NSString *)hook_className
+{
+    return [self hook_className] ?: self.classReference.name;
+}
+
+@end

@@ -53,4 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)hook_initWithClassObject:(CDOCClass *)classObject;
 @end
 
+@interface CDOCCategory (ART)
+- (NSString *)hook_className;
+@end
+
 NS_ASSUME_NONNULL_END
