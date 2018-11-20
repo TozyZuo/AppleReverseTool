@@ -56,4 +56,9 @@
     return RGBColor(251, 244, 208);
 }
 
++ (NSColor *)bundleColor
+{
+    return RGBColor(128, 128, 128);
+}
+
 @end

@@ -11,6 +11,7 @@
 #import "ARTURL.h"
 #import "ARTRichTextController.h"
 #import "ARTDataController.h"
+#import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 
 @interface CDOCClass (ARTClassTreeViewController)
@@ -52,7 +53,7 @@
 {
     [super viewDidLoad];
 
-    self.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+    self.font = NSFontManager.sharedFontManager.selectedFont;
 
     self.filterQueue = [[NSOperationQueue alloc] init];
     self.filterQueue.maxConcurrentOperationCount = 1;
@@ -62,6 +63,15 @@
         weakSelf.font = updateFontBlock(weakSelf.font);
         [weakSelf.outlineView reloadData];
     }];
+
+    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(showClassBundle)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+     {
+         BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
+         BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
+         if (new != old) {
+             [weakSelf reloadData];
+         }
+     }];
 }
 
 #pragma mark - Private

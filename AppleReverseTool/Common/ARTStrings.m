@@ -16,6 +16,7 @@ ARTScheme kSchemeCategory = @"Category";
 ARTScheme kSchemeProtocol = @"Protocol";
 ARTScheme kSchemeStruct = @"Struct";
 ARTScheme kSchemeUnion = @"Union";
+ARTScheme kSchemeBundle = @"Bundle";
 
 #pragma mark - scheme action
 
@@ -31,6 +32,7 @@ ARTColorType kColorStrings = @"strings";
 ARTColorType kColorKeywords = @"keywords";
 ARTColorType kColorComments = @"comments";
 ARTColorType kColorNumbers = @"numbers";
+ARTColorType kColorBundle = @"bundle";
 // non used
 ARTColorType kColorConnectingLine = @"connectingLine";
 ARTColorType kColorExpandButton = @"expandButton";

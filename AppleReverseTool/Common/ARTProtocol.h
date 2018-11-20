@@ -17,6 +17,9 @@ NS_INLINE NSString *ARTAssociatedKeyForSelector(SEL sel)
 }
 
 @protocol ARTProtocol <NSObject>
++ (nullable id)objectForKeyedSubscript:(NSString *)key;
++ (void)setObject:(nullable id)obj forKeyedSubscript:(NSString *)key;
++ (void)setWeakObject:(nullable id)obj forKey:(NSString *)key;
 - (nullable id)objectForKeyedSubscript:(NSString *)key;
 - (void)setObject:(nullable id)obj forKeyedSubscript:(NSString *)key;
 - (void)setWeakObject:(nullable id)obj forKey:(NSString *)key;

@@ -9,6 +9,7 @@
 #import "ARTClassTreeCell.h"
 #import "ARTURL.h"
 #import "ARTRichTextController.h"
+#import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 #import "CDOCClassReference.h"
 
@@ -134,16 +135,28 @@
 
 - (void)updateDataWithClass:(CDOCClass *)class filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount
 {
+    self.category = nil;
     self.aClass = class;
 
-    self.richTextController.text = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>%@", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name, [self categoryLinkButtonWithData:class isFiltered:filterConditionText.length totalCount:totalCategoriesCount]];
+    NSString *classFeild = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name];
+
+    NSString *bundleField = ARTConfigManager.sharedManager.showClassBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, class.bundleName, kColorBundle, class.bundleName] : @"";
+
+    NSString *categoryField = [self categoryLinkButtonWithData:class isFiltered:filterConditionText.length totalCount:totalCategoriesCount];
+
+    self.richTextController.text = [NSString stringWithFormat:@"%@%@%@", classFeild, bundleField, categoryField];
 
     self.richTextController.filterConditionText = filterConditionText;
 }
 
 - (void)updateDataWithCategory:(CDOCCategory *)category filterConditionText:(NSString *)filterConditionText
 {
-    self.richTextController.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name];
+    self.aClass = nil;
+    self.category = category;
+
+    NSString *bundleField = ARTConfigManager.sharedManager.showClassBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, category.bundleName, kColorBundle, category.bundleName] : @"";
+
+    self.richTextController.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>%@)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name, bundleField];
 
     self.richTextController.filterConditionText = filterConditionText;
 }

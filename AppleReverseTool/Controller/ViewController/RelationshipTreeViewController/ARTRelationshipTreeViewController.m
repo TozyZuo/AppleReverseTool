@@ -37,7 +37,7 @@
     [super viewDidLoad];
     self.outlineView.headerView = nil;
 
-    self.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+    self.font = NSFontManager.sharedFontManager.selectedFont;
 
     __weak typeof(self) weakSelf = self;
     [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {

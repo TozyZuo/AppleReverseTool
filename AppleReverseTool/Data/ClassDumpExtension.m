@@ -106,6 +106,16 @@ NSString *ARTStringCreate(NSString *string, ...)
     self.superNode = superClass;
 }
 
+- (NSString *)bundleName
+{
+    return self[ARTAssociatedKeyForSelector(_cmd)];
+}
+
+- (void)setBundleName:(NSString *)bundleName
+{
+    self[ARTAssociatedKeyForSelector(@selector(bundleName))] = bundleName;
+}
+
 - (NSArray<CDOCCategory *> *)categories
 {
     return self.interalCategories;
@@ -195,6 +205,16 @@ NSString *ARTStringCreate(NSString *string, ...)
         copy.classRef = self.classRef.copy;
     }
     return copy;
+}
+
+- (NSString *)bundleName
+{
+    return self[ARTAssociatedKeyForSelector(_cmd)];
+}
+
+- (void)setBundleName:(NSString *)bundleName
+{
+    self[ARTAssociatedKeyForSelector(@selector(bundleName))] = bundleName;
 }
 
 - (CDOCClass *)classReference

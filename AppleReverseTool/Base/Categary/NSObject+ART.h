@@ -14,4 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 <ARTProtocol>
 @end
 
+@interface NSObject (ARTObserve)
+- (void)observe:(nullable id)object keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(void (^)(id _Nullable observer, id object, NSDictionary<NSKeyValueChangeKey, id> *change))block;
+- (void)observe:(nullable id)object keyPaths:(NSArray<NSString *> *)keyPaths options:(NSKeyValueObservingOptions)options block:(void (^)(id _Nullable observer, id object, NSDictionary<NSKeyValueChangeKey, id> *change))block;
+@end
+
 NS_ASSUME_NONNULL_END

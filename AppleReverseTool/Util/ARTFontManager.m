@@ -9,6 +9,7 @@
 #import "ARTFontManager.h"
 #import "ARTWeakObjectWrapper.h"
 
+static NSString * const NSFontManagerSelectedFontKey = @"NSFontManagerSelectedFontKey";
 static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontChangeBlockKey";
 
 @interface NSFontManager (ART)
@@ -32,8 +33,20 @@ static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontCha
     self = [super _init];
     if (self) {
         self.observers = [[NSMutableArray alloc] init];
+        NSData *fontData = NSUserDefaults.standardUserDefaults[NSFontManagerSelectedFontKey];
+        if (!fontData) {
+            fontData = [NSKeyedArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo-Regular" size:18]];
+            NSUserDefaults.standardUserDefaults[NSFontManagerSelectedFontKey] = fontData;
+        }
+        [super setSelectedFont:[NSKeyedUnarchiver unarchiveObjectWithData:fontData] isMultiple:NO];
     }
     return self;
+}
+
+- (void)setSelectedFont:(NSFont *)fontObj isMultiple:(BOOL)flag
+{
+    [super setSelectedFont:fontObj isMultiple:flag];
+    NSUserDefaults.standardUserDefaults[NSFontManagerSelectedFontKey] = [NSKeyedArchiver archivedDataWithRootObject:fontObj];
 }
 
 - (void)setTarget:(id)target

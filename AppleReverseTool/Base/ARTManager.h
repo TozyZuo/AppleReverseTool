@@ -14,4 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedManager;
 @end
 
+@interface ARTManagerController : ARTSingleInstanceController
+
+@end
+
 NS_ASSUME_NONNULL_END

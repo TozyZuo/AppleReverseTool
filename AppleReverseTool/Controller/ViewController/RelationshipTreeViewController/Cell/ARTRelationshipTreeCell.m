@@ -40,7 +40,6 @@
 {
     NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
     textView.autoresizingMask = NSViewWidthSizable| NSViewHeightSizable;
-    textView.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
     textView.selectable = YES;
     textView.editable = NO;
     textView.textContainer.lineBreakMode = NSLineBreakByClipping;

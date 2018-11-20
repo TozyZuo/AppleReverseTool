@@ -49,7 +49,7 @@
     self.currentLinkIndex = -1;
 
     // storyboard does not work?
-    self.textView.font = [NSFont fontWithName:@"Menlo-Regular" size:18];
+    self.textView.font = NSFontManager.sharedFontManager.selectedFont;
 
     self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
     self.richTextController.delegate = self;

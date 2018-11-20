@@ -17,9 +17,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"ApplePersistenceIgnoreState"])
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ApplePersistenceIgnoreState"];
+    if(!NSUserDefaults.standardUserDefaults[@"ApplePersistenceIgnoreState"]) {
+        NSUserDefaults.standardUserDefaults[@"ApplePersistenceIgnoreState"] = @YES;
     }
     
 //    [TZDebugUtil addDeallocLogToClasses:[[TZDebugUtil classesInBundle:[NSBundle mainBundle]] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(Class  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings)

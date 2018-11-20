@@ -15,12 +15,16 @@ void *ARTSingleInstanceKey = &ARTSingleInstanceKey;
 
 + (instancetype)sharedInstance
 {
-    id instance = objc_getAssociatedObject(self, ARTSingleInstanceKey);
+    id instance = ((id)self)[ARTAssociatedKeyForSelector(_cmd)];
     if (!instance) {
         instance = [[self alloc] init];
-        objc_setAssociatedObject(self, ARTSingleInstanceKey, instance, OBJC_ASSOCIATION_RETAIN);
+        ((id)self)[ARTAssociatedKeyForSelector(_cmd)] = instance;
     }
     return instance;
 }
+
+@end
+
+@implementation ARTSingleInstanceController
 
 @end

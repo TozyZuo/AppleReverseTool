@@ -15,6 +15,7 @@ extern ARTScheme kSchemeCategory;
 extern ARTScheme kSchemeProtocol;
 extern ARTScheme kSchemeStruct;
 extern ARTScheme kSchemeUnion;
+extern ARTScheme kSchemeBundle;
 
 typedef NSString *ARTSchemeAction;
 extern ARTSchemeAction kExpandSubClassAction;
@@ -30,3 +31,4 @@ extern ARTColorType kColorStrings;
 extern ARTColorType kColorKeywords;
 extern ARTColorType kColorComments;
 extern ARTColorType kColorNumbers;
+extern ARTColorType kColorBundle;

@@ -629,6 +629,19 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Config" id="O9A-lY-Far">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Config" id="Sof-xP-sbT">
+                                    <items>
+                                        <menuItem title="Show Class Bundle" id="j4K-WQ-Fbb">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.showClassBundle" id="Rte-4q-eIC"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="View" id="H8h-7b-M4v">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="HyV-fh-RgO">
@@ -707,7 +720,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <objectController id="IqU-dL-3mQ">
+                <objectController id="IqU-dL-3mQ" customClass="ARTConfigManagerController">
                     <connections>
                         <binding destination="hnw-xV-0zn" name="contentObject" keyPath="keyWindow" id="mFq-6W-XmH"/>
                     </connections>
@@ -879,7 +892,7 @@
         <scene sceneID="eTV-Sj-VE2">
             <objects>
                 <viewController id="a7i-bA-zwu" customClass="ARTClassTreeViewController" sceneMemberID="viewController">
-                    <view key="view" id="Lkm-2i-KUk" customClass="MyView">
+                    <view key="view" id="Lkm-2i-KUk">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

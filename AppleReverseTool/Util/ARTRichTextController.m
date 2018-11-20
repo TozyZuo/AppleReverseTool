@@ -448,7 +448,7 @@
 #ifdef TrackingAreaDebug
                 NSView *view = [[NSView alloc] initWithFrame:rect];
                 view.wantsLayer = YES;
-                view.layer.backgroundColor = [self.textColor colorWithAlphaComponent:.5].CGColor;
+                view.layer.backgroundColor = [NSColor.redColor colorWithAlphaComponent:.5].CGColor;
                 [self.view addSubview:view];
                 NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:rect options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:@{@"component": linkableComponent, @"view": view}];
 #else

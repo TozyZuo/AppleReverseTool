@@ -113,6 +113,7 @@
 
     CDOCClass *class = (CDOCClass *)aClass;
     class.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
+    class.bundleName = self.frameworkName;
 
     self.classesByClassString[aClass.name] = class;
     if (self.isCurrentFrameworkInsideMainFile) {
@@ -142,6 +143,7 @@
     [super willVisitCategory:category];
 
     category.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
+    category.bundleName = self.frameworkName;
 
     NSMutableDictionary *categories = self.categoriesByClassString[category.className];
     if (!categories) {
