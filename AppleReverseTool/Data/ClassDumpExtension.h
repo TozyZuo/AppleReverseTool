@@ -22,11 +22,14 @@
 #define _SC ARTColorStringCreate
 #define _SF(...) [NSString stringWithFormat:__VA_ARGS__]
 
-#define _CL(className) _SC(ARTLinkStringCreate(kSchemeClass, className, className), self.dataController.classForName(className).isInsideMainBundle ? kColorClass : kColorOtherClass)
-#define _PL(protocolName) _SC(ARTLinkStringCreate(kSchemeProtocol, protocolName, protocolName), self.dataController.allProtocols[protocolName].isInsideMainBundle ? kColorClass : kColorOtherClass)
-#define _SL(structName) ARTLinkStringCreate(kSchemeStruct, _S(self.typeString, @"/", structName, nil), structName)
-#define _UL(structName) ARTLinkStringCreate(kSchemeUnion, _S(self.typeString, @"/", structName, nil), structName)
+#define _CL(aClass) _SC(ARTLinkStringCreate(kSchemeClass, aClass.name, aClass.name), aClass.isInsideMainBundle ? kColorClass : kColorOtherClass)
+#define _PL(protocol) _SC(ARTLinkStringCreate(kSchemeProtocol, protocol.name, protocol.name), protocol.isInsideMainBundle ? kColorClass : kColorOtherClass)
 #define _BL(objectWithBundle) ARTConfigManager.sharedManager.showClassBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, objectWithBundle.bundleName, kColorBundle, objectWithBundle.bundleName] : @""
+
+#define _CNL(className) _SC(ARTLinkStringCreate(kSchemeClass, className, className), self.dataController.classForName(className).isInsideMainBundle ? kColorClass : kColorOtherClass)
+#define _PNL(protocolName) _SC(ARTLinkStringCreate(kSchemeProtocol, protocolName, protocolName), self.dataController.allProtocols[protocolName].isInsideMainBundle ? kColorClass : kColorOtherClass)
+#define _SNL(structName) ARTLinkStringCreate(kSchemeStruct, _S(self.typeString, @"/", structName, nil), structName)
+#define _UNL(structName) ARTLinkStringCreate(kSchemeUnion, _S(self.typeString, @"/", structName, nil), structName)
 
 
 NS_ASSUME_NONNULL_BEGIN

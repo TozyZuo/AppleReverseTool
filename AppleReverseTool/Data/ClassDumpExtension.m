@@ -603,12 +603,12 @@ TZWarningIgnoreEnd
             assert(self.typeName != nil);
             [typeFormatter formattingDidReferenceClassName:_typeName.name];
 
-            NSMutableString *typeName = [NSMutableString stringWithString:_CL(_typeName.description)];
+            NSMutableString *typeName = [NSMutableString stringWithString:_CNL(_typeName.description)];
 
             if (_protocols.count) {
                 [typeName appendString:@"<"];
                 for (NSString *protocol in _protocols) {
-                    [typeName appendString:_S(_PL(protocol), @", ", nil)];
+                    [typeName appendString:_S(_PNL(protocol), @", ", nil)];
                 }
                 [typeName deleteCharactersInRange:NSMakeRange(typeName.length - 2, 2)];
                 [typeName appendString:@">"];
@@ -632,7 +632,7 @@ TZWarningIgnoreEnd
                     [str appendString:_S(_SC(@"id", kColorKeywords), @" <", nil)];
 
                     for (NSString *protocol in _protocols) {
-                        [str appendString:_S(_PL(protocol), @", ", nil)];
+                        [str appendString:_S(_PNL(protocol), @", ", nil)];
                     }
 
                     [str deleteCharactersInRange:NSMakeRange(str.length - 2, 2)];
@@ -653,7 +653,7 @@ TZWarningIgnoreEnd
                     [str appendString:_S(_SC(@"id", kColorKeywords), @" <", nil)];
 
                     for (NSString *protocol in _protocols) {
-                        [str appendString:_S(_PL(protocol), @", ", nil)];
+                        [str appendString:_S(_PNL(protocol), @", ", nil)];
                     }
 
                     [str deleteCharactersInRange:NSMakeRange(str.length - 2, 2)];
@@ -690,7 +690,7 @@ TZWarningIgnoreEnd
             /*if (typeName == nil || [@"?" isEqual:[typeName description]])*/ {
                 NSString *typedefName = [typeFormatter typedefNameForStructure:self level:level];
                 if (typedefName != nil) {
-                    baseType = _SC(_UL(typedefName), kColorOtherClass);
+                    baseType = _SC(_UNL(typedefName), kColorOtherClass);
                 }
             }
 
@@ -698,7 +698,7 @@ TZWarningIgnoreEnd
                 if (_typeName == nil || [@"?" isEqual:[_typeName description]])
                     baseType = _SC(@"union", kColorKeywords);
                 else
-                    baseType = _S(_SC(@"union", kColorKeywords), @" ", _SC(_UL(_typeName.description), kColorOtherClass), nil);
+                    baseType = _S(_SC(@"union", kColorKeywords), @" ", _SC(_UNL(_typeName.description), kColorOtherClass), nil);
 //                    baseType = [NSString stringWithFormat:@"union %@", _typeName];
 
                 if ((typeFormatter.shouldAutoExpand && [typeFormatter.typeController shouldExpandType:self] && [_members count] > 0)
@@ -723,14 +723,14 @@ TZWarningIgnoreEnd
             /*if (typeName == nil || [@"?" isEqual:[typeName description]])*/ {
                 NSString *typedefName = [typeFormatter typedefNameForStructure:self level:level];
                 if (typedefName != nil) {
-                    baseType = _SC(_SL(typedefName), kColorOtherClass);
+                    baseType = _SC(_SNL(typedefName), kColorOtherClass);
                 }
             }
             if (baseType == nil) {
                 if (_typeName == nil || [@"?" isEqual:[_typeName description]])
                     baseType = _SC(@"struct", kColorKeywords);
                 else
-                    baseType = _S(_SC(@"struct", kColorKeywords), @" ", _SC(_SL(_typeName.description), kColorOtherClass), nil);
+                    baseType = _S(_SC(@"struct", kColorKeywords), @" ", _SC(_SNL(_typeName.description), kColorOtherClass), nil);
 //                    baseType = [NSString stringWithFormat:@"struct %@", _typeName];
 
                 if ((typeFormatter.shouldAutoExpand && [typeFormatter.typeController shouldExpandType:self] && [_members count] > 0)
@@ -866,7 +866,7 @@ TZWarningIgnoreEnd
     if (name) {
         switch (self.type.primitiveType) {
             case T_NAMED_OBJECT:
-                name = _CL(name);
+                name = _CNL(name);
                 break;
 
             default:
