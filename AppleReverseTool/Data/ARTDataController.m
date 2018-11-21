@@ -99,11 +99,22 @@ static BOOL _isInDataProcessing = NO;
         CDClassDump *classDump = [[CDClassDump alloc] init];
         classDump.searchPathState.executablePath = path.stringByDeletingLastPathComponent;
 
-        CDFile * file = [CDFile fileWithContentsOfFile:path searchPathState:classDump.searchPathState];
+        CDFile *file = [CDFile fileWithContentsOfFile:path searchPathState:classDump.searchPathState];
+
+        if (!file) {
+            TZInvokeBlockInMainThread(^{
+                [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"Couldn't support this file!"] message:nil];
+                exit(1);
+            });
+            return;
+        }
 
         if ([file isKindOfClass:[CDFatFile class]] ) {
-            [NSAlert showModalAlertWithTitle:@"暂不支持fat file, 请手动用lipo切割(后续会加上)" message:nil];
-            exit(1);
+            TZInvokeBlockInMainThread(^{
+                [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"Not support fat file, please use \"lipo -thin arch_type %@ %@_output\" (it will be supported in next version)", path, path] message:nil];
+                exit(1);
+            });
+            return;
         }
 
         CDMachOFile * machOFile = (CDMachOFile *)file;
@@ -116,8 +127,11 @@ static BOOL _isInDataProcessing = NO;
         classDump[@"typeController"] = typeController;
         CDArch targetArch;
         if (![machOFile bestMatchForLocalArch:&targetArch]) {
-            [NSAlert showModalAlertWithTitle:@"Error: Couldn't get local architecture!" message:nil];
-            exit(1);
+            TZInvokeBlockInMainThread(^{
+                [NSAlert showModalAlertWithTitle:@"Error: Couldn't get local architecture!" message:nil];
+                exit(1);
+            });
+            return;
         }
         classDump.targetArch = targetArch;
         classDump.shouldProcessRecursively = YES;
@@ -128,13 +142,16 @@ static BOOL _isInDataProcessing = NO;
 
         NSError *error;
         if (![classDump loadFile:machOFile error:&error]) {
-            [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"Error: %@", error.localizedFailureReason] message:nil];
-            exit(1);
+            TZInvokeBlockInMainThread(^{
+                [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"Error: %@", error.localizedFailureReason] message:nil];
+                exit(1);
+            });
+            return;
         } else {
             if (progress) {
                 TZInvokeBlockInMainThread(^{
                     progress(ARTDataControllerProcessStateWillProcess, nil, nil, nil, nil);
-                })
+                });
             }
 
             if (progress) {
@@ -142,7 +159,7 @@ static BOOL _isInDataProcessing = NO;
                 {
                     TZInvokeBlockInMainThread(^{
                         progress(state, framework, class, iVar, type);
-                    })
+                    });
                 };
             }
 
@@ -160,7 +177,7 @@ static BOOL _isInDataProcessing = NO;
             if (progress) {
                 TZInvokeBlockInMainThread(^{
                     progress(ARTDataControllerProcessStateDidProcess, nil, nil, nil, nil);
-                })
+                });
             }
             [classDump recursivelyVisit:visitor];
             visitor.classDump = nil;
@@ -218,7 +235,7 @@ static BOOL _isInDataProcessing = NO;
         if (completion) {
             TZInvokeBlockInMainThread(^{
                 completion(self);
-            })
+            });
         }
     });
 }

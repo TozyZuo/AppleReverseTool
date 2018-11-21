@@ -14,8 +14,10 @@
 {
     NSAlert *alert = [[NSAlert alloc] init];
     alert.messageText = title;
-    alert.informativeText = message;
-    [alert runModal];
+    alert.informativeText = message ?: @"";
+    TZInvokeBlockInMainThread(^{
+        [alert runModal];
+    });
 }
 
 @end

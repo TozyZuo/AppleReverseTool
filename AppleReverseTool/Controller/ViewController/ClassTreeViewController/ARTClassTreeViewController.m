@@ -42,7 +42,7 @@
 @property (nonatomic,  weak ) ARTDataController *dataController;
 @property (nonatomic, strong) NSFont *font;
 @property (nonatomic, strong) NSArray<CDOCClass *> *data;
-@property (nonatomic, strong) NSArray<CDOCClass *> *filteredData;
+@property (nonatomic, strong) NSArray<CDOCClass *> *filteredData; // keep origin state
 @property (nonatomic, strong) NSString *filterConditionText;
 @property (nonatomic, strong) NSOperationQueue *filterQueue;
 @end
