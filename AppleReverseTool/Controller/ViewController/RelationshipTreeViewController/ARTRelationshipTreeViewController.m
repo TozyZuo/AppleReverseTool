@@ -12,6 +12,7 @@
 #import "ARTURL.h"
 #import "ARTRelationshipTreeModel.h"
 #import "ARTRichTextController.h"
+#import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 #import "CDTypeLexer.h"
@@ -44,6 +45,31 @@
         weakSelf.font = updateFontBlock(weakSelf.font);
         [weakSelf.outlineView reloadData];
     }];
+
+    [self observe:ARTConfigManager.sharedManager keyPath:@"hideUnexpandedVariables" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    {
+        [weakSelf refreshData:weakSelf.data];
+
+        NSMutableArray *modelData = weakSelf.data.mutableCopy;
+        [modelData sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2)
+         {
+             return obj1.canBeExpanded ? NSOrderedAscending : NSOrderedDescending;
+         }];
+        weakSelf.data = modelData;
+        [weakSelf.outlineView reloadData];
+    }];
+}
+
+#pragma mark - Private
+
+- (void)refreshData:(NSArray<ARTRelationshipTreeModel *> *)data
+{
+    for (ARTRelationshipTreeModel *model in data) {
+        if (model.subNodes) {
+            [self refreshData:model.subNodes];
+        }
+        [model recreateSubNodesForcibly:NO hideUnexpandedVariables:ARTConfigManager.sharedManager.hideUnexpandedVariables];
+    }
 }
 
 #pragma mark - Public
@@ -124,7 +150,7 @@
             if ([self.outlineView isItemExpanded:data]) {
                 [self.outlineView collapseItem:data];
             } else {
-                [relationshipTreeCell.data createSubNodes];
+                [relationshipTreeCell.data recreateSubNodesForcibly:YES hideUnexpandedVariables:ARTConfigManager.sharedManager.hideUnexpandedVariables];
                 [self.outlineView expandItem:data];
             }
             [relationshipTreeCell updateData:data];

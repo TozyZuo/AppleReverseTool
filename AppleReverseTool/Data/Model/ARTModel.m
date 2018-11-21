@@ -59,7 +59,7 @@
 */
 - (NSString *)description
 {
-    return self.toDictionary.description;
+    return [[super description] stringByAppendingString:self.toDictionary.description];
 }
 
 - (NSArray *)allKeys
@@ -70,7 +70,7 @@
 - (NSDictionary *)toDictionary
 {
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    for (NSString *key in self.allKeys) {
+    for (NSString *key in self.keys) {
         dic[key] = self[key];
     }
     return dic;

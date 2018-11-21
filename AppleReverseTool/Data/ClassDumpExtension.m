@@ -47,11 +47,22 @@ NSString *ARTStringCreate(NSString *string, ...)
     self[ARTAssociatedKeyForSelector(@selector(isInsideMainBundle))] = @(isInsideMainBundle);
 }
 
+- (NSString *)bundleName
+{
+    return self[ARTAssociatedKeyForSelector(_cmd)];
+}
+
+- (void)setBundleName:(NSString *)bundleName
+{
+    self[ARTAssociatedKeyForSelector(@selector(bundleName))] = bundleName;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
     CDOCProtocol *copy = [[self.class alloc] init];
     copy.name = self.name;
     copy.isInsideMainBundle = self.isInsideMainBundle;
+    copy.bundleName = self.bundleName;
     copy[@"protocols"] = self.protocols;
     copy[@"classMethods"] = self.classMethods;
     copy[@"instanceMethods"] = self.instanceMethods;
@@ -104,16 +115,6 @@ NSString *ARTStringCreate(NSString *string, ...)
 - (void)setSuperClass:(CDOCClass *)superClass
 {
     self.superNode = superClass;
-}
-
-- (NSString *)bundleName
-{
-    return self[ARTAssociatedKeyForSelector(_cmd)];
-}
-
-- (void)setBundleName:(NSString *)bundleName
-{
-    self[ARTAssociatedKeyForSelector(@selector(bundleName))] = bundleName;
 }
 
 - (NSArray<CDOCCategory *> *)categories
@@ -205,16 +206,6 @@ NSString *ARTStringCreate(NSString *string, ...)
         copy.classRef = self.classRef.copy;
     }
     return copy;
-}
-
-- (NSString *)bundleName
-{
-    return self[ARTAssociatedKeyForSelector(_cmd)];
-}
-
-- (void)setBundleName:(NSString *)bundleName
-{
-    self[ARTAssociatedKeyForSelector(@selector(bundleName))] = bundleName;
 }
 
 - (CDOCClass *)classReference

@@ -26,6 +26,7 @@
 #define _PL(protocolName) _SC(ARTLinkStringCreate(kSchemeProtocol, protocolName, protocolName), self.dataController.allProtocols[protocolName].isInsideMainBundle ? kColorClass : kColorOtherClass)
 #define _SL(structName) ARTLinkStringCreate(kSchemeStruct, _S(self.typeString, @"/", structName, nil), structName)
 #define _UL(structName) ARTLinkStringCreate(kSchemeUnion, _S(self.typeString, @"/", structName, nil), structName)
+#define _BL(objectWithBundle) ARTConfigManager.sharedManager.showClassBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, objectWithBundle.bundleName, kColorBundle, objectWithBundle.bundleName] : @""
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -49,12 +50,12 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 @interface CDOCProtocol (ARTExtension)
 <NSCopying>
 @property (nonatomic, assign) BOOL isInsideMainBundle;
+@property (nonatomic, strong) NSString *bundleName;
 @end
 
 @interface CDOCClass (ARTExtension)
 <ARTNode>
 @property (  weak  ) CDOCClass *superClass;
-@property ( strong ) NSString *bundleName;
 @property (readonly) NSArray<CDOCClass *> *referrers;
 @property (readonly) NSArray<CDOCCategory *> *categories;
 - (void)addCategory:(CDOCCategory *)category;
@@ -64,7 +65,6 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 
 @interface CDOCCategory (ARTExtension)
 <NSCopying>
-@property (strong) NSString *bundleName;
 @property ( weak ) CDOCClass *classReference;
 @end
 

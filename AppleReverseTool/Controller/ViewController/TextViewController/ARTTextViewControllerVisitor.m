@@ -8,6 +8,7 @@
 
 #import "ARTTextViewControllerVisitor.h"
 #import "ARTDataController.h"
+#import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 #import "CDOCClassReference.h"
 #import "CDOCMethod.h"
@@ -58,7 +59,8 @@ static BOOL debug = NO;
         [self.resultString appendString:@"\n<\n"];
 
         for (CDOCProtocol *protocol in protocols) {
-            [self.resultString appendString:_S(@"\t", _PL(protocol.name), @",\n", nil)];
+
+            [self.resultString appendString:_S(@"\t", _PL(protocol.name), _BL(protocol), @",\n", nil)];
         }
 
         [self.resultString deleteCharactersInRange:NSMakeRange(self.resultString.length - 2, 2)];

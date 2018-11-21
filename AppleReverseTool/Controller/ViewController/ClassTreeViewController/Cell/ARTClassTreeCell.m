@@ -140,7 +140,7 @@
 
     NSString *classFeild = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name];
 
-    NSString *bundleField = ARTConfigManager.sharedManager.showClassBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, class.bundleName, kColorBundle, class.bundleName] : @"";
+    NSString *bundleField = _BL(class);
 
     NSString *categoryField = [self categoryLinkButtonWithData:class isFiltered:filterConditionText.length totalCount:totalCategoriesCount];
 

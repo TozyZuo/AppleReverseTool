@@ -117,7 +117,7 @@
     type.isParsing = YES;
     [iVarData appendToString:text typeController:self.dataController.typeController];
     type.isParsing = NO;
-    [text deleteCharactersInRange:NSMakeRange(0, 3)];
+    [text deleteCharactersInRange:NSMakeRange(0, 3)]; // delete white space
     return text;
 }
 

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ARTConfigManager : ARTManager
 @property (nonatomic, assign) BOOL showClassBundle;
+@property (nonatomic, assign) BOOL hideUnexpandedVariables;
 @end
 
 @interface ARTConfigManagerController : ARTManagerController

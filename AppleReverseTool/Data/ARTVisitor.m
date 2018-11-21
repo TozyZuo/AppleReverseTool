@@ -91,6 +91,8 @@
     [super willVisitProtocol:protocol];
 
     protocol.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
+    protocol.bundleName = self.frameworkName;
+
     self.protocolsByProtocolString[protocol.name] = protocol;
     if (self.isCurrentFrameworkInsideMainFile) {
         self.protocolsByProtocolStringInMainFile[protocol.name] = protocol;
@@ -111,13 +113,12 @@
 
     [super willVisitClass:aClass];
 
-    CDOCClass *class = (CDOCClass *)aClass;
-    class.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
-    class.bundleName = self.frameworkName;
+    aClass.isInsideMainBundle = self.isCurrentFrameworkInsideMainFile;
+    aClass.bundleName = self.frameworkName;
 
-    self.classesByClassString[aClass.name] = class;
+    self.classesByClassString[aClass.name] = aClass;
     if (self.isCurrentFrameworkInsideMainFile) {
-        self.classesByClassStringInMainFile[aClass.name] = class;
+        self.classesByClassStringInMainFile[aClass.name] = aClass;
     }
 
     self.className = aClass.name;

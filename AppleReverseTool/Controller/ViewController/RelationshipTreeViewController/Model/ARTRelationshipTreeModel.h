@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CDOCClass *classData;
 @property (readonly) CDOCInstanceVariable *iVarData;
 - (instancetype)initWithData:(id)data dataController:(ARTDataController *)dataController;
-- (void)createSubNodes;
+- (void)createSubNodesWithHideUnexpandedVariables:(BOOL)hideUnexpandedVariables;
+- (void)recreateSubNodesForcibly:(BOOL)force hideUnexpandedVariables:(BOOL)hideUnexpandedVariables;
 @end
 NS_ASSUME_NONNULL_END

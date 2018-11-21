@@ -639,6 +639,12 @@
                                                 <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.showClassBundle" id="Rte-4q-eIC"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Hide Unexpanded Variables" id="QIM-7v-Jtf">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.hideUnexpandedVariables" id="CJk-nq-aOe"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

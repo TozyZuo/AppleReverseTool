@@ -8,12 +8,14 @@
 
 #import "ARTRelationshipTreeModel.h"
 #import "ARTDataController.h"
+#import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 
 @interface ARTRelationshipTreeModel ()
 @property (nonatomic,  weak ) ARTDataController *dataController;
 @property (nonatomic, strong) id data;
+@property (nonatomic, assign) BOOL hideUnexpandedVariables;
 @end
 
 @implementation ARTRelationshipTreeModel
@@ -29,20 +31,54 @@
     return self;
 }
 
+- (CDOCClass *)classDataFromData:(id)data
+{
+    if ([data isKindOfClass:CDOCClass.class]) {
+        return data;
+    } else if ([data isKindOfClass:CDOCInstanceVariable.class]) {
+        CDOCInstanceVariable *var =(CDOCInstanceVariable *)data;
+        return self.dataController.classForName(var.type.typeName.name);
+    }
+    return nil;
+}
+
 - (BOOL)canBeExpanded
 {
     CDOCClass *classData = self.classData;
-    return classData.isInsideMainBundle ? classData.instanceVariables.count > 0 : NO;
+    if (classData.isInsideMainBundle) {
+        if (self.hideUnexpandedVariables) {
+            for (CDOCInstanceVariable *var in classData.instanceVariables) {
+                if ([self classDataFromData:var]) {
+                    return YES;
+                }
+            }
+        } else {
+            return classData.instanceVariables.count > 0;
+        }
+    }
+    return NO;
 }
 
-- (void)createSubNodes
+- (void)createSubNodesWithHideUnexpandedVariables:(BOOL)hideUnexpandedVariables
 {
     if (!_subNodes) {
+        [self recreateSubNodesForcibly:YES hideUnexpandedVariables:hideUnexpandedVariables];
+    }
+}
+
+- (void)recreateSubNodesForcibly:(BOOL)force hideUnexpandedVariables:(BOOL)hideUnexpandedVariables
+{
+    self.hideUnexpandedVariables = hideUnexpandedVariables;
+    if (force || _subNodes) {
         NSMutableArray *subNodes = [[NSMutableArray alloc] init];
         for (CDOCInstanceVariable *var in self.classData.instanceVariables) {
-            ARTRelationshipTreeModel *model = [[ARTRelationshipTreeModel alloc] initWithData:var dataController:self.dataController];
-            model.superNode = self;
-            [subNodes addObject:model];
+            CDOCClass *aClass = [self classDataFromData:var];
+            if (aClass || !hideUnexpandedVariables) {
+                ARTRelationshipTreeModel *model = [[ARTRelationshipTreeModel alloc] initWithData:var dataController:self.dataController];
+                model.hideUnexpandedVariables = hideUnexpandedVariables;
+                model.superNode = self;
+                [subNodes addObject:model];
+            }
         }
         [subNodes sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2) {
             CDDetailedType detailedType1 = obj1.iVarData.type.detailedType;
@@ -66,13 +102,7 @@
 
 - (CDOCClass *)classData
 {
-    if ([self.data isKindOfClass:CDOCClass.class]) {
-        return self.data;
-    } else if ([self.data isKindOfClass:CDOCInstanceVariable.class]) {
-        CDOCInstanceVariable *var =(CDOCInstanceVariable *)self.data;
-        return self.dataController.classForName(var.type.typeName.name);
-    }
-    return nil;
+    return [self classDataFromData:self.data];
 }
 
 - (CDOCInstanceVariable *)iVarData
