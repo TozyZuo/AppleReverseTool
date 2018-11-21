@@ -14,7 +14,7 @@
 @property (nonatomic, copy) NSString *tagLabel;
 @property (nonatomic) NSMutableDictionary *attributes;
 @property (nonatomic, assign) NSInteger position;
-@property (nonatomic, assign) NSRect rect;
+@property (nonatomic, strong) NSArray<NSValue *> *rects;
 
 - (id)initWithString:(NSString*)aText tag:(NSString*)aTagLabel attributes:(NSMutableDictionary*)theAttributes;
 + (id)componentWithString:(NSString*)aText tag:(NSString*)aTagLabel attributes:(NSMutableDictionary*)theAttributes;
@@ -412,6 +412,8 @@
 
     for (ARTTextComponent *linkableComponent in self.linkComponents)
     {
+        NSMutableArray *rects = [[NSMutableArray alloc] init];
+
         CGFloat y;
         if (self.view.isFlipped) {
             y = insets.top;
@@ -444,7 +446,7 @@
                     rect.origin.y = y; // TODO
                 }
 
-                linkableComponent.rect = rect;
+                [rects addObject:@(rect)];
 #ifdef TrackingAreaDebug
                 NSView *view = [[NSView alloc] initWithFrame:rect];
                 view.wantsLayer = YES;
@@ -461,6 +463,7 @@
             y = y + ascent + descent + leading + self.lineSpacing + self.extraLineSpacing;
             y = ceil(y);
         }
+        linkableComponent.rects = rects;
     }
 
     //    self.visibleRange = CTFrameGetVisibleStringRange(frame);
@@ -529,9 +532,11 @@
         {
             ARTTextComponent *component = nil;
             for (ARTTextComponent *cpt in self.linkComponents) {
-                if (CGRectContainsPoint(cpt.rect, p)) {
-                    component = cpt;
-                    break;
+                for (NSValue *rectValue in cpt.rects) {
+                    if (CGRectContainsPoint(rectValue.rectValue, p)) {
+                        component = cpt;
+                        break;
+                    }
                 }
             }
             if (component) {

@@ -376,7 +376,7 @@
             if (text) {
                 [self pushLink:link text:text];
             } else {
-                self.richTextController.text = @"";
+                [self goToIndex:self.currentLinkIndex];
             }
         }];
     }
