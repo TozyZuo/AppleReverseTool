@@ -36,7 +36,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.outlineView.headerView = nil;
 
     self.font = NSFontManager.sharedFontManager.selectedFont;
 
@@ -48,15 +47,19 @@
 
     [self observe:ARTConfigManager.sharedManager keyPath:@"hideUnexpandedVariables" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
-        [weakSelf refreshData:weakSelf.data];
+        BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
+        BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
+        if (new != old) {
+            [weakSelf refreshData:weakSelf.data];
 
-        NSMutableArray *modelData = weakSelf.data.mutableCopy;
-        [modelData sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2)
-         {
-             return obj1.canBeExpanded ? NSOrderedAscending : NSOrderedDescending;
-         }];
-        weakSelf.data = modelData;
-        [weakSelf.outlineView reloadData];
+            NSMutableArray *modelData = weakSelf.data.mutableCopy;
+            [modelData sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2)
+             {
+                 return obj1.canBeExpanded ? NSOrderedAscending : NSOrderedDescending;
+             }];
+            weakSelf.data = modelData;
+            [weakSelf.outlineView reloadData];
+        }
     }];
 }
 
@@ -64,11 +67,13 @@
 
 - (void)refreshData:(NSArray<ARTRelationshipTreeModel *> *)data
 {
+    BOOL hideUnexpandedVariables = ARTConfigManager.sharedManager.hideUnexpandedVariables;
     for (ARTRelationshipTreeModel *model in data) {
         if (model.subNodes) {
             [self refreshData:model.subNodes];
         }
-        [model recreateSubNodesForcibly:NO hideUnexpandedVariables:ARTConfigManager.sharedManager.hideUnexpandedVariables];
+        model.hideUnexpandedVariables = hideUnexpandedVariables;
+        [model recreateSubNodesForcibly:NO];
     }
 }
 
@@ -78,9 +83,12 @@
 {
     self.dataController = dataController;
 
+    BOOL hideUnexpandedVariables = ARTConfigManager.sharedManager.hideUnexpandedVariables;
     NSMutableArray *modelData = [[NSMutableArray alloc] init];
     for (CDOCClass *class in dataController.relationshipNodes) {
-        [modelData addObject:[[ARTRelationshipTreeModel alloc] initWithData:class dataController:self.dataController]];
+        ARTRelationshipTreeModel *model = [[ARTRelationshipTreeModel alloc] initWithData:class dataController:self.dataController];
+        model.hideUnexpandedVariables = hideUnexpandedVariables;
+        [modelData addObject:model];
     }
     [modelData sortUsingComparator:^NSComparisonResult(ARTRelationshipTreeModel * _Nonnull obj1, ARTRelationshipTreeModel * _Nonnull obj2)
     {
@@ -150,7 +158,7 @@
             if ([self.outlineView isItemExpanded:data]) {
                 [self.outlineView collapseItem:data];
             } else {
-                [relationshipTreeCell.data recreateSubNodesForcibly:YES hideUnexpandedVariables:ARTConfigManager.sharedManager.hideUnexpandedVariables];
+                [relationshipTreeCell.data createSubNodes];
                 [self.outlineView expandItem:data];
             }
             [relationshipTreeCell updateData:data];

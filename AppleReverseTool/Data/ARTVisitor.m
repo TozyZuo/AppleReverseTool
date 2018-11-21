@@ -183,6 +183,17 @@
     [super didEndVisiting];
 
     // merge all
+    [self.protocolsByProtocolString enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CDOCProtocol * _Nonnull protocol, BOOL * _Nonnull stop)
+    {
+        if (protocol.protocols.count) {
+            NSMutableArray *protocols = [[NSMutableArray alloc] init];
+            for (CDOCProtocol *aProtocol in protocol.protocols) {
+                [protocols addObject:self.protocolsByProtocolString[aProtocol.name] ?: aProtocol];
+            }
+            protocol[@"protocols"] = protocols;
+        }
+    }];
+
     [self.classesByClassString enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CDOCClass * _Nonnull class, BOOL * _Nonnull stop)
     {
         class.superClass = self.classesByClassString[class.superClassName];
@@ -199,6 +210,14 @@
             category.classReference = class;
             category.classRef = nil;
             [class addCategory:category];
+
+            if (category.protocols.count) {
+                NSMutableArray *protocols = [[NSMutableArray alloc] init];
+                for (CDOCProtocol *protocol in category.protocols) {
+                    [protocols addObject:self.protocolsByProtocolString[protocol.name] ?: protocol];
+                }
+                category[@"protocols"] = protocols;
+            }
         }];
     }];
 }

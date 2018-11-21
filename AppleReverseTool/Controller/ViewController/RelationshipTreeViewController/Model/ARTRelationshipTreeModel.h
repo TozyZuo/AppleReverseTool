@@ -13,13 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 @class ARTDataController, CDOCClass, CDOCInstanceVariable;
 
 @interface ARTRelationshipTreeModel : ARTModel
-@property (  weak  ) ARTRelationshipTreeModel *superNode;
-@property (readonly) NSArray<ARTRelationshipTreeModel *> *subNodes;
-@property (readonly) BOOL canBeExpanded;
-@property (readonly) CDOCClass *classData;
-@property (readonly) CDOCInstanceVariable *iVarData;
+@property (nonatomic,  weak  ) ARTRelationshipTreeModel *superNode;
+@property (nonatomic,readonly) NSArray<ARTRelationshipTreeModel *> *subNodes;
+@property (nonatomic, assign ) BOOL hideUnexpandedVariables;
+@property (nonatomic,readonly) BOOL canBeExpanded;
+@property (nonatomic,readonly) CDOCClass *classData;
+@property (nonatomic,readonly) CDOCInstanceVariable *iVarData;
 - (instancetype)initWithData:(id)data dataController:(ARTDataController *)dataController;
-- (void)createSubNodesWithHideUnexpandedVariables:(BOOL)hideUnexpandedVariables;
-- (void)recreateSubNodesForcibly:(BOOL)force hideUnexpandedVariables:(BOOL)hideUnexpandedVariables;
+- (void)createSubNodes;
+- (void)recreateSubNodesForcibly:(BOOL)force;
 @end
 NS_ASSUME_NONNULL_END

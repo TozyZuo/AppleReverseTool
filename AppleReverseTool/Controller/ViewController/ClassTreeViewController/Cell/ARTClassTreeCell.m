@@ -75,7 +75,7 @@
         node = (CDOCClass *)node.superNode;
     }
 
-    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font>", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
+    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font> ", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
 }
 
 - (NSString *)prefixWithClass:(CDOCClass *)data
@@ -89,7 +89,7 @@
         prefix = isLastNode ? [@" \t" stringByAppendingString:prefix] : [@"<font color=connectingLine>│</font>\t" stringByAppendingString:prefix];
     }
 
-    return [prefix stringByAppendingString:[self expandButtonStringForData:data]];
+    return [prefix stringByAppendingFormat:@"%@ ", [self expandButtonStringForData:data]];
 }
 
 - (NSString *)expandButtonStringForData:(CDOCClass *)data
@@ -138,13 +138,7 @@
     self.category = nil;
     self.aClass = class;
 
-    NSString *classFeild = [NSString stringWithFormat:@"%@ <a href='%@://%@' color=%@>%@</a>", [self prefixWithClass:class], kSchemeClass, class.name, class.isInsideMainBundle ? kColorClass : kColorOtherClass, class.name];
-
-    NSString *bundleField = _BL(class);
-
-    NSString *categoryField = [self categoryLinkButtonWithData:class isFiltered:filterConditionText.length totalCount:totalCategoriesCount];
-
-    self.richTextController.text = [NSString stringWithFormat:@"%@%@%@", classFeild, bundleField, categoryField];
+    self.richTextController.text = _S([self prefixWithClass:class], _CL(class), _BL(class), [self categoryLinkButtonWithData:class isFiltered:filterConditionText.length totalCount:totalCategoriesCount], nil);
 
     self.richTextController.filterConditionText = filterConditionText;
 }
@@ -154,9 +148,8 @@
     self.aClass = nil;
     self.category = category;
 
-    NSString *bundleField = ARTConfigManager.sharedManager.showClassBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, category.bundleName, kColorBundle, category.bundleName] : @"";
-
-    self.richTextController.text = [NSString stringWithFormat:@"%@ (<a href='%@://%@/%@' color=%@>%@</a>%@)", [self prefixWithCategory:category], kSchemeCategory, category.className, category.name, category.isInsideMainBundle ? kColorClass : kColorOtherClass, category.name, bundleField];
+//    self.richTextController.text = _S([self prefixWithCategory:category], @"(", _CGL(category), _BL(category),@")", nil);
+    self.richTextController.text = _SF(@"%@(%@%@)", [self prefixWithCategory:category], _CGL(category), _BL(category));
 
     self.richTextController.filterConditionText = filterConditionText;
 }

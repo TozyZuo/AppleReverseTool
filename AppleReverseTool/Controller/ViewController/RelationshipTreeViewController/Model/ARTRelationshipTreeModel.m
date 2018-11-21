@@ -15,7 +15,6 @@
 @interface ARTRelationshipTreeModel ()
 @property (nonatomic,  weak ) ARTDataController *dataController;
 @property (nonatomic, strong) id data;
-@property (nonatomic, assign) BOOL hideUnexpandedVariables;
 @end
 
 @implementation ARTRelationshipTreeModel
@@ -59,23 +58,22 @@
     return NO;
 }
 
-- (void)createSubNodesWithHideUnexpandedVariables:(BOOL)hideUnexpandedVariables
+- (void)createSubNodes
 {
     if (!_subNodes) {
-        [self recreateSubNodesForcibly:YES hideUnexpandedVariables:hideUnexpandedVariables];
+        [self recreateSubNodesForcibly:YES];
     }
 }
 
-- (void)recreateSubNodesForcibly:(BOOL)force hideUnexpandedVariables:(BOOL)hideUnexpandedVariables
+- (void)recreateSubNodesForcibly:(BOOL)force
 {
-    self.hideUnexpandedVariables = hideUnexpandedVariables;
     if (force || _subNodes) {
         NSMutableArray *subNodes = [[NSMutableArray alloc] init];
         for (CDOCInstanceVariable *var in self.classData.instanceVariables) {
             CDOCClass *aClass = [self classDataFromData:var];
-            if (aClass || !hideUnexpandedVariables) {
+            if (aClass || !self.hideUnexpandedVariables) {
                 ARTRelationshipTreeModel *model = [[ARTRelationshipTreeModel alloc] initWithData:var dataController:self.dataController];
-                model.hideUnexpandedVariables = hideUnexpandedVariables;
+                model.hideUnexpandedVariables = self.hideUnexpandedVariables;
                 model.superNode = self;
                 [subNodes addObject:model];
             }

@@ -633,10 +633,10 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Config" id="Sof-xP-sbT">
                                     <items>
-                                        <menuItem title="Show Class Bundle" id="j4K-WQ-Fbb">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Show Bundle" keyEquivalent="B" id="j4K-WQ-Fbb">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
-                                                <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.showClassBundle" id="Rte-4q-eIC"/>
+                                                <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.showBundle" id="vqW-ES-Nns"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Hide Unexpanded Variables" id="QIM-7v-Jtf">
@@ -1109,8 +1109,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="272"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" headerView="6Wq-fF-ubn" viewBased="YES" autoresizesOutlineColumn="YES" outlineTableColumn="t43-6z-KFf" id="65b-gF-DEw">
-                                            <rect key="frame" x="0.0" y="0.0" width="450" height="249"/>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" viewBased="YES" outlineTableColumn="t43-6z-KFf" id="65b-gF-DEw">
+                                            <rect key="frame" x="0.0" y="0.0" width="450" height="272"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1151,10 +1151,6 @@
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" id="6Wq-fF-ubn">
-                                    <rect key="frame" x="0.0" y="0.0" width="450" height="23"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableHeaderView>
                             </scrollView>
                         </subviews>
                     </view>

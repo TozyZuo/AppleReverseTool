@@ -14,6 +14,7 @@
 #import "ARTURL.h"
 #import "ARTRichTextController.h"
 #import "ARTFontManager.h"
+#import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 #import "CDClassDump.h"
 #import "NSAlert+ART.h"
@@ -28,7 +29,7 @@
 @property (nonatomic, strong) ARTRichTextController *richTextController;
 @property (nonatomic, strong) NSMutableArray<NSString *> *menuStack;
 @property (nonatomic, strong) NSMutableArray<NSString *> *linkStack;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *linkMap;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *linkCache;
 @property (nonatomic, assign) NSUInteger maxCount;
 @property (nonatomic, assign) NSInteger currentLinkIndex;
 @property (nonatomic, assign) BOOL canGoBack;
@@ -44,11 +45,10 @@
 
     self.menuStack = [[NSMutableArray alloc] init];
     self.linkStack = [[NSMutableArray alloc] init];
-    self.linkMap = [[NSMutableDictionary alloc] init];
+    self.linkCache = [[NSMutableDictionary alloc] init];
     self.maxCount = ULONG_MAX;
     self.currentLinkIndex = -1;
 
-    // storyboard does not work?
     self.textView.font = NSFontManager.sharedFontManager.selectedFont;
 
     self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
@@ -101,6 +101,12 @@
     [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
         weakSelf.textView.font = updateFontBlock(weakSelf.textView.font);
     }];
+
+    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(showBundle)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    {
+        [weakSelf.linkCache removeAllObjects];
+        [weakSelf goToIndex:weakSelf.currentLinkIndex];
+    }];
 }
 
 - (void)swipeWithEvent:(NSEvent *)event
@@ -151,6 +157,8 @@
              title = [@"[U] " stringByAppendingString:url.path];
          } else if ([url.scheme isEqualToString:kSchemeCategory]) {
              title = [NSString stringWithFormat:@"[C] %@ (%@)", url.host, url.path];
+         } else if ([url.scheme isEqualToString:kSchemeProtocol]) {
+             title = [@"[P] " stringByAppendingString:url.host];
          } else {
              title = [@"[C] " stringByAppendingString:url.host];
          }
@@ -165,36 +173,46 @@
 
 #pragma mark - Private
 
+#pragma mark Stack
+
 - (void)menuStackHandleLink:(NSString *)link
 {
     [self.menuStack removeObject:link];
     [self.menuStack addObject:link];
 }
 
-
 - (IBAction)goBack:(id)sender
 {
     if (self.canGoBack) {
-        [self willChangeLinkStack];
-
-        self.currentLinkIndex = self.currentLinkIndex - 1;
-        NSString *link = self.linkStack[self.currentLinkIndex];
-        [self menuStackHandleLink:link];
-        self.richTextController.text = self.linkMap[link];
-
-        [self didChangeLinkStack];
+        [self goToIndex:self.currentLinkIndex - 1];
     }
 }
 
 - (IBAction)goForward:(id)sender
 {
     if (self.canGoForward) {
+        [self goToIndex:self.currentLinkIndex + 1];
+    }
+}
+
+- (void)goToIndex:(NSInteger)index
+{
+    if (index >= 0 && index < self.linkStack.count) {
         [self willChangeLinkStack];
 
-        self.currentLinkIndex = self.currentLinkIndex + 1;
+        self.currentLinkIndex = index;
         NSString *link = self.linkStack[self.currentLinkIndex];
         [self menuStackHandleLink:link];
-        self.richTextController.text = self.linkMap[link];
+        NSString *text = self.linkCache[link];
+        if (text) {
+            self.richTextController.text = text;
+        } else {
+            self.richTextController.text = _SC(@"Loading...", kColorComments);
+            [self textForLink:link completion:^(NSString *text) {
+                self.linkCache[link] = text;
+                self.richTextController.text = text;
+            }];
+        }
 
         [self didChangeLinkStack];
     }
@@ -202,6 +220,10 @@
 
 - (void)pushLink:(NSString *)link text:(NSString *)text
 {
+    if (!(link.length && text.length)) {
+        return;
+    }
+
     [self willChangeLinkStack];
 
     [self menuStackHandleLink:link];
@@ -213,7 +235,7 @@
     if (self.linkStack.count > self.maxCount) {
         [self.linkStack removeObjectAtIndex:0];
     }
-    self.linkMap[link] = text;
+    self.linkCache[link] = text;
 //    self.currentLinkIndex = self.currentLinkIndex + 1;
     self.currentLinkIndex = self.linkStack.count - 1;
 
@@ -221,39 +243,14 @@
     [self didChangeLinkStack];
 }
 
-- (void)stringFromData:(CDOCProtocol *)data completion:(void (^)(NSString *text))completion
+#pragma mark Stack
+
+- (void)textForLink:(NSString *)link completion:(void (^)(NSString *text))completion
 {
-    if (completion) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            CDClassDump *classDump = [[CDClassDump alloc] init];
-            ARTTextViewControllerVisitor *visitor = [[ARTTextViewControllerVisitor alloc] initWithTypeController:self.dataController.typeController dataController:self.dataController];
-            visitor.classDump = classDump;
-            [data recursivelyVisit:visitor];
-            NSString *text = visitor.resultString;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(text);
-            });
-        });
-    }
-}
-
-- (void)linkStackMenuAction:(NSMenuItem *)item
-{
-    NSString *link = item.representedObject;
-    [self pushLink:link text:self.linkMap[link]];
-}
-
-#pragma mark - Public
-
-- (void)updateDataWithLink:(NSString *)link
-{
-    if (self.currentLinkIndex >= 0 && [self.linkStack[self.currentLinkIndex] isEqualToString:link]) {
-        return;
-    }
-
     // check cache
-    if (self.linkMap[link]) {
-        [self pushLink:link text:self.linkMap[link]];
+    NSString *text = self.linkCache[link];
+    if (text) {
+        completion(text);
         return;
     }
 
@@ -266,12 +263,10 @@
         NSString *className = host;
         CDOCClass *class = self.dataController.classForName(className);
         if (class) {
-            self.richTextController.text = _SC(@"Loading...", kColorComments);
-            [self stringFromData:class completion:^(NSString *text) {
-                [self pushLink:link text:text];
-            }];
+            [self stringFromData:class completion:completion];
         } else {
             [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未发现类 %@", className] message:[NSString stringWithFormat:@"应该是%@没有link这个类所在的库导致", self.dataController.filePath.lastPathComponent]];
+            completion(nil);
         }
     }
     else if ([scheme isEqualToString:kSchemeProtocol])
@@ -279,12 +274,10 @@
         NSString *protocolName = host;
         CDOCProtocol *protocol = self.dataController.allProtocols[protocolName];
         if (protocol) {
-            self.richTextController.text = _SC(@"Loading...", kColorComments);
-            [self stringFromData:protocol completion:^(NSString *text) {
-                [self pushLink:link text:text];
-            }];
+            [self stringFromData:protocol completion:completion];
         } else {
             [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未发现协议 %@", protocolName] message:@"一般出现于该协议没有类接受"];
+            completion(nil);
         }
     }
     else if ([scheme isEqualToString:kSchemeCategory])
@@ -302,14 +295,14 @@
             }
             if (category) {
                 self.richTextController.text = _SC(@"Loading...", kColorComments);
-                [self stringFromData:category completion:^(NSString *text) {
-                    [self pushLink:link text:text];
-                }];
+                [self stringFromData:category completion:completion];
             } else {
                 [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"类%@未找到类别(%@)", className, categoryName] message:@"不应该出现，请提issue"];
+                completion(nil);
             }
         } else {
             [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"未找到类别(%@)所属的类%@", categoryName, className] message:@"不应该出现，请提issue"];
+            completion(nil);
         }
     }
     else if ([scheme isEqualToString:kSchemeStruct] || [scheme isEqualToString:kSchemeUnion])
@@ -334,11 +327,58 @@
         }
 
         if (info) {
-            NSString *text = [self.dataController.typeController structDisplayDescriptionWithStructureInfo:info];
-            [self pushLink:link text:text];
+            completion([self.dataController.typeController structDisplayDescriptionWithStructureInfo:info]);
         } else {
             [NSAlert showModalAlertWithTitle:@"未找到结构体类型" message:[NSString stringWithFormat:@"%@ %@", name, typeString]];
+            completion(nil);
         }
+    }
+}
+
+- (void)stringFromData:(CDOCProtocol *)data completion:(void (^)(NSString *text))completion
+{
+    if (completion) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            CDClassDump *classDump = [[CDClassDump alloc] init];
+            ARTTextViewControllerVisitor *visitor = [[ARTTextViewControllerVisitor alloc] initWithTypeController:self.dataController.typeController dataController:self.dataController];
+            visitor.classDump = classDump;
+            [data recursivelyVisit:visitor];
+            NSString *text = visitor.resultString;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(text);
+            });
+        });
+    }
+}
+
+#pragma mark Action
+
+- (void)linkStackMenuAction:(NSMenuItem *)item
+{
+    NSString *link = item.representedObject;
+    [self updateDataWithLink:link];
+}
+
+#pragma mark - Public
+
+- (void)updateDataWithLink:(NSString *)link
+{
+    if (self.currentLinkIndex >= 0 && [self.linkStack[self.currentLinkIndex] isEqualToString:link]) {
+        return;
+    }
+
+    NSString *text = self.linkCache[link];
+    if (text) {
+        [self pushLink:link text:text];
+    } else {
+        self.richTextController.text = _SC(@"Loading...", kColorComments);
+        [self textForLink:link completion:^(NSString *text) {
+            if (text) {
+                [self pushLink:link text:text];
+            } else {
+                self.richTextController.text = @"";
+            }
+        }];
     }
 }
 
