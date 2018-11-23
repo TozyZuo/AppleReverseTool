@@ -102,10 +102,18 @@
         weakSelf.textView.font = updateFontBlock(weakSelf.textView.font);
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(showBundle)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager
+         keyPaths:@[NSStringFromSelector(@selector(showBundle)),
+                    NSStringFromSelector(@selector(hideComments))]
+          options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
+            block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
-        [weakSelf.linkCache removeAllObjects];
-        [weakSelf goToIndex:weakSelf.currentLinkIndex];
+        BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
+        BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
+        if (new != old) {
+            [weakSelf.linkCache removeAllObjects];
+            [weakSelf goToIndex:weakSelf.currentLinkIndex];
+        }
     }];
 }
 
@@ -294,7 +302,6 @@
                 }
             }
             if (category) {
-                self.richTextController.text = _SC(@"Loading...", kColorComments);
                 [self stringFromData:category completion:completion];
             } else {
                 [NSAlert showModalAlertWithTitle:[NSString stringWithFormat:@"类%@未找到类别(%@)", className, categoryName] message:@"不应该出现，请提issue"];
@@ -332,6 +339,15 @@
             [NSAlert showModalAlertWithTitle:@"未找到结构体类型" message:[NSString stringWithFormat:@"%@ %@", name, typeString]];
             completion(nil);
         }
+    }
+    /*
+    else if ([scheme isEqualToString:kSchemeBundle])
+    {
+        // TODO
+    }
+    */
+    else {
+        completion(nil);
     }
 }
 

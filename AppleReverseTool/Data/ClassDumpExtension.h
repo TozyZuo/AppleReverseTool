@@ -22,10 +22,12 @@
 #define _SC ARTColorStringCreate
 #define _SF(...) [NSString stringWithFormat:__VA_ARGS__]
 
+#define _CS(string) (ARTConfigManager.sharedManager.hideComments ? @"" : _SC(string, kColorComments))
+
 #define _CL(aClass) _SC(ARTLinkStringCreate(kSchemeClass, aClass.name, aClass.name), aClass.isInsideMainBundle ? kColorClass : kColorOtherClass)
 #define _CGL(category) _SC(ARTLinkStringCreate(kSchemeCategory, _S(category.className, @"/", category.name, nil), category.name), category.isInsideMainBundle ? kColorClass : kColorOtherClass)
 #define _PL(protocol) _S(_SC(ARTLinkStringCreate(kSchemeProtocol, protocol.name, protocol.name), protocol.isInsideMainBundle ? kColorClass : kColorOtherClass), _BL(protocol), nil)
-#define _BL(objectWithBundle) ARTConfigManager.sharedManager.showBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, objectWithBundle.bundleName, kColorBundle, objectWithBundle.bundleName] : @""
+#define _BL(objectWithBundle) (ARTConfigManager.sharedManager.showBundle ? [NSString stringWithFormat:@"<font size=%.0f><a href='%@://%@' color=%@>[%@]</a></font>", ceilf(NSFontManager.sharedFontManager.selectedFont.pointSize * .5), kSchemeBundle, objectWithBundle.bundleName, kColorBundle, objectWithBundle.bundleName] : @"")
 
 #define _CNL(className) _SC(ARTLinkStringCreate(kSchemeClass, className, className), self.dataController.classForName(className).isInsideMainBundle ? kColorClass : kColorOtherClass)
 #define _PNL(protocolName) _SC(ARTLinkStringCreate(kSchemeProtocol, protocolName, protocolName), self.dataController.allProtocols[protocolName].isInsideMainBundle ? kColorClass : kColorOtherClass)

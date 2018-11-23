@@ -645,6 +645,12 @@
                                                 <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.hideUnexpandedVariables" id="CJk-nq-aOe"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Hide Comments" id="NBX-lO-pWV">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.hideComments" id="zML-GB-yTe"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

@@ -237,7 +237,7 @@ static BOOL debug = NO;
 
     if ([remaining count] > 0) {
         [self.resultString appendString:@"\n"];
-        [self.resultString appendString:_SC(@"// Remaining properties\n", kColorComments)];
+        [self.resultString appendString:_CS(@"// Remaining properties\n")];
         //NSLog(@"Warning: remaining undeclared property count: %u", [remaining count]);
         //NSLog(@"remaining: %@", remaining);
         for (CDOCProperty *property in remaining)
@@ -328,14 +328,14 @@ static BOOL debug = NO;
     [self.resultString appendFormat:@"%@;", formattedString];
 
     if (isDynamic) {
-        [self.resultString appendString:_SC(_SF(@" // @dynamic %@;", property.name), kColorComments)];
+        [self.resultString appendString:_CS(_SF(@" // @dynamic %@;", property.name))];
 //        [self.resultString appendFormat:@" // @dynamic %@;", property.name];
     } else if (backingVar != nil) {
         if ([backingVar isEqualToString:property.name]) {
-            [self.resultString appendString:_SC(_SF(@" // @synthesize %@;", property.name), kColorComments)];
+            [self.resultString appendString:_CS(_SF(@" // @synthesize %@;", property.name))];
 //            [self.resultString appendFormat:@" // @synthesize %@;", property.name];
         } else {
-            [self.resultString appendString:_SC(_SF(@" // @synthesize %@=%@;", property.name, backingVar), kColorComments)];
+            [self.resultString appendString:_CS(_SF(@" // @synthesize %@=%@;", property.name, backingVar))];
 //            [self.resultString appendFormat:@" // @synthesize %@=%@;", property.name, backingVar];
         }
     }
