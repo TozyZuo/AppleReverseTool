@@ -89,6 +89,7 @@ typedef NS_ENUM(NSInteger, CDDetailedType) {
     CDDetailedTypeBlock,
     CDDetailedTypeID,
     CDDetailedTypeNamedObject,
+    CDDetailedTypeVoid,
 };
 
 @interface CDType (ARTExtension)

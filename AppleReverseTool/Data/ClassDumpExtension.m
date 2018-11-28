@@ -295,6 +295,9 @@ TZWarningIgnoreEnd
             case T_NAMED_OBJECT:
                 detailedType = @(CDDetailedTypeNamedObject);
                 break;
+            case 'v':
+                detailedType = @(CDDetailedTypeVoid);
+                break;
             default:
                 detailedType = @(CDDetailedTypeSimple);
                 break;

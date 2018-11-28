@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class) BOOL deallocLogEnable;
 
 + (NSArray<Class> *)classesInBundle:(NSBundle *)bundle;
+// not support for multiple call
 + (void)addDeallocLogToClasses:(NSArray<Class> *)classes;
 
 @end
