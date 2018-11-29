@@ -36,7 +36,7 @@
     NSOutlineViewDataSource,
     NSOutlineViewDelegate,
     NSTextFieldDelegate,
-    ARTClassTreeCellDelegate
+    ARTRichTextCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic,  weak ) ARTDataController *dataController;
@@ -257,9 +257,9 @@
     return cell;
 }
 
-#pragma mark - ARTClassTreeCellDelegate
+#pragma mark - ARTRichTextCellDelegate
 
-- (void)classTreeCell:(ARTClassTreeCell *)classTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)richTextCell:(ARTClassTreeCell *)classTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     ARTURL *url = [[ARTURL alloc] initWithString:link];
     if ([url.scheme isEqualToString:kSchemeAction]) {

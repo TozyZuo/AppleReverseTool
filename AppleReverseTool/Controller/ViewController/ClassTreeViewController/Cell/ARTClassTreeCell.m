@@ -8,60 +8,16 @@
 
 #import "ARTClassTreeCell.h"
 #import "ARTURL.h"
-#import "ARTRichTextController.h"
 #import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
-#import "CDOCClassReference.h"
 
 @interface ARTClassTreeCell ()
 <ARTRichTextControllerDelegate>
-@property (weak) IBOutlet NSTextView *textView;
-@property (nonatomic, strong) ARTRichTextController *richTextController;
 @property (nonatomic,  weak ) CDOCClass *aClass;
 @property (nonatomic,  weak ) CDOCCategory *category;
 @end
 
 @implementation ARTClassTreeCell
-
-- (instancetype)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [self initialize];
-}
-
-- (void)setFrame:(NSRect)frame
-{
-    [super setFrame:frame];
-    self.textView.frame = self.bounds;
-}
-
-- (void)initialize
-{
-    NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
-//    textView.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable|
-//    NSViewMinXMargin|
-//    NSViewMaxXMargin|
-//    NSViewMinYMargin|
-//    NSViewMaxYMargin;
-
-    textView.selectable = YES;
-    textView.editable = NO;
-    textView.backgroundColor = NSColor.clearColor;
-    textView.textContainer.lineBreakMode = NSLineBreakByClipping;
-    [self addSubview:textView];
-    self.textView = textView;
-
-    self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
-    self.richTextController.delegate = self;
-}
 
 - (NSString *)prefixWithCategory:(CDOCCategory *)category
 {
@@ -152,15 +108,6 @@
     self.richTextController.text = _SF(@"%@(%@%@)", [self prefixWithCategory:category], _CGL(category), _BL(category));
 
     self.richTextController.filterConditionText = filterConditionText;
-}
-
-#pragma mark - ARTRichTextControllerDelegate
-
-- (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
-{
-    if ([self.delegate respondsToSelector:@selector(classTreeCell:didClickLink:rightMouse:)]) {
-        [self.delegate classTreeCell:self didClickLink:link rightMouse:rightMouse];
-    }
 }
 
 @end

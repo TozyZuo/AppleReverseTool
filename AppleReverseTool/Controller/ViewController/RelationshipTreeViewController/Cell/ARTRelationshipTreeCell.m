@@ -7,7 +7,6 @@
 //
 
 #import "ARTRelationshipTreeCell.h"
-#import "ARTRichTextController.h"
 #import "ARTRelationshipTreeModel.h"
 #import "ARTDataController.h"
 #import "ClassDumpExtension.h"
@@ -15,40 +14,10 @@
 
 @interface ARTRelationshipTreeCell ()
 <ARTRichTextControllerDelegate>
-@property (weak) IBOutlet NSTextView *textView;
-@property (nonatomic, strong) ARTRichTextController *richTextController;
 @property (nonatomic, strong) ARTRelationshipTreeModel *data;
 @end
 
 @implementation ARTRelationshipTreeCell
-
-- (instancetype)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)awakeFromNib
-{
-    [self initialize];
-}
-
-- (void)initialize
-{
-    NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
-    textView.autoresizingMask = NSViewWidthSizable| NSViewHeightSizable;
-    textView.selectable = YES;
-    textView.editable = NO;
-    textView.textContainer.lineBreakMode = NSLineBreakByClipping;
-    [self addSubview:textView];
-    self.textView = textView;
-
-    self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
-    self.richTextController.delegate = self;
-}
 
 #pragma mark - Public
 
@@ -119,15 +88,6 @@
     type.isParsing = NO;
     [text deleteCharactersInRange:NSMakeRange(0, 3)]; // delete white space
     return text;
-}
-
-#pragma mark - ARTRichTextControllerDelegate
-
-- (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
-{
-    if ([self.delegate respondsToSelector:@selector(relationshipTreeCell:didClickLink:rightMouse:)]) {
-        [self.delegate relationshipTreeCell:self didClickLink:link rightMouse:rightMouse];
-    }
 }
 
 @end

@@ -51,6 +51,13 @@
 		BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
+		BA94A5B521AE8D97004F6BCA /* SFBPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5A721AE8D96004F6BCA /* SFBPopover.m */; };
+		BA94A5B621AE8D97004F6BCA /* SFBPopoverWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5A821AE8D96004F6BCA /* SFBPopoverWindow.m */; };
+		BA94A5B721AE8D97004F6BCA /* SFBPopoverWindowFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5A921AE8D96004F6BCA /* SFBPopoverWindowFrame.m */; };
+		BA94A5BB21AE911B004F6BCA /* ARTClassPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5BA21AE911B004F6BCA /* ARTClassPickerViewController.m */; };
+		BA94A5BF21AE929A004F6BCA /* ARTClassPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA94A5BE21AE929A004F6BCA /* ARTClassPickerViewController.xib */; };
+		BA94A5C321AF8BE1004F6BCA /* ARTClassPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5C221AF8BE1004F6BCA /* ARTClassPickerCell.m */; };
+		BA94A5C621AF9210004F6BCA /* ARTRichTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */; };
 		BA9CA3BD21901CC000BD7B78 /* AppKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */; };
 		BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CDB217760CB003FD6CB /* ARTManager.m */; };
 		BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */; };
@@ -249,6 +256,19 @@
 		BA8434052168AD13007E55B0 /* ARTURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTURL.m; sourceTree = "<group>"; };
 		BA856D17216B5AA5009944A3 /* NSAlert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAlert+ART.h"; sourceTree = "<group>"; };
 		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
+		BA94A5A521AE8D96004F6BCA /* SFBPopoverWindowFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopoverWindowFrame.h; sourceTree = "<group>"; };
+		BA94A5A621AE8D96004F6BCA /* SFBPopoverWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopoverWindow.h; sourceTree = "<group>"; };
+		BA94A5A721AE8D96004F6BCA /* SFBPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopover.m; sourceTree = "<group>"; };
+		BA94A5A821AE8D96004F6BCA /* SFBPopoverWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopoverWindow.m; sourceTree = "<group>"; };
+		BA94A5A921AE8D96004F6BCA /* SFBPopoverWindowFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopoverWindowFrame.m; sourceTree = "<group>"; };
+		BA94A5AA21AE8D96004F6BCA /* SFBPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopover.h; sourceTree = "<group>"; };
+		BA94A5B921AE911B004F6BCA /* ARTClassPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassPickerViewController.h; sourceTree = "<group>"; };
+		BA94A5BA21AE911B004F6BCA /* ARTClassPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassPickerViewController.m; sourceTree = "<group>"; };
+		BA94A5BE21AE929A004F6BCA /* ARTClassPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ARTClassPickerViewController.xib; sourceTree = "<group>"; };
+		BA94A5C121AF8BE1004F6BCA /* ARTClassPickerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassPickerCell.h; sourceTree = "<group>"; };
+		BA94A5C221AF8BE1004F6BCA /* ARTClassPickerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassPickerCell.m; sourceTree = "<group>"; };
+		BA94A5C421AF9210004F6BCA /* ARTRichTextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRichTextCell.h; sourceTree = "<group>"; };
+		BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRichTextCell.m; sourceTree = "<group>"; };
 		BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppKitExtension.m; path = AppleReverseTool/Util/AppKitExtension.m; sourceTree = SOURCE_ROOT; };
 		BA9F9CDA217760CB003FD6CB /* ARTManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTManager.h; sourceTree = "<group>"; };
 		BA9F9CDB217760CB003FD6CB /* ARTManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTManager.m; sourceTree = "<group>"; };
@@ -330,6 +350,7 @@
 		BA3BE7AD21624BEF007AEFEF /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				BA94A5B821AE90E3004F6BCA /* PickClassViewController */,
 				BA3BE7BF21625F1A007AEFEF /* TextViewController */,
 				BA3BE7BE21625EF1007AEFEF /* ClassTreeViewController */,
 				BACFB3E72170BC84004CAD2E /* RelationshipTreeViewController */,
@@ -439,6 +460,8 @@
 				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 				BAD5F5F8216C85CC002207CF /* ARTButton.h */,
 				BAD5F5F9216C85CC002207CF /* ARTButton.m */,
+				BA94A5C421AF9210004F6BCA /* ARTRichTextCell.h */,
+				BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -527,6 +550,39 @@
 			path = Categary;
 			sourceTree = "<group>";
 		};
+		BA94A5A421AE8D96004F6BCA /* SFBPopover */ = {
+			isa = PBXGroup;
+			children = (
+				BA94A5AA21AE8D96004F6BCA /* SFBPopover.h */,
+				BA94A5A721AE8D96004F6BCA /* SFBPopover.m */,
+				BA94A5A621AE8D96004F6BCA /* SFBPopoverWindow.h */,
+				BA94A5A821AE8D96004F6BCA /* SFBPopoverWindow.m */,
+				BA94A5A521AE8D96004F6BCA /* SFBPopoverWindowFrame.h */,
+				BA94A5A921AE8D96004F6BCA /* SFBPopoverWindowFrame.m */,
+			);
+			path = SFBPopover;
+			sourceTree = "<group>";
+		};
+		BA94A5B821AE90E3004F6BCA /* PickClassViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BA94A5C021AF8BC6004F6BCA /* Cell */,
+				BA94A5B921AE911B004F6BCA /* ARTClassPickerViewController.h */,
+				BA94A5BA21AE911B004F6BCA /* ARTClassPickerViewController.m */,
+				BA94A5BE21AE929A004F6BCA /* ARTClassPickerViewController.xib */,
+			);
+			path = PickClassViewController;
+			sourceTree = "<group>";
+		};
+		BA94A5C021AF8BC6004F6BCA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				BA94A5C121AF8BE1004F6BCA /* ARTClassPickerCell.h */,
+				BA94A5C221AF8BE1004F6BCA /* ARTClassPickerCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		BAB66BB62171F162004D50E1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +595,7 @@
 		BAB6E5DC216A0F67005BA8C9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA94A5A421AE8D96004F6BCA /* SFBPopover */,
 				BA2E22062189DA0600480731 /* RFOverlayScroller.h */,
 				BA2E220C2189DA0700480731 /* RFOverlayScroller.m */,
 				BA2E220E218AA82400480731 /* RFOverlayScrollView.h */,
@@ -762,6 +819,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA635CA6215DFBEF0048AB9A /* Assets.xcassets in Resources */,
+				BA94A5BF21AE929A004F6BCA /* ARTClassPickerViewController.xib in Resources */,
 				BA635CA9215DFBEF0048AB9A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,12 +832,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA2E220D2189DA0700480731 /* RFOverlayScroller.m in Sources */,
+				BA94A5B721AE8D97004F6BCA /* SFBPopoverWindowFrame.m in Sources */,
 				BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */,
 				BA9CA3BD21901CC000BD7B78 /* AppKitExtension.m in Sources */,
+				BA94A5C621AF9210004F6BCA /* ARTRichTextCell.m in Sources */,
 				BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */,
 				BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */,
 				BA19199421A2A709004D855E /* ARTConfigManager.m in Sources */,
 				BA635EC4215E0F1C0048AB9A /* CRNode.m in Sources */,
+				BA94A5B621AE8D97004F6BCA /* SFBPopoverWindow.m in Sources */,
 				BA635EBC215E09C70048AB9A /* CDTypeController.m in Sources */,
 				BA635CAC215DFBEF0048AB9A /* main.m in Sources */,
 				BA8434062168AD13007E55B0 /* ARTURL.m in Sources */,
@@ -788,6 +849,7 @@
 				BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */,
 				BA3BE7CE21635425007AEFEF /* NSColor+ART.m in Sources */,
 				BA635EB3215E09530048AB9A /* CDClassDump.m in Sources */,
+				BA94A5B521AE8D97004F6BCA /* SFBPopover.m in Sources */,
 				BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */,
 				BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */,
 				BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */,
@@ -820,8 +882,10 @@
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
 				BA635CEC215E02930048AB9A /* ARTSingleInstance.m in Sources */,
+				BA94A5BB21AE911B004F6BCA /* ARTClassPickerViewController.m in Sources */,
 				BA635EBA215E09C70048AB9A /* CDVisitor.m in Sources */,
 				BACFB3EA2170BCBE004CAD2E /* ARTRelationshipTreeViewController.m in Sources */,
+				BA94A5C321AF8BE1004F6BCA /* ARTClassPickerCell.m in Sources */,
 				BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */,
 				BA635ECC215F1E700048AB9A /* ARTVisitor.m in Sources */,
 				BA635EBB215E09C70048AB9A /* CDSearchPathState.m in Sources */,

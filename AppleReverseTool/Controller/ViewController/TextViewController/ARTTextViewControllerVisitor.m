@@ -280,7 +280,7 @@ static BOOL debug = NO;
     [self.resultString appendString:self.classMethodsString];
     [self.resultString appendString:self.instanceMethodsString];
 
-    if (aClass.hasMethods)
+    if (self.classMethodsString.length || self.instanceMethodsString.length)
         [self.resultString appendString:@"\n"];
 
     [self.resultString appendString:_SC(@"@end\n\n", kColorKeywords)];
@@ -343,7 +343,7 @@ static BOOL debug = NO;
     [self.resultString appendString:self.classMethodsString];
     [self.resultString appendString:self.instanceMethodsString];
 
-    if (category.hasMethods)
+    if (self.classMethodsString.length || self.instanceMethodsString.length)
         [self.resultString appendString:@"\n"];
 
     [self.resultString appendString:_SC(@"@end\n\n", kColorKeywords)];

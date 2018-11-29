@@ -11,7 +11,6 @@
 #import "ARTDataController.h"
 #import "ARTURL.h"
 #import "ARTRelationshipTreeModel.h"
-#import "ARTRichTextController.h"
 #import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
@@ -23,7 +22,7 @@
 <
     NSOutlineViewDataSource,
     NSOutlineViewDelegate,
-    ARTRelationshipTreeCellDelegate
+    ARTRichTextCellDelegate
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic,  weak ) ARTDataController *dataController;
@@ -147,9 +146,9 @@
     return cell;
 }
 
-#pragma mark - ARTRelationshipTreeCellDelegate
+#pragma mark - ARTRichTextCellDelegate
 
-- (void)relationshipTreeCell:(ARTRelationshipTreeCell *)relationshipTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
+- (void)richTextCell:(ARTRelationshipTreeCell *)relationshipTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {
     ARTURL *url = [[ARTURL alloc] initWithString:link];
     if ([url.scheme isEqualToString:kSchemeAction]) {

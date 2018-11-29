@@ -6,25 +6,17 @@
 //  Copyright © 2018年 TozyZuo. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "CDOCClass.h"
+#import "ARTRichTextCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class ARTClassTreeCell, CDOCCategory, ARTRichTextController;
+@class CDOCCategory, CDOCClass, CDOCProtocol;
 
-@protocol ARTClassTreeCellDelegate <NSObject>
-@optional
-- (void)classTreeCell:(ARTClassTreeCell *)classTreeCell didClickLink:(NSString *)link rightMouse:(BOOL)rightMouse;
-@end
-
-@interface ARTClassTreeCell : NSView
-@property (nonatomic,   weak  ) id<ARTClassTreeCellDelegate> delegate;
+@interface ARTClassTreeCell : ARTRichTextCell
 @property (nonatomic,   weak  ) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, readonly) __kindof CDOCProtocol *data;
-@property (   weak  , readonly) NSTextView *textView;
 @property (nonatomic, readonly) CGSize optimumSize;
-- (void)updateDataWithClass:(CDOCClass *)class filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount;
+- (void)updateDataWithClass:(CDOCClass *)aClass filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount;
 - (void)updateDataWithCategory:(CDOCCategory *)category filterConditionText:(NSString *)filterConditionText;
 @end
 
