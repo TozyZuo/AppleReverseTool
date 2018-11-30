@@ -8,15 +8,16 @@
 
 #import "ARTRelationshipTreeViewController.h"
 #import "ARTRelationshipTreeCell.h"
+#import "ARTClassPickerViewController.h"
 #import "ARTDataController.h"
 #import "ARTURL.h"
 #import "ARTRelationshipTreeModel.h"
 #import "ARTConfigManager.h"
+#import "ARTPopover.h"
 #import "ClassDumpExtension.h"
 #import "CDOCInstanceVariable.h"
 #import "CDTypeLexer.h"
 #import "CDTypeName.h"
-
 
 @interface ARTRelationshipTreeViewController ()
 <
@@ -28,6 +29,8 @@
 @property (nonatomic,  weak ) ARTDataController *dataController;
 @property (nonatomic, strong) NSFont *font;
 @property (nonatomic, strong) NSArray<ARTRelationshipTreeModel *> *data;
+@property (nonatomic, strong) ARTClassPickerViewController *classPickerViewController;
+@property (nonatomic, strong) ARTPopover *popover;
 @end
 
 @implementation ARTRelationshipTreeViewController
@@ -36,9 +39,13 @@
 {
     [super viewDidLoad];
 
-    self.font = NSFontManager.sharedFontManager.selectedFont;
+    self.font = ARTFontManager.sharedFontManager.themeFont;
 
-    __weak typeof(self) weakSelf = self;
+    self.classPickerViewController = [[ARTClassPickerViewController alloc] init];
+
+    self.popover = [[ARTPopover alloc] initWithContentViewController:self.classPickerViewController];
+
+    weakifySelf();
     [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
         weakSelf.font = updateFontBlock(weakSelf.font);
         [weakSelf.outlineView reloadData];
@@ -81,6 +88,7 @@
 - (void)updateData:(ARTDataController *)dataController
 {
     self.dataController = dataController;
+    self.classPickerViewController.dataController = dataController;
 
     BOOL hideUnexpandedVariables = ARTConfigManager.sharedManager.hideUnexpandedVariables;
     NSMutableArray *modelData = [[NSMutableArray alloc] init];
@@ -168,6 +176,59 @@
             [self.delegate relationshipTreeViewController:self didClickItem:relationshipTreeCell.data link:link rightMouse:rightMouse];
         }
     }
+}
+
+#pragma mark - NSTextFieldDelegate
+
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+    NSTextField *textField = obj.object;
+    if (textField.stringValue.length) {
+        [self.popover displayPopoverInWindow:self.view.window atPoint:[textField.superview convertPoint:NSMakePoint(textField.width * .5, textField.height) toView:nil]];
+
+        weakifySelf();
+        [self.classPickerViewController setFilterString:textField.stringValue completion:^(CDOCClass * _Nullable aClass)
+        {
+            strongifySelf();
+            [self.popover closePopover:nil];
+
+            if (aClass) {
+                textField.stringValue = aClass.name;
+            }
+        }];
+    } else {
+        [self.popover closePopover:nil];
+    }
+}
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    static NSArray *commandSelectorArray;
+    static NSString *cancelOperation = @"cancelOperation:";
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        commandSelectorArray = @[NSStringFromSelector(@selector(insertNewline:)),
+                                 NSStringFromSelector(@selector(moveUp:)),
+                                 NSStringFromSelector(@selector(moveDown:)),];
+    });
+
+    if ([NSStringFromSelector(commandSelector) isEqualToString:cancelOperation] && control.stringValue.length)
+    {
+        if (self.popover.isVisible) {
+            [self.popover closePopover:nil];
+        } else {
+            [self.popover displayPopoverInWindow:self.view.window atPoint:[control.superview convertPoint:NSMakePoint(control.width * .5, control.height) toView:nil]];
+        }
+    }
+
+    if ([commandSelectorArray containsObject:NSStringFromSelector(commandSelector)] && self.popover.isVisible)
+    {
+        TZWarningIgnore(-Warc-performSelector-leaks)
+        [self.classPickerViewController performSelector:commandSelector withObject:nil];
+        TZWarningIgnoreEnd
+        return YES;
+    }
+    return NO;
 }
 
 @end

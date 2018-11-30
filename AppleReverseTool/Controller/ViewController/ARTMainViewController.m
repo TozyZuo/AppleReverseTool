@@ -86,7 +86,7 @@
 {
     [super viewDidLoad];
 
-    __weak typeof(self) weakSelf = self;
+    weakifySelf();
 
     [self.classTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"类树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica" traits:0 weight:0 size:13], NSForegroundColorAttributeName: RGBColor(128, 128, 128)}] forState:ARTButtonStateNormal];
     [self.classTreeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"类树" attributes:@{NSFontAttributeName: [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue" traits:NSBoldFontMask weight:0 size:13], NSForegroundColorAttributeName: RGBColor(49, 49, 49)}] forState:ARTButtonStateHighlighted];

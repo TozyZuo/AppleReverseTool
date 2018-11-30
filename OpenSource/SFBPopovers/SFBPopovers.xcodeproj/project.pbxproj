@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		32A1032F136844AC009FA237 /* SFBPopoverWindowFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A1032D136844AC009FA237 /* SFBPopoverWindowFrame.m */; };
+		32A10EBD136A5855009FA237 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A10EBC136A5855009FA237 /* QuartzCore.framework */; };
+		32CE12C81367854000CE7985 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CE12C71367854000CE7985 /* Cocoa.framework */; };
+		32CE12DE1367857A00CE7985 /* SFBPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CE12DC1367857A00CE7985 /* SFBPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32CE12DF1367857A00CE7985 /* SFBPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE12DD1367857A00CE7985 /* SFBPopover.m */; };
+		32CE12E41367859400CE7985 /* SFBPopoverWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE12E21367859400CE7985 /* SFBPopoverWindow.m */; };
+		BA94A5D821AFD512004F6BCA /* SFBPopoverWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 32CE12E11367859400CE7985 /* SFBPopoverWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA94A5D921AFD512004F6BCA /* SFBPopoverWindowFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 32A1032C136844AC009FA237 /* SFBPopoverWindowFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		32A1032C136844AC009FA237 /* SFBPopoverWindowFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopoverWindowFrame.h; sourceTree = "<group>"; };
+		32A1032D136844AC009FA237 /* SFBPopoverWindowFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopoverWindowFrame.m; sourceTree = "<group>"; };
+		32A10EBC136A5855009FA237 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		32CE12C41367854000CE7985 /* SFBPopovers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SFBPopovers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32CE12C71367854000CE7985 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		32CE12CA1367854000CE7985 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		32CE12CB1367854000CE7985 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		32CE12CC1367854000CE7985 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		32CE12CF1367854000CE7985 /* SFBPopovers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SFBPopovers-Info.plist"; sourceTree = "<group>"; };
+		32CE12D31367854000CE7985 /* SFBPopovers-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SFBPopovers-Prefix.pch"; sourceTree = "<group>"; };
+		32CE12DC1367857A00CE7985 /* SFBPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopover.h; sourceTree = "<group>"; };
+		32CE12DD1367857A00CE7985 /* SFBPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopover.m; sourceTree = "<group>"; };
+		32CE12E11367859400CE7985 /* SFBPopoverWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopoverWindow.h; sourceTree = "<group>"; };
+		32CE12E21367859400CE7985 /* SFBPopoverWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopoverWindow.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		32CE12C01367854000CE7985 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CE12C81367854000CE7985 /* Cocoa.framework in Frameworks */,
+				32A10EBD136A5855009FA237 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		32CE12B81367854000CE7985 = {
+			isa = PBXGroup;
+			children = (
+				32CE12CD1367854000CE7985 /* SFBPopovers */,
+				32CE12C61367854000CE7985 /* Frameworks */,
+				32CE12C51367854000CE7985 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		32CE12C51367854000CE7985 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32CE12C41367854000CE7985 /* SFBPopovers.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		32CE12C61367854000CE7985 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				32CE12C71367854000CE7985 /* Cocoa.framework */,
+				32CE12C91367854000CE7985 /* Other Frameworks */,
+				32A10EBC136A5855009FA237 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		32CE12C91367854000CE7985 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				32CE12CA1367854000CE7985 /* AppKit.framework */,
+				32CE12CB1367854000CE7985 /* CoreData.framework */,
+				32CE12CC1367854000CE7985 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		32CE12CD1367854000CE7985 /* SFBPopovers */ = {
+			isa = PBXGroup;
+			children = (
+				32CE12CE1367854000CE7985 /* Supporting Files */,
+				32CE12DC1367857A00CE7985 /* SFBPopover.h */,
+				32CE12DD1367857A00CE7985 /* SFBPopover.m */,
+				32CE12E11367859400CE7985 /* SFBPopoverWindow.h */,
+				32CE12E21367859400CE7985 /* SFBPopoverWindow.m */,
+				32A1032C136844AC009FA237 /* SFBPopoverWindowFrame.h */,
+				32A1032D136844AC009FA237 /* SFBPopoverWindowFrame.m */,
+			);
+			name = SFBPopovers;
+			sourceTree = "<group>";
+		};
+		32CE12CE1367854000CE7985 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				32CE12CF1367854000CE7985 /* SFBPopovers-Info.plist */,
+				32CE12D31367854000CE7985 /* SFBPopovers-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		32CE12C11367854000CE7985 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CE12DE1367857A00CE7985 /* SFBPopover.h in Headers */,
+				BA94A5D821AFD512004F6BCA /* SFBPopoverWindow.h in Headers */,
+				BA94A5D921AFD512004F6BCA /* SFBPopoverWindowFrame.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		32CE12C31367854000CE7985 /* SFBPopovers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32CE12D61367854000CE7985 /* Build configuration list for PBXNativeTarget "SFBPopovers" */;
+			buildPhases = (
+				32CE12BF1367854000CE7985 /* Sources */,
+				32CE12C01367854000CE7985 /* Frameworks */,
+				32CE12C11367854000CE7985 /* Headers */,
+				32CE12C21367854000CE7985 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SFBPopovers;
+			productName = SFBPopovers;
+			productReference = 32CE12C41367854000CE7985 /* SFBPopovers.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		32CE12BA1367854000CE7985 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = sbooth.org;
+			};
+			buildConfigurationList = 32CE12BD1367854000CE7985 /* Build configuration list for PBXProject "SFBPopovers" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 32CE12B81367854000CE7985;
+			productRefGroup = 32CE12C51367854000CE7985 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				32CE12C31367854000CE7985 /* SFBPopovers */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		32CE12C21367854000CE7985 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		32CE12BF1367854000CE7985 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CE12DF1367857A00CE7985 /* SFBPopover.m in Sources */,
+				32CE12E41367859400CE7985 /* SFBPopoverWindow.m in Sources */,
+				32A1032F136844AC009FA237 /* SFBPopoverWindowFrame.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		32CE12D41367854000CE7985 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		32CE12D51367854000CE7985 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+			};
+			name = Release;
+		};
+		32CE12D71367854000CE7985 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SFBPopovers-Prefix.pch";
+				INFOPLIST_FILE = "SFBPopovers-Info.plist";
+				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sbooth.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		32CE12D81367854000CE7985 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SFBPopovers-Prefix.pch";
+				INFOPLIST_FILE = "SFBPopovers-Info.plist";
+				INSTALL_PATH = "@rpath";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sbooth.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32CE12BD1367854000CE7985 /* Build configuration list for PBXProject "SFBPopovers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32CE12D41367854000CE7985 /* Debug */,
+				32CE12D51367854000CE7985 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32CE12D61367854000CE7985 /* Build configuration list for PBXNativeTarget "SFBPopovers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32CE12D71367854000CE7985 /* Debug */,
+				32CE12D81367854000CE7985 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 32CE12BA1367854000CE7985 /* Project object */;
+}

@@ -9,7 +9,7 @@
 #import "ARTFontManager.h"
 #import "ARTWeakObjectWrapper.h"
 
-static NSString * const NSFontManagerSelectedFontKey = @"NSFontManagerSelectedFontKey";
+static NSString * const NSFontManagerThemeFontKey = @"NSFontManagerThemeFontKey";
 static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontChangeBlockKey";
 
 @interface NSFontManager (ART)
@@ -33,20 +33,20 @@ static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontCha
     self = [super _init];
     if (self) {
         self.observers = [[NSMutableArray alloc] init];
-        NSData *fontData = NSUserDefaults.standardUserDefaults[NSFontManagerSelectedFontKey];
+        NSData *fontData = NSUserDefaults.standardUserDefaults[NSFontManagerThemeFontKey];
         if (!fontData) {
             fontData = [NSKeyedArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo-Regular" size:18]];
-            NSUserDefaults.standardUserDefaults[NSFontManagerSelectedFontKey] = fontData;
+            NSUserDefaults.standardUserDefaults[NSFontManagerThemeFontKey] = fontData;
         }
-        [super setSelectedFont:[NSKeyedUnarchiver unarchiveObjectWithData:fontData] isMultiple:NO];
+        self.themeFont = [NSKeyedUnarchiver unarchiveObjectWithData:fontData];
     }
     return self;
 }
 
-- (void)setSelectedFont:(NSFont *)fontObj isMultiple:(BOOL)flag
+- (void)setThemeFont:(NSFont *)themeFont
 {
-    [super setSelectedFont:fontObj isMultiple:flag];
-    NSUserDefaults.standardUserDefaults[NSFontManagerSelectedFontKey] = [NSKeyedArchiver archivedDataWithRootObject:fontObj];
+    _themeFont = themeFont;
+    NSUserDefaults.standardUserDefaults[NSFontManagerThemeFontKey] = [NSKeyedArchiver archivedDataWithRootObject:themeFont];
 }
 
 - (void)setTarget:(id)target
@@ -86,6 +86,8 @@ static NSString * const NSFontManagerFontChangeBlockKey = @"NSFontManagerFontCha
             [observers removeObject:wrapper];
         }
     }
+
+    self.themeFont = updateFontBlock(self.themeFont);
 }
 
 @end

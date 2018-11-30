@@ -452,7 +452,7 @@ NSSet *RTLabelValidTags;
 					[button setComponentIndex:linkableComponents.componentIndex];
                     [button setUrl:[NSURL URLWithString:(linkableComponents.attributes)[@"href"]]];
                     button.link = linkableComponents.attributes[@"href"];
-                    __weak typeof(self) weakSelf = self;
+                    weakifySelf();
                     button.eventHandler = ^(__kindof ARTControl * _Nonnull button, ARTControlEventType type, NSEvent *event)
                     {
                         switch (type) {

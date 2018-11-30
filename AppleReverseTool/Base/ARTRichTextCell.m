@@ -33,7 +33,11 @@
 - (void)setFrame:(NSRect)frame
 {
     [super setFrame:frame];
-    self.textView.frame = self.bounds;
+//    self.textView.frame = self.bounds;
+    CGRect rect = CGRectZero;
+    rect.size = self.richTextController.optimumSize;
+    rect.origin.y = (frame.size.height - rect.size.height) * .5;
+    self.textView.frame = rect;
 }
 
 - (void)initialize

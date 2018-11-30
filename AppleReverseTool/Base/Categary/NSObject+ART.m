@@ -96,5 +96,19 @@ static void *NSObjectAssociatedObjectDictionaryKey = &NSObjectAssociatedObjectDi
 {
     [self.KVOControllerNonRetaining observe:object keyPaths:keyPaths options:options block:block];
 }
+- (void)unobserve:(nullable id)object keyPath:(NSString *)keyPath
+{
+    [self.KVOControllerNonRetaining unobserve:object keyPath:keyPath];
+}
+
+- (void)unobserve:(nullable id)object
+{
+    [self.KVOControllerNonRetaining unobserve:object];
+}
+
+- (void)unobserveAll
+{
+    [self.KVOControllerNonRetaining unobserveAll];
+}
 
 @end

@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSArray<CDOCClass *> *classNodes;
 @property (nonatomic, readonly) CDOCClass * _Nullable (^classForName)(NSString *name);
 @property (nonatomic, readonly) NSDictionary<NSString *, CDOCProtocol *> *allProtocols;
+@property (nonatomic, readonly) NSDictionary<NSString *, CDOCClass *> *allClasses;
+@property (nonatomic, readonly) NSDictionary<NSString *, CDOCClass *> *allClassesInMainFile;
 @property (nonatomic, readonly) NSString *filePath;
 @property (nonatomic, readonly) CDTypeController *typeController;
 - (void)processDataWithFilePath:(NSString *)filePath

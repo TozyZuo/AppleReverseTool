@@ -45,7 +45,8 @@
 {
     [_view removeObserver:self forKeyPath:@"frame"];
     [_view removeObserver:self forKeyPath:@"font"];
-    [NSEvent removeMonitor:self.eventMonitor];
+    [_view removeObserver:self forKeyPath:@"textColor"];
+    [NSEvent removeMonitor:_eventMonitor];
 }
 
 - (instancetype)init
@@ -62,7 +63,7 @@
         self.textColor = view.textColor;
         self.view = view;
 
-        __weak typeof(self) weakSelf = self;
+        weakifySelf();
         self.eventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown|NSEventMaskLeftMouseUp|NSEventMaskRightMouseDown|NSEventMaskRightMouseUp|NSEventTypeOtherMouseDown|NSEventTypeOtherMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event)
         {
             return [weakSelf handleMonitorEvent:event];
@@ -129,8 +130,10 @@
     if (![_view isEqual:view]) {
         [_view removeObserver:self forKeyPath:@"frame"];
         [_view removeObserver:self forKeyPath:@"font"];
+        [_view removeObserver:self forKeyPath:@"textColor"];
         [view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
         [view addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+        [view addObserver:self forKeyPath:@"textColor" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
         _view = view;
     }
 }
@@ -150,7 +153,15 @@
         NSFont *old = change[NSKeyValueChangeOldKey];
         if (![new isEqual:old]) {
             NSMutableAttributedString *attributedText = self.attributedText.mutableCopy;
-            [attributedText addAttribute:NSFontAttributeName value:self.view.font range:NSMakeRange(0, self.attributedText.length)];
+            [attributedText addAttribute:NSFontAttributeName value:new range:NSMakeRange(0, self.attributedText.length)];
+            self.attributedText = attributedText;
+        }
+    } else if ([keyPath isEqualToString:@"textColor"]) {
+        NSColor *new = change[NSKeyValueChangeNewKey];
+        NSColor *old = change[NSKeyValueChangeOldKey];
+        if (![new isEqual:old]) {
+            NSMutableAttributedString *attributedText = self.attributedText.mutableCopy;
+            [attributedText addAttribute:NSForegroundColorAttributeName value:new range:NSMakeRange(0, self.attributedText.length)];
             self.attributedText = attributedText;
         }
     }

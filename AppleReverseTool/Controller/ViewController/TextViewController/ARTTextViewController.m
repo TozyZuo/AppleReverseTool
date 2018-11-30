@@ -49,12 +49,12 @@
     self.maxCount = ULONG_MAX;
     self.currentLinkIndex = -1;
 
-    self.textView.font = NSFontManager.sharedFontManager.selectedFont;
+    self.textView.font = ARTFontManager.sharedFontManager.themeFont;
 
     self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
     self.richTextController.delegate = self;
 
-    __weak typeof(self) weakSelf = self;
+    weakifySelf();
     [self.menuButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_showAllButtion"] forState:ARTButtonStateNormal];
     [self.menuButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_showAllButtion_highlighted"] forState:ARTButtonStateHighlighted];
     self.menuButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)

@@ -53,7 +53,8 @@
 
 + (NSColor *)filteredCharacterBackgroundColor
 {
-    return RGBColor(251, 244, 208);
+    return RGBAColor(252, 227, 154, .5);
+//    return RGBColor(251, 244, 208);
 }
 
 + (NSColor *)bundleColor

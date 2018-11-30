@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BA0A512621770FDE00FD9CB8 /* ARTRichTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */; };
 		BA0BE692219D802300166FD3 /* TZDebugUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CC03219C538B00AA2F19 /* TZDebugUtil.m */; };
+		BA0FC7C321B11C08002F7ACC /* ARTPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0FC7C221B11C08002F7ACC /* ARTPopover.m */; };
+		BA0FC7CE21B1206A002F7ACC /* SFBPopoversHook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5D621AFD3EC004F6BCA /* SFBPopoversHook.m */; };
 		BA19199421A2A709004D855E /* ARTConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA19199321A2A708004D855E /* ARTConfigManager.m */; };
 		BA1919BF21A2B539004D855E /* KVOController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1919BA21A2B4E0004D855E /* KVOController.framework */; };
 		BA1919C021A2B539004D855E /* KVOController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA1919BA21A2B4E0004D855E /* KVOController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -51,13 +53,12 @@
 		BA6C1AB2216659F600ABC059 /* NSView_TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
-		BA94A5B521AE8D97004F6BCA /* SFBPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5A721AE8D96004F6BCA /* SFBPopover.m */; };
-		BA94A5B621AE8D97004F6BCA /* SFBPopoverWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5A821AE8D96004F6BCA /* SFBPopoverWindow.m */; };
-		BA94A5B721AE8D97004F6BCA /* SFBPopoverWindowFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5A921AE8D96004F6BCA /* SFBPopoverWindowFrame.m */; };
 		BA94A5BB21AE911B004F6BCA /* ARTClassPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5BA21AE911B004F6BCA /* ARTClassPickerViewController.m */; };
 		BA94A5BF21AE929A004F6BCA /* ARTClassPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA94A5BE21AE929A004F6BCA /* ARTClassPickerViewController.xib */; };
 		BA94A5C321AF8BE1004F6BCA /* ARTClassPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5C221AF8BE1004F6BCA /* ARTClassPickerCell.m */; };
 		BA94A5C621AF9210004F6BCA /* ARTRichTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */; };
+		BA94A5D021AFD215004F6BCA /* SFBPopovers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA94A5CD21AFD1FB004F6BCA /* SFBPopovers.framework */; };
+		BA94A5D121AFD21B004F6BCA /* SFBPopovers.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA94A5CD21AFD1FB004F6BCA /* SFBPopovers.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA9CA3BD21901CC000BD7B78 /* AppKitExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */; };
 		BA9F9CDC217760CB003FD6CB /* ARTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CDB217760CB003FD6CB /* ARTManager.m */; };
 		BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */; };
@@ -158,6 +159,20 @@
 			remoteGlobalIDString = 013D1F1013A5AE5A00BF0A67;
 			remoteInfo = MachObjC;
 		};
+		BA94A5CC21AFD1FB004F6BCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32CE12C41367854000CE7985;
+			remoteInfo = SFBPopovers;
+		};
+		BA94A5D221AFD228004F6BCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 32CE12C31367854000CE7985;
+			remoteInfo = SFBPopovers;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -167,6 +182,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BA94A5D121AFD21B004F6BCA /* SFBPopovers.framework in Embed Frameworks */,
 				BA1919C021A2B539004D855E /* KVOController.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -179,6 +195,8 @@
 		BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTRichTextController.m; sourceTree = "<group>"; };
 		BA0BE68A219D7E1000166FD3 /* fishhook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		BA0BE690219D7E1000166FD3 /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
+		BA0FC7C121B11C08002F7ACC /* ARTPopover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTPopover.h; sourceTree = "<group>"; };
+		BA0FC7C221B11C08002F7ACC /* ARTPopover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTPopover.m; sourceTree = "<group>"; };
 		BA19199221A2A708004D855E /* ARTConfigManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTConfigManager.h; sourceTree = "<group>"; };
 		BA19199321A2A708004D855E /* ARTConfigManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTConfigManager.m; sourceTree = "<group>"; };
 		BA1919A921A2B4E0004D855E /* FBKVOController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FBKVOController.xcodeproj; path = KVOController/FBKVOController.xcodeproj; sourceTree = "<group>"; };
@@ -256,12 +274,6 @@
 		BA8434052168AD13007E55B0 /* ARTURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTURL.m; sourceTree = "<group>"; };
 		BA856D17216B5AA5009944A3 /* NSAlert+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAlert+ART.h"; sourceTree = "<group>"; };
 		BA856D18216B5AA5009944A3 /* NSAlert+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+ART.m"; sourceTree = "<group>"; };
-		BA94A5A521AE8D96004F6BCA /* SFBPopoverWindowFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopoverWindowFrame.h; sourceTree = "<group>"; };
-		BA94A5A621AE8D96004F6BCA /* SFBPopoverWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopoverWindow.h; sourceTree = "<group>"; };
-		BA94A5A721AE8D96004F6BCA /* SFBPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopover.m; sourceTree = "<group>"; };
-		BA94A5A821AE8D96004F6BCA /* SFBPopoverWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopoverWindow.m; sourceTree = "<group>"; };
-		BA94A5A921AE8D96004F6BCA /* SFBPopoverWindowFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBPopoverWindowFrame.m; sourceTree = "<group>"; };
-		BA94A5AA21AE8D96004F6BCA /* SFBPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBPopover.h; sourceTree = "<group>"; };
 		BA94A5B921AE911B004F6BCA /* ARTClassPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassPickerViewController.h; sourceTree = "<group>"; };
 		BA94A5BA21AE911B004F6BCA /* ARTClassPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassPickerViewController.m; sourceTree = "<group>"; };
 		BA94A5BE21AE929A004F6BCA /* ARTClassPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ARTClassPickerViewController.xib; sourceTree = "<group>"; };
@@ -269,6 +281,9 @@
 		BA94A5C221AF8BE1004F6BCA /* ARTClassPickerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassPickerCell.m; sourceTree = "<group>"; };
 		BA94A5C421AF9210004F6BCA /* ARTRichTextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRichTextCell.h; sourceTree = "<group>"; };
 		BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRichTextCell.m; sourceTree = "<group>"; };
+		BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SFBPopovers.xcodeproj; path = SFBPopovers/SFBPopovers.xcodeproj; sourceTree = "<group>"; };
+		BA94A5D521AFD3EC004F6BCA /* SFBPopoversHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFBPopoversHook.h; sourceTree = "<group>"; };
+		BA94A5D621AFD3EC004F6BCA /* SFBPopoversHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFBPopoversHook.m; sourceTree = "<group>"; };
 		BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppKitExtension.m; path = AppleReverseTool/Util/AppKitExtension.m; sourceTree = SOURCE_ROOT; };
 		BA9F9CDA217760CB003FD6CB /* ARTManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTManager.h; sourceTree = "<group>"; };
 		BA9F9CDB217760CB003FD6CB /* ARTManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTManager.m; sourceTree = "<group>"; };
@@ -302,6 +317,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA94A5D021AFD215004F6BCA /* SFBPopovers.framework in Frameworks */,
 				BA635EC0215E0A440048AB9A /* libMachObjC.a in Frameworks */,
 				BA1919BF21A2B539004D855E /* KVOController.framework in Frameworks */,
 			);
@@ -329,6 +345,7 @@
 		BA1919A821A2B252004D855E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
+				BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */,
 				BA1919A921A2B4E0004D855E /* FBKVOController.xcodeproj */,
 				BA635E9E215E091C0048AB9A /* class-dump-ref */,
 			);
@@ -469,12 +486,9 @@
 		BA635CED215E02BF0048AB9A /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				BAF2FEC32160B0650082A508 /* Model */,
+				BA94A5D421AFD3B4004F6BCA /* OpenSourceExtension */,
 				BA635EC1215E0EC50048AB9A /* ClassRelationship */,
-				BA3BE7A521621B7A007AEFEF /* ClassDumpHook.h */,
-				BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */,
-				BA3BE8102164C4DA007AEFEF /* ClassDumpExtension.h */,
-				BA3BE8112164C4DA007AEFEF /* ClassDumpExtension.m */,
+				BAF2FEC32160B0650082A508 /* Model */,
 				BA635CEE215E02D90048AB9A /* ARTController.h */,
 				BA635CEF215E02D90048AB9A /* ARTController.m */,
 				BA635CF1215E02E90048AB9A /* ARTDataController.h */,
@@ -550,19 +564,6 @@
 			path = Categary;
 			sourceTree = "<group>";
 		};
-		BA94A5A421AE8D96004F6BCA /* SFBPopover */ = {
-			isa = PBXGroup;
-			children = (
-				BA94A5AA21AE8D96004F6BCA /* SFBPopover.h */,
-				BA94A5A721AE8D96004F6BCA /* SFBPopover.m */,
-				BA94A5A621AE8D96004F6BCA /* SFBPopoverWindow.h */,
-				BA94A5A821AE8D96004F6BCA /* SFBPopoverWindow.m */,
-				BA94A5A521AE8D96004F6BCA /* SFBPopoverWindowFrame.h */,
-				BA94A5A921AE8D96004F6BCA /* SFBPopoverWindowFrame.m */,
-			);
-			path = SFBPopover;
-			sourceTree = "<group>";
-		};
 		BA94A5B821AE90E3004F6BCA /* PickClassViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,6 +584,27 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		BA94A5C821AFD1FA004F6BCA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA94A5CD21AFD1FB004F6BCA /* SFBPopovers.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA94A5D421AFD3B4004F6BCA /* OpenSourceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				BA3BE7A521621B7A007AEFEF /* ClassDumpHook.h */,
+				BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */,
+				BA3BE8102164C4DA007AEFEF /* ClassDumpExtension.h */,
+				BA3BE8112164C4DA007AEFEF /* ClassDumpExtension.m */,
+				BA94A5D521AFD3EC004F6BCA /* SFBPopoversHook.h */,
+				BA94A5D621AFD3EC004F6BCA /* SFBPopoversHook.m */,
+			);
+			path = OpenSourceExtension;
+			sourceTree = "<group>";
+		};
 		BAB66BB62171F162004D50E1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,13 +617,14 @@
 		BAB6E5DC216A0F67005BA8C9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BA94A5A421AE8D96004F6BCA /* SFBPopover */,
 				BA2E22062189DA0600480731 /* RFOverlayScroller.h */,
 				BA2E220C2189DA0700480731 /* RFOverlayScroller.m */,
 				BA2E220E218AA82400480731 /* RFOverlayScrollView.h */,
 				BA2E220F218AA82400480731 /* RFOverlayScrollView.m */,
 				BA3BE7C721632CB0007AEFEF /* RTLabel.h */,
 				BA3BE7C621632CB0007AEFEF /* RTLabel.m */,
+				BA0FC7C121B11C08002F7ACC /* ARTPopover.h */,
+				BA0FC7C221B11C08002F7ACC /* ARTPopover.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -684,6 +707,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA94A5D321AFD228004F6BCA /* PBXTargetDependency */,
 				BA635EBF215E0A3E0048AB9A /* PBXTargetDependency */,
 				BA1919C221A2B539004D855E /* PBXTargetDependency */,
 			);
@@ -731,6 +755,10 @@
 				{
 					ProductGroup = BA1919AA21A2B4E0004D855E /* Products */;
 					ProjectRef = BA1919A921A2B4E0004D855E /* FBKVOController.xcodeproj */;
+				},
+				{
+					ProductGroup = BA94A5C821AFD1FA004F6BCA /* Products */;
+					ProjectRef = BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -811,6 +839,13 @@
 			remoteRef = BA635EB0215E092A0048AB9A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BA94A5CD21AFD1FB004F6BCA /* SFBPopovers.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SFBPopovers.framework;
+			remoteRef = BA94A5CC21AFD1FB004F6BCA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -832,7 +867,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA2E220D2189DA0700480731 /* RFOverlayScroller.m in Sources */,
-				BA94A5B721AE8D97004F6BCA /* SFBPopoverWindowFrame.m in Sources */,
 				BA635CA4215DFBEE0048AB9A /* ARTDocument.m in Sources */,
 				BA9CA3BD21901CC000BD7B78 /* AppKitExtension.m in Sources */,
 				BA94A5C621AF9210004F6BCA /* ARTRichTextCell.m in Sources */,
@@ -840,16 +874,15 @@
 				BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */,
 				BA19199421A2A709004D855E /* ARTConfigManager.m in Sources */,
 				BA635EC4215E0F1C0048AB9A /* CRNode.m in Sources */,
-				BA94A5B621AE8D97004F6BCA /* SFBPopoverWindow.m in Sources */,
 				BA635EBC215E09C70048AB9A /* CDTypeController.m in Sources */,
 				BA635CAC215DFBEF0048AB9A /* main.m in Sources */,
 				BA8434062168AD13007E55B0 /* ARTURL.m in Sources */,
 				BA53CBFB219C10B000AA2F19 /* NSMenu+TZCategory.m in Sources */,
 				BA635EC9215E25D30048AB9A /* CDClassFrameworkVisitor.m in Sources */,
 				BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */,
+				BA0FC7CE21B1206A002F7ACC /* SFBPopoversHook.m in Sources */,
 				BA3BE7CE21635425007AEFEF /* NSColor+ART.m in Sources */,
 				BA635EB3215E09530048AB9A /* CDClassDump.m in Sources */,
-				BA94A5B521AE8D97004F6BCA /* SFBPopover.m in Sources */,
 				BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */,
 				BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */,
 				BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */,
@@ -877,6 +910,7 @@
 				BA3BE7BD21625BF1007AEFEF /* ARTTextViewController.m in Sources */,
 				BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */,
 				BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */,
+				BA0FC7C321B11C08002F7ACC /* ARTPopover.m in Sources */,
 				BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */,
 				BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */,
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
@@ -904,6 +938,11 @@
 			isa = PBXTargetDependency;
 			name = MachObjC;
 			targetProxy = BA635EBE215E0A3E0048AB9A /* PBXContainerItemProxy */;
+		};
+		BA94A5D321AFD228004F6BCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SFBPopovers;
+			targetProxy = BA94A5D221AFD228004F6BCA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

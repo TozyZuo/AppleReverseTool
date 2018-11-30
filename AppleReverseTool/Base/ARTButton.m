@@ -27,7 +27,7 @@
     self.imageMap = [[NSMutableDictionary alloc] init];
     self.sizeMap = [NSMapTable strongToStrongObjectsMapTable];
 
-    __weak typeof(self) weakSelf = self;
+    weakifySelf();
     [super setEventHandler:^(__kindof ARTControl *button, ARTControlEventType type, NSEvent *event) {
 
         switch (type) {

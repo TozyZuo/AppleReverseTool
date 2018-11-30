@@ -53,12 +53,12 @@
 {
     [super viewDidLoad];
 
-    self.font = NSFontManager.sharedFontManager.selectedFont;
+    self.font = ARTFontManager.sharedFontManager.themeFont;
 
     self.filterQueue = [[NSOperationQueue alloc] init];
     self.filterQueue.maxConcurrentOperationCount = 1;
 
-    __weak typeof(self) weakSelf = self;
+    weakifySelf();
     [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
         weakSelf.font = updateFontBlock(weakSelf.font);
         [weakSelf.outlineView reloadData];
@@ -96,7 +96,7 @@
         self.filterConditionText = text;
 
         [self.filterQueue cancelAllOperations];
-        __weak typeof(self) weakSelf = self;
+        weakifySelf();
 
         NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
             NSMutableArray<CDOCClass */*classCopy*/> *result = [[NSMutableArray alloc] init];
