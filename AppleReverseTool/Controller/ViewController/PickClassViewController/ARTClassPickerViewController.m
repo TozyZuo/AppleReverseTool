@@ -136,7 +136,7 @@
     if (row > self.results.count) {
         return nil;
     }
-    
+    ns
     ARTClassPickerCell *cell = [tableView makeViewWithIdentifier:@"CellID" owner:self];
     cell.textView.font = self.font;
     cell.aClass = self.results[row];

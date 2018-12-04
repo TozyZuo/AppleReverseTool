@@ -19,15 +19,6 @@
 
 @implementation ARTView
 
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
 - (instancetype)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];

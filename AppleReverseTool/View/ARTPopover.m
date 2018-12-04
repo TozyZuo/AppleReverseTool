@@ -86,7 +86,7 @@
 - (void)displayPopoverInWindow:(NSWindow *)window atPoint:(NSPoint)point chooseBestLocation:(BOOL)chooseBestLocation makeKey:(BOOL)makeKey
 {
     [super displayPopoverInWindow:window atPoint:point chooseBestLocation:chooseBestLocation makeKey:makeKey];
-//    [self.monitor start];
+    [self.monitor start];
 
     weakifySelf();
     NSViewController *contentViewController = self[@"contentViewController"];
