@@ -117,6 +117,11 @@ NSString *ARTStringCreate(NSString *string, ...)
     self.superNode = superClass;
 }
 
+- (NSArray<CDOCClass *> *)subClasses
+{
+    return (NSArray<CDOCClass *> *)self.subNodes;
+}
+
 - (NSArray<CDOCCategory *> *)categories
 {
     return self.interalCategories;
@@ -137,9 +142,9 @@ NSString *ARTStringCreate(NSString *string, ...)
     return interalCategories;
 }
 
-- (NSArray<CDOCClass *> *)referrers
+- (NSHashTable<CDOCClass *> *)referers
 {
-    return self.interalReferrers.allObjects;
+    return self.interalReferrers;
 }
 
 - (void)addReferrer:(CDOCClass *)referrer

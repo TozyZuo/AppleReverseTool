@@ -141,14 +141,14 @@
 
         self.dataController = [[ARTDataController alloc] init];
 
-        [self.dataController processDataWithFilePath:fileURL.path progress:^(ARTDataControllerProcessState state, NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable iVar, NSString * _Nullable type)
+        [self.dataController processDataWithFilePath:fileURL.path progress:^(ARTDataControllerProcessState state, NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable ivar, NSString * _Nullable type)
          {
              switch (state) {
                  case ARTDataControllerProcessStateWillProcess:
                      self.stateLabel.stringValue = @"准备分析数据...";
                      break;
                  case ARTDataControllerProcessStateProcessingData:
-                     self.stateLabel.stringValue = [NSString stringWithFormat:@"分析 [%@] %@ %@", framework, class ?: @"", iVar ?: @""];
+                     self.stateLabel.stringValue = [NSString stringWithFormat:@"分析 [%@] %@ %@", framework, class ?: @"", ivar ?: @""];
                      break;
                  case ARTDataControllerProcessStateProcessingType:
                      self.stateLabel.stringValue = [NSString stringWithFormat:@"分析类型 [%@] %@ %@", framework, class ?: @"", type ?: @""];

@@ -155,10 +155,10 @@ static BOOL _isInDataProcessing = NO;
             }
 
             if (progress) {
-                userInfo[@"progress"] = ^(ARTDataControllerProcessState state, NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable iVar, NSString * _Nullable type)
+                userInfo[@"progress"] = ^(ARTDataControllerProcessState state, NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable ivar, NSString * _Nullable type)
                 {
                     TZInvokeBlockInMainThread(^{
-                        progress(state, framework, class, iVar, type);
+                        progress(state, framework, class, ivar, type);
                     });
                 };
             }
@@ -216,10 +216,10 @@ static BOOL _isInDataProcessing = NO;
                 // manage referredClass
                 for (CDOCInstanceVariable *var in class.instanceVariables) {
                     CDOCClass *referredClass = self.classForName(var.type.typeName.name);
-                    if (referredClass.isInsideMainBundle) {
+//                    if (referredClass.isInsideMainBundle) {
                         [referredClass addReferrer:class];
                         [classesLeft removeObject:referredClass];
-                    }
+//                    }
                 }
             }
 

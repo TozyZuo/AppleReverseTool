@@ -51,7 +51,7 @@
         [weakSelf.outlineView reloadData];
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:@"hideUnexpandedVariables" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(hideUnexpandedVariables)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
         BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
         BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
@@ -67,6 +67,15 @@
             [weakSelf.outlineView reloadData];
         }
     }];
+
+    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(allowExpandClassNotInMainBundle)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+     {
+         BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
+         BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
+         if (new != old) {
+             [weakSelf.outlineView reloadData];
+         }
+     }];
 }
 
 #pragma mark - Private
@@ -92,8 +101,8 @@
 
     BOOL hideUnexpandedVariables = ARTConfigManager.sharedManager.hideUnexpandedVariables;
     NSMutableArray *modelData = [[NSMutableArray alloc] init];
-    for (CDOCClass *class in dataController.relationshipNodes) {
-        ARTRelationshipTreeModel *model = [[ARTRelationshipTreeModel alloc] initWithData:class dataController:self.dataController];
+    for (CDOCClass *aClass in dataController.relationshipNodes) {
+        ARTRelationshipTreeModel *model = [[ARTRelationshipTreeModel alloc] initWithClass:aClass type:ARTRelationshipTreeModelTypeReference dataController:self.dataController];
         model.hideUnexpandedVariables = hideUnexpandedVariables;
         [modelData addObject:model];
     }
@@ -115,7 +124,7 @@
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable ARTRelationshipTreeModel *)item
 {
     if (item) {
-        return item.subNodes.count;
+        return item.subNodes.count + (item.isSubclassExpanded ? item.subclassNodes.count : 0);
     } else {
         return self.data.count;
     }
@@ -124,7 +133,15 @@
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable ARTRelationshipTreeModel *)item
 {
     if (item) {
-        return item.subNodes[index];
+        if (item.isSubclassExpanded) {
+            if (index < item.subclassNodes.count) {
+                return item.subclassNodes[index];
+            } else {
+                return item.subNodes[index - item.subclassNodes.count];
+            }
+        } else {
+            return item.subNodes[index];
+        }
     } else {
         return self.data[index];
     }
@@ -169,6 +186,22 @@
                 [self.outlineView expandItem:data];
             }
             [relationshipTreeCell updateData:data];
+        } else if ([url.host isEqualToString:kExpandSubClassAction]) {
+            if ([self.outlineView isItemExpanded:data]) {
+                data.isSubclassExpanded = !data.isSubclassExpanded;
+                if (data.isSubclassExpanded) {
+                    [data createSubclassNodes];
+                    [self.outlineView insertItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.subclassNodes.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
+                } else {
+                    [self.outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, data.subclassNodes.count)] inParent:data withAnimation:NSTableViewAnimationEffectNone];
+                }
+            } else {
+                data.isSubclassExpanded = YES;
+                [data createSubclassNodes];
+                [data createSubNodes];
+                [self.outlineView expandItem:data];
+                [relationshipTreeCell updateData:data];
+            }
         }
     } else {
         if ([self.delegate respondsToSelector:@selector(relationshipTreeViewController:didClickItem:link:rightMouse:)])
@@ -194,10 +227,18 @@
 
             if (aClass) {
                 textField.stringValue = aClass.name;
+                ARTRelationshipTreeModel *referenceModel = [[ARTRelationshipTreeModel alloc] initWithClass:aClass type:ARTRelationshipTreeModelTypeReference dataController:self.dataController];
+                referenceModel.showHint = YES;
+                ARTRelationshipTreeModel *refererModel = [[ARTRelationshipTreeModel alloc] initWithClass:aClass type:ARTRelationshipTreeModelTypeReferer dataController:self.dataController];
+                refererModel.showHint = YES;
+                self.data = @[referenceModel, refererModel];
+                [self.outlineView reloadData];
             }
         }];
     } else {
         [self.popover closePopover:nil];
+        // TODO
+        [self updateData:self.dataController];
     }
 }
 

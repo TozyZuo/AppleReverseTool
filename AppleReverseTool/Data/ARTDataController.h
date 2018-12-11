@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *filePath;
 @property (nonatomic, readonly) CDTypeController *typeController;
 - (void)processDataWithFilePath:(NSString *)filePath
-                       progress:(void (^ _Nullable)(ARTDataControllerProcessState state, NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable iVar, NSString * _Nullable type))progress
+                       progress:(void (^ _Nullable)(ARTDataControllerProcessState state, NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable ivar, NSString * _Nullable type))progress
                      completion:(void (^)(ARTDataController *dataController))completion;
 @end
 

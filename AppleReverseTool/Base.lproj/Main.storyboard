@@ -651,6 +651,12 @@
                                                 <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.hideComments" id="zML-GB-yTe"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Allow Expand Class Not In Main Bundle" id="5Y1-9x-G1M">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="IqU-dL-3mQ" name="value" keyPath="selection.allowExpandClassNotInMainBundle" id="dgg-iY-YCW"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

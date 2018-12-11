@@ -9,6 +9,7 @@
 #import "ARTClassPickerViewController.h"
 #import "ARTDataController.h"
 #import "ARTClassPickerCell.h"
+#import "ARTConfigManager.h"
 #import "CDOCClass.h"
 #import "NSColor+ART.h"
 
@@ -91,7 +92,8 @@
 
             NSMutableArray *results = [[NSMutableArray alloc] init];
 
-            for (CDOCClass *aClass in self.dataController.allClassesInMainFile.allValues) {
+            NSArray *allClasses = ARTConfigManager.sharedInstance.allowExpandClassNotInMainBundle ? self.dataController.allClasses.allValues : self.dataController.allClassesInMainFile.allValues;
+            for (CDOCClass *aClass in allClasses) {
                 if ([ARTRichTextController isString:aClass.name metTheFilterCondition:filterString]) {
                     [results addObject:aClass];
                 }
@@ -136,7 +138,7 @@
     if (row > self.results.count) {
         return nil;
     }
-    ns
+    
     ARTClassPickerCell *cell = [tableView makeViewWithIdentifier:@"CellID" owner:self];
     cell.textView.font = self.font;
     cell.aClass = self.results[row];

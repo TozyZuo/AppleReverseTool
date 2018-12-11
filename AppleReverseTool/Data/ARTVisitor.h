@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSMutableDictionary<NSString *, CDOCClass *> *classesByClassString;
 @property (readonly) NSMutableDictionary<NSString *, CDOCProtocol *> *protocolsByProtocolString;
 
-- (instancetype)initWithDataController:(ARTDataController *)dataController progress:(void (^ _Nullable)(NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable iVar))progress;
+- (instancetype)initWithDataController:(ARTDataController *)dataController progress:(void (^ _Nullable)(NSString * _Nullable framework, NSString * _Nullable class, NSString * _Nullable ivar))progress;
 @end
 
 NS_ASSUME_NONNULL_END
