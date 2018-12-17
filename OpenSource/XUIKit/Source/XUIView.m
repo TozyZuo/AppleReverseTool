@@ -53,6 +53,9 @@ static const struct {
 };
 */
 
+@interface XUIView ()
+<CALayerDelegate>
+@end
 
 @implementation XUIView {
     BOOL _implementsDrawRect;
