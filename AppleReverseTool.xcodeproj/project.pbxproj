@@ -14,6 +14,7 @@
 		BA19199421A2A709004D855E /* ARTConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA19199321A2A708004D855E /* ARTConfigManager.m */; };
 		BA1919BF21A2B539004D855E /* KVOController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA1919BA21A2B4E0004D855E /* KVOController.framework */; };
 		BA1919C021A2B539004D855E /* KVOController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA1919BA21A2B4E0004D855E /* KVOController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA29D05621BFDE600027FB01 /* ARTCategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA29D05521BFDE600027FB01 /* ARTCategoryView.m */; };
 		BA2E220D2189DA0700480731 /* RFOverlayScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E220C2189DA0700480731 /* RFOverlayScroller.m */; };
 		BA2E2210218AA82400480731 /* RFOverlayScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2E220F218AA82400480731 /* RFOverlayScrollView.m */; };
 		BA3BE7A721621B7A007AEFEF /* ClassDumpHook.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE7A621621B7A007AEFEF /* ClassDumpHook.m */; };
@@ -69,6 +70,8 @@
 		BACFB3EE2170BCFA004CAD2E /* ARTRelationshipTreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3ED2170BCFA004CAD2E /* ARTRelationshipTreeCell.m */; };
 		BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F1216C6F69002207CF /* CALayer+ART.m */; };
 		BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F9216C85CC002207CF /* ARTButton.m */; };
+		BAD961A221C743D500BCF65D /* XUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD961A121C743C300BCF65D /* XUIKit.framework */; };
+		BAD961A321C743D500BCF65D /* XUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAD961A121C743C300BCF65D /* XUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBA2160A8150082A508 /* ARTWindowController.m */; };
 		BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBD2160A83C0082A508 /* ARTMainWindowController.m */; };
 		BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEC52160B07B0082A508 /* ARTModel.m */; };
@@ -173,6 +176,20 @@
 			remoteGlobalIDString = 32CE12C31367854000CE7985;
 			remoteInfo = SFBPopovers;
 		};
+		BAD961A021C743C300BCF65D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAD9619C21C743C300BCF65D /* XUIKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 551008D3159BEE4000C86022;
+			remoteInfo = XUIKit;
+		};
+		BAD961A421C743D500BCF65D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAD9619C21C743C300BCF65D /* XUIKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 551008D2159BEE4000C86022;
+			remoteInfo = XUIKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -184,6 +201,7 @@
 			files = (
 				BA94A5D121AFD21B004F6BCA /* SFBPopovers.framework in Embed Frameworks */,
 				BA1919C021A2B539004D855E /* KVOController.framework in Embed Frameworks */,
+				BAD961A321C743D500BCF65D /* XUIKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +219,8 @@
 		BA19199321A2A708004D855E /* ARTConfigManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTConfigManager.m; sourceTree = "<group>"; };
 		BA1919A921A2B4E0004D855E /* FBKVOController.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FBKVOController.xcodeproj; path = KVOController/FBKVOController.xcodeproj; sourceTree = "<group>"; };
 		BA21C91B2161C387008E8F97 /* ARTProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTProtocol.h; sourceTree = "<group>"; };
+		BA29D05421BFDE600027FB01 /* ARTCategoryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTCategoryView.h; sourceTree = "<group>"; };
+		BA29D05521BFDE600027FB01 /* ARTCategoryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTCategoryView.m; sourceTree = "<group>"; };
 		BA2E22062189DA0600480731 /* RFOverlayScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFOverlayScroller.h; sourceTree = "<group>"; };
 		BA2E220C2189DA0700480731 /* RFOverlayScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFOverlayScroller.m; sourceTree = "<group>"; };
 		BA2E220E218AA82400480731 /* RFOverlayScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFOverlayScrollView.h; sourceTree = "<group>"; };
@@ -303,6 +323,7 @@
 		BAD5F5F1216C6F69002207CF /* CALayer+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CALayer+ART.m"; sourceTree = "<group>"; };
 		BAD5F5F8216C85CC002207CF /* ARTButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTButton.h; sourceTree = "<group>"; };
 		BAD5F5F9216C85CC002207CF /* ARTButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTButton.m; sourceTree = "<group>"; };
+		BAD9619C21C743C300BCF65D /* XUIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = XUIKit.xcodeproj; path = XUIKit/XUIKit.xcodeproj; sourceTree = "<group>"; };
 		BAF2FEB92160A8150082A508 /* ARTWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTWindowController.h; sourceTree = "<group>"; };
 		BAF2FEBA2160A8150082A508 /* ARTWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTWindowController.m; sourceTree = "<group>"; };
 		BAF2FEBC2160A83C0082A508 /* ARTMainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTMainWindowController.h; sourceTree = "<group>"; };
@@ -319,6 +340,7 @@
 			files = (
 				BA94A5D021AFD215004F6BCA /* SFBPopovers.framework in Frameworks */,
 				BA635EC0215E0A440048AB9A /* libMachObjC.a in Frameworks */,
+				BAD961A221C743D500BCF65D /* XUIKit.framework in Frameworks */,
 				BA1919BF21A2B539004D855E /* KVOController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +367,7 @@
 		BA1919A821A2B252004D855E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
+				BAD9619C21C743C300BCF65D /* XUIKit.xcodeproj */,
 				BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */,
 				BA1919A921A2B4E0004D855E /* FBKVOController.xcodeproj */,
 				BA635E9E215E091C0048AB9A /* class-dump-ref */,
@@ -473,6 +496,8 @@
 				BA9F9CDB217760CB003FD6CB /* ARTManager.m */,
 				BA6C1AA42166579100ABC059 /* ARTView.h */,
 				BA6C1AA52166579100ABC059 /* ARTView.m */,
+				BA29D05421BFDE600027FB01 /* ARTCategoryView.h */,
+				BA29D05521BFDE600027FB01 /* ARTCategoryView.m */,
 				BA3BE7C921634B3B007AEFEF /* ARTControl.h */,
 				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 				BAD5F5F8216C85CC002207CF /* ARTButton.h */,
@@ -649,6 +674,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		BAD9619D21C743C300BCF65D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BAD961A121C743C300BCF65D /* XUIKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BAF2FEB22160A7F70082A508 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -710,6 +743,7 @@
 				BA94A5D321AFD228004F6BCA /* PBXTargetDependency */,
 				BA635EBF215E0A3E0048AB9A /* PBXTargetDependency */,
 				BA1919C221A2B539004D855E /* PBXTargetDependency */,
+				BAD961A521C743D500BCF65D /* PBXTargetDependency */,
 			);
 			name = Rcode;
 			productName = AppleReverseTool;
@@ -759,6 +793,10 @@
 				{
 					ProductGroup = BA94A5C821AFD1FA004F6BCA /* Products */;
 					ProjectRef = BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */;
+				},
+				{
+					ProductGroup = BAD9619D21C743C300BCF65D /* Products */;
+					ProjectRef = BAD9619C21C743C300BCF65D /* XUIKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -846,6 +884,13 @@
 			remoteRef = BA94A5CC21AFD1FB004F6BCA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BAD961A121C743C300BCF65D /* XUIKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = XUIKit.framework;
+			remoteRef = BAD961A021C743C300BCF65D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -912,6 +957,7 @@
 				BA3BE80F216459EE007AEFEF /* ARTStrings.m in Sources */,
 				BA0FC7C321B11C08002F7ACC /* ARTPopover.m in Sources */,
 				BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */,
+				BA29D05621BFDE600027FB01 /* ARTCategoryView.m in Sources */,
 				BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */,
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
@@ -943,6 +989,11 @@
 			isa = PBXTargetDependency;
 			name = SFBPopovers;
 			targetProxy = BA94A5D221AFD228004F6BCA /* PBXContainerItemProxy */;
+		};
+		BAD961A521C743D500BCF65D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XUIKit;
+			targetProxy = BAD961A421C743D500BCF65D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -175,7 +175,7 @@
 
 - (BOOL)isString:(NSString *)string metTheFilterCondition:(NSString *)conditionText
 {
-    return [ARTRichTextController isString:string metTheFilterCondition:conditionText];
+    return [ARTRichTextController priorityForFilterCondition:conditionText string:string] > 0;
 }
 
 #pragma mark - Public

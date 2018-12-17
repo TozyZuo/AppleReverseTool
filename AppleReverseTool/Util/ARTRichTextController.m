@@ -887,10 +887,10 @@
 
 #pragma mark - Public
 
-+ (BOOL)isString:(NSString *)string metTheFilterCondition:(NSString *)conditionText
++ (CGFloat)priorityForFilterCondition:(NSString *)conditionText string:(NSString *)string
 {
     if (!(string.length && conditionText.length)) {
-        return NO;
+        return -1;
     }
 
     NSInteger index = 0;
@@ -899,11 +899,11 @@
         NSRange range = [string rangeOfString:[conditionText substringWithRange:NSMakeRange(i, 1)] options:NSCaseInsensitiveSearch range:NSMakeRange(index, string.length - index)];
         index = NSMaxRange(range);
         if (range.location == NSNotFound) {
-            return NO;
+            return -1;
         }
     }
 
-    return YES;
+    return conditionText.length/(CGFloat)string.length;
 }
 
 + (NSIndexSet *)fuzzySearchWithString:(NSString *)string conditionText:(NSString *)conditionText
@@ -943,8 +943,8 @@
 
         _filterConditionText = nil;
 
-        if ([ARTRichTextController isString:self.plainText metTheFilterCondition:filterConditionText]) {
-
+        if ([ARTRichTextController priorityForFilterCondition:filterConditionText string:self.plainText] > 0)
+        {
             _filterConditionText = filterConditionText;
 
             [[ARTRichTextController fuzzySearchWithString:self.attributedText.string conditionText:_filterConditionText] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop)

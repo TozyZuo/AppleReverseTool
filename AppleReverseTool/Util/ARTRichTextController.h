@@ -42,7 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithView:(NSView<ARTRichTextViewProtocol> * _Nullable)view NS_DESIGNATED_INITIALIZER;
 
-+ (BOOL)isString:(NSString *)string metTheFilterCondition:(NSString *)conditionText;
+// return value < 0 is invalid
++ (CGFloat)priorityForFilterCondition:(NSString *)conditionText string:(NSString *)string;
 + (nullable NSIndexSet *)fuzzySearchWithString:(NSString *)string conditionText:(NSString *)conditionText;
 
 @end

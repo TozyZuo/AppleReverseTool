@@ -17,6 +17,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSColor (ART)
++ (NSColor *)classColor;
++ (NSColor *)otherClassColor;
++ (NSColor *)connectingLineColor;
++ (NSColor *)expandButtonColor;
++ (NSColor *)stringsColor;
++ (NSColor *)keywordsColor;
++ (NSColor *)commentsColor;
++ (NSColor *)numbersColor;
++ (NSColor *)filteredCharacterBackgroundColor;
++ (NSColor *)bundleColor;
 @end
 
 NS_ASSUME_NONNULL_END

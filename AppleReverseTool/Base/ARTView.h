@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 IB_DESIGNABLE
 @interface ARTView : NSView
 @property (nonatomic, strong) IBInspectable NSColor *backgroundColor;
+- (void)initialize;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,7 +10,8 @@
 #import "ARTDataController.h"
 #import "ARTClassPickerCell.h"
 #import "ARTConfigManager.h"
-#import "CDOCClass.h"
+#import "ARTCategoryView.h"
+#import "ClassDumpExtension.h"
 #import "NSColor+ART.h"
 
 @interface ARTClassPickerViewController ()
@@ -51,7 +52,7 @@
 
 - (void)insertNewline:(id)sender
 {
-    ARTClassPickerCell *cell = [self.tableView viewAtColumn:0 row:self.tableView.selectedRow makeIfNecessary:NO];
+    ARTClassPickerCell *cell = [self.tableView viewAtColumn:1 row:self.tableView.selectedRow makeIfNecessary:NO];
     self.filterString = nil;
     self.completion(cell.aClass);
 }
@@ -70,10 +71,10 @@
 {
     NSTableView *tableView = self.tableView;
     if (tableView.selectedRow >= 0) {
-        ARTClassPickerCell *cell = [tableView viewAtColumn:0 row:tableView.selectedRow makeIfNecessary:NO];
+        ARTClassPickerCell *cell = [tableView viewAtColumn:1 row:tableView.selectedRow makeIfNecessary:NO];
         cell.textView.textColor = NSColor.blackColor;
     }
-    ARTClassPickerCell *cell = [tableView viewAtColumn:0 row:row makeIfNecessary:YES];
+    ARTClassPickerCell *cell = [tableView viewAtColumn:1 row:row makeIfNecessary:YES];
     cell.textView.textColor = NSColor.whiteColor;
 }
 
@@ -91,13 +92,20 @@
             strongifySelf();
 
             NSMutableArray *results = [[NSMutableArray alloc] init];
+            NSMutableDictionary *resultsMap = [[NSMutableDictionary alloc] init];
 
             NSArray *allClasses = ARTConfigManager.sharedInstance.allowExpandClassNotInMainBundle ? self.dataController.allClasses.allValues : self.dataController.allClassesInMainFile.allValues;
             for (CDOCClass *aClass in allClasses) {
-                if ([ARTRichTextController isString:aClass.name metTheFilterCondition:filterString]) {
-                    [results addObject:aClass];
+                CGFloat priority = [ARTRichTextController priorityForFilterCondition:filterString string:aClass.name];
+                if (priority > 0) {
+                    resultsMap[@(priority)] = aClass;
                 }
             }
+
+            [[resultsMap.allKeys sortedArrayUsingSelector:@selector(compare:)].reversedArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop)
+            {
+                [results addObject:resultsMap[obj]];
+            }];
 
             self.results = results;
         }];
@@ -138,18 +146,31 @@
     if (row > self.results.count) {
         return nil;
     }
-    
-    ARTClassPickerCell *cell = [tableView makeViewWithIdentifier:@"CellID" owner:self];
-    cell.textView.font = self.font;
-    cell.aClass = self.results[row];
-    cell.richTextController.filterConditionText = self.filterString;
-    if (row == tableView.selectedRow) {
-        cell.textView.textColor = NSColor.whiteColor;
+
+    CDOCClass *aClass = self.results[row];
+
+    if ([tableColumn.identifier isEqualToString:@"CellID"])
+    {
+        ARTClassPickerCell *cell = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+        cell.textView.font = self.font;
+        cell.aClass = aClass;
+        cell.richTextController.filterConditionText = self.filterString;
+        if (row == tableView.selectedRow) {
+            cell.textView.textColor = NSColor.whiteColor;
+        } else {
+            cell.textView.textColor = NSColor.blackColor;
+        }
+
+        return cell;
     } else {
-        cell.textView.textColor = NSColor.blackColor;
+        NSView *cell = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+        ARTCategoryView *view = cell.subviews.firstObject;
+        view.color = aClass.isInsideMainBundle ? NSColor.classColor : NSColor.otherClassColor;
+        view.character = @"C";
+        return cell;
     }
 
-    return cell;
+    return nil;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row

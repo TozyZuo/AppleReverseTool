@@ -128,16 +128,22 @@
     if (!_fileURL && fileURL) {
         _fileURL = fileURL;
 
-//        id c = [[NSClassFromString(@"CDOCClass") alloc] init];
-//        [(NSImage *)c setName:@"NSObject"];
-//        ARTDataController *dc = [[ARTDataController alloc] init];
-//        dc[@"classNodes"] = @[c];
-//        [self.classTreeViewController updateData:dc];
-//        self.classTreeButton.enabled = YES;
-//        self.classTreeButton.selected = YES;
-//        self.relationshipTreeButton.enabled = YES;
-//        self.dataController = dc;
-//        return;
+#if 0
+        id c = [[NSClassFromString(@"CDOCClass") alloc] init];
+        [(NSImage *)c setName:@"NSObject"];
+        ARTDataController *dc = [[ARTDataController alloc] init];
+        dc[@"classNodes"] = @[c];
+        dc[@"allClasses"] = @{@"NSObject": c};
+        dc[@"allClassesInMainFile"] = @{@"NSObject": c};
+        self.dataController = dc;
+        [self.classTreeViewController updateData:dc];
+        [self.relationshipTreeViewController updateData:dc];
+        self.classTreeButton.enabled = YES;
+        self.classTreeButton.selected = YES;
+        self.relationshipTreeButton.enabled = YES;
+        [self relationshipTreeButtonAction:self.relationshipTreeButton];
+        return;
+#endif
 
         self.dataController = [[ARTDataController alloc] init];
 
