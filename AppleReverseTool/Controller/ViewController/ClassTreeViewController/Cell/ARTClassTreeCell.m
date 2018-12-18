@@ -10,6 +10,7 @@
 #import "ARTURL.h"
 #import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
+#import "NSColor+ART.h"
 
 @interface ARTClassTreeCell ()
 <ARTRichTextControllerDelegate>
@@ -31,7 +32,7 @@
         node = (CDOCClass *)node.superNode;
     }
 
-    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=connectingLine>%@</font> ", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
+    return [prefix stringByAppendingFormat:@"<font color=connectingLine>│</font>\t<font color=numbers>%@</font> ", [class.categories indexOfObject:category] == (class.categories.count - 1) ? @"└" : @"├"];
 }
 
 - (NSString *)prefixWithClass:(CDOCClass *)data
@@ -82,11 +83,6 @@
 - (CDOCProtocol *)data
 {
     return self.aClass ?: self.category.classReference;
-}
-
-- (CGSize)optimumSize
-{
-    return self.richTextController.optimumSize;
 }
 
 - (void)updateDataWithClass:(CDOCClass *)class filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount

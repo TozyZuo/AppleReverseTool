@@ -17,6 +17,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSColor (ART)
+
 + (NSColor *)classColor;
 + (NSColor *)otherClassColor;
 + (NSColor *)connectingLineColor;
@@ -27,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSColor *)numbersColor;
 + (NSColor *)filteredCharacterBackgroundColor;
 + (NSColor *)bundleColor;
+
+- (NSString *)hexValue;
+
 @end
 
 NS_ASSUME_NONNULL_END

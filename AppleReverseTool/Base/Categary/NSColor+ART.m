@@ -62,4 +62,11 @@
     return RGBColor(128, 128, 128);
 }
 
+- (NSString *)hexValue
+{
+    CGFloat r, g, b, a;
+    [self getRed:&r green:&g blue:&b alpha:&a];
+    return [NSString stringWithFormat:@"%x%x%x%x", (unsigned)(255 * r), (unsigned)(255 * g), (unsigned)(255 * b), (unsigned)(255 * a)];
+}
+
 @end

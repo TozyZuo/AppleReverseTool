@@ -42,22 +42,29 @@
 
 - (void)initialize
 {
-    NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
-    //    textView.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable|
-    //    NSViewMinXMargin|
-    //    NSViewMaxXMargin|
-    //    NSViewMinYMargin|
-    //    NSViewMaxYMargin;
+    if (!self.textView) {
+        NSTextView *textView = [[NSTextView alloc] initWithFrame:self.bounds];
+//        textView.autoresizingMask = NSViewWidthSizable|NSViewHeightSizable|
+//        NSViewMinXMargin|
+//        NSViewMaxXMargin|
+//        NSViewMinYMargin|
+//        NSViewMaxYMargin;
 
-    textView.selectable = YES;
-    textView.editable = NO;
-    textView.backgroundColor = NSColor.clearColor;
-    textView.textContainer.lineBreakMode = NSLineBreakByClipping;
-    [self addSubview:textView];
-    self.textView = textView;
+        textView.selectable = YES;
+        textView.editable = NO;
+        textView.backgroundColor = NSColor.clearColor;
+        textView.textContainer.lineBreakMode = NSLineBreakByClipping;
+        [self addSubview:textView];
+        self.textView = textView;
+    }
 
     self.richTextController = [[ARTRichTextController alloc] initWithView:self.textView];
     self.richTextController.delegate = self;
+}
+
+- (CGSize)optimumSize
+{
+    return self.richTextController.optimumSize;
 }
 
 #pragma mark - ARTRichTextControllerDelegate

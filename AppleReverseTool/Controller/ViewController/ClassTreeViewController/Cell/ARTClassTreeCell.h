@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ARTClassTreeCell : ARTRichTextCell
 @property (nonatomic,   weak  ) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic, readonly) __kindof CDOCProtocol *data;
-@property (nonatomic, readonly) CGSize optimumSize;
 - (void)updateDataWithClass:(CDOCClass *)aClass filterConditionText:(NSString *)filterConditionText totalCategoriesCount:(NSUInteger)totalCategoriesCount;
 - (void)updateDataWithCategory:(CDOCCategory *)category filterConditionText:(NSString *)filterConditionText;
 @end

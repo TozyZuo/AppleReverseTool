@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ARTRichTextCell : ARTView
 @property (weak) IBOutlet NSTextView *textView;
 @property (nonatomic, readonly) ARTRichTextController *richTextController;
+@property (nonatomic, readonly) CGSize optimumSize;
 @property (nonatomic,   weak  ) id<ARTRichTextCellDelegate> delegate;
 - (void)initialize;
 @end

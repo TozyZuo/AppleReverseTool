@@ -30,6 +30,7 @@
 		BA3BE8122164C4DA007AEFEF /* ClassDumpExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8112164C4DA007AEFEF /* ClassDumpExtension.m */; };
 		BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8132164DA40007AEFEF /* ARTProtocol.m */; };
 		BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */; };
+		BA48E57921C7A2570091F9F2 /* ARTClassTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA48E57821C7A2570091F9F2 /* ARTClassTreeModel.m */; };
 		BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */; };
 		BA53CBFB219C10B000AA2F19 /* NSMenu+TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */; };
 		BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635C9D215DFBEE0048AB9A /* AppDelegate.m */; };
@@ -250,6 +251,8 @@
 		BA3BE8132164DA40007AEFEF /* ARTProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTProtocol.m; sourceTree = "<group>"; };
 		BA3BE8152164FC7D007AEFEF /* ARTTextViewControllerVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTTextViewControllerVisitor.h; sourceTree = "<group>"; };
 		BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTTextViewControllerVisitor.m; sourceTree = "<group>"; };
+		BA48E57721C7A2570091F9F2 /* ARTClassTreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassTreeModel.h; sourceTree = "<group>"; };
+		BA48E57821C7A2570091F9F2 /* ARTClassTreeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassTreeModel.m; sourceTree = "<group>"; };
 		BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Foundation_Log.m; sourceTree = "<group>"; };
 		BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+TZCategory.h"; sourceTree = "<group>"; };
 		BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+TZCategory.m"; sourceTree = "<group>"; };
@@ -405,6 +408,7 @@
 		BA3BE7BE21625EF1007AEFEF /* ClassTreeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				BA48E56C21C7A2130091F9F2 /* Model */,
 				BA3BE7C221632C73007AEFEF /* Cell */,
 				BA3BE7B621625BBD007AEFEF /* ARTClassTreeViewController.h */,
 				BA3BE7B721625BBD007AEFEF /* ARTClassTreeViewController.m */,
@@ -430,6 +434,15 @@
 				BA3BE7C421632C95007AEFEF /* ARTClassTreeCell.m */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		BA48E56C21C7A2130091F9F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BA48E57721C7A2570091F9F2 /* ARTClassTreeModel.h */,
+				BA48E57821C7A2570091F9F2 /* ARTClassTreeModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BA53CC05219D18FB00AA2F19 /* DebugUtil */ = {
@@ -930,6 +943,7 @@
 				BA635EB3215E09530048AB9A /* CDClassDump.m in Sources */,
 				BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */,
 				BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */,
+				BA48E57921C7A2570091F9F2 /* ARTClassTreeModel.m in Sources */,
 				BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */,
 				BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */,
 				BA635CF0215E02D90048AB9A /* ARTController.m in Sources */,
