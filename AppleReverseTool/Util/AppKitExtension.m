@@ -79,11 +79,11 @@ static BOOL _NSViewImplementedDescription;
 - (NSString *)descriptionAppendTextIfApplicable
 {
     NSString *text = nil;
-
-TZWarningIgnore(-Wundeclared-selector)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     if ([self respondsToSelector:@selector(text)]) {
         id t = [self performSelector:@selector(text)];
-TZWarningIgnoreEnd
+#pragma clang diagnostic pop
         if ([t isKindOfClass:NSString.class]) {
             text = t;
         }

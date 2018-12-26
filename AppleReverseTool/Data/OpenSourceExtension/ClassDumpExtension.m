@@ -89,22 +89,22 @@ NSString *ARTStringCreate(NSString *string, ...)
 
 - (NSArray<id<ARTNode>> *)subNodes
 {
-    return self.interalSubNodes;
+    return self.internalSubNodes;
 }
 
 - (void)addSubNode:(id<ARTNode>)node
 {
-    [self.interalSubNodes addObject:node];
+    [self.internalSubNodes addObject:node];
 }
 
-- (NSMutableArray *)interalSubNodes
+- (NSMutableArray *)internalSubNodes
 {
-    NSMutableArray *interalSubNodes = self[ARTAssociatedKeyForSelector(_cmd)];
-    if (!interalSubNodes) {
-        interalSubNodes = [[NSMutableArray alloc] init];
-        self[ARTAssociatedKeyForSelector(_cmd)] = interalSubNodes;
+    NSMutableArray *internalSubNodes = self[ARTAssociatedKeyForSelector(_cmd)];
+    if (!internalSubNodes) {
+        internalSubNodes = [[NSMutableArray alloc] init];
+        self[ARTAssociatedKeyForSelector(_cmd)] = internalSubNodes;
     }
-    return interalSubNodes;
+    return internalSubNodes;
 }
 
 - (CDOCClass *)superClass
@@ -124,60 +124,72 @@ NSString *ARTStringCreate(NSString *string, ...)
 
 - (NSArray<CDOCCategory *> *)categories
 {
-    return self.interalCategories;
+    return self.internalCategories;
 }
 
 - (void)addCategory:(CDOCCategory *)category
 {
-    [self.interalCategories addObject:category];
+    [self.internalCategories addObject:category];
 }
 
-- (NSMutableArray *)interalCategories
+- (NSMutableArray *)internalCategories
 {
-    NSMutableArray *interalCategories = self[ARTAssociatedKeyForSelector(_cmd)];
-    if (!interalCategories) {
-        interalCategories = [[NSMutableArray alloc] init];
-        self[ARTAssociatedKeyForSelector(_cmd)] = interalCategories;
+    NSMutableArray *internalCategories = self[ARTAssociatedKeyForSelector(_cmd)];
+    if (!internalCategories) {
+        internalCategories = [[NSMutableArray alloc] init];
+        self[ARTAssociatedKeyForSelector(_cmd)] = internalCategories;
     }
-    return interalCategories;
+    return internalCategories;
 }
 
 - (NSHashTable<CDOCClass *> *)referers
 {
-    return self.interalReferrers;
+    return self.internalReferrers;
 }
 
 - (void)addReferrer:(CDOCClass *)referrer
 {
-    [self.interalReferrers addObject:referrer];
+    [self.internalReferrers addObject:referrer];
 }
 
-- (NSHashTable *)interalReferrers
+- (NSHashTable *)internalReferrers
 {
-    NSHashTable *interalReferrers = self[ARTAssociatedKeyForSelector(_cmd)];
-    if (!interalReferrers) {
-        interalReferrers = [NSHashTable weakObjectsHashTable];
-        self[ARTAssociatedKeyForSelector(_cmd)] = interalReferrers;
+    NSHashTable *internalReferrers = self[ARTAssociatedKeyForSelector(_cmd)];
+    if (!internalReferrers) {
+        internalReferrers = [NSHashTable weakObjectsHashTable];
+        self[ARTAssociatedKeyForSelector(_cmd)] = internalReferrers;
     }
-    return interalReferrers;
+    return internalReferrers;
+}
+
+- (CDOCCategory * _Nullable (^)(NSString * _Nonnull))categoryForName
+{
+    return ^(NSString *name){
+        for (CDOCCategory *category in self.internalCategories) {
+            if ([category.name isEqualToString:name]) {
+                return category;
+            }
+        }
+        return (CDOCCategory *)nil;
+    };
 }
 
 - (void)sort
 {
-    NSMutableArray *interalSubNodes = self.interalSubNodes;
-    [interalSubNodes sortUsingComparator:^NSComparisonResult(id<ARTNode>  _Nonnull obj1, id<ARTNode>  _Nonnull obj2) {
+    NSMutableArray *internalSubNodes = self.internalSubNodes;
+    [internalSubNodes sortUsingComparator:^NSComparisonResult(id<ARTNode>  _Nonnull obj1, id<ARTNode>  _Nonnull obj2) {
         return [obj1.name compare:obj2.name];
     }];
 
-    [self.interalCategories sortUsingComparator:^NSComparisonResult(CDOCCategory * _Nonnull obj1, CDOCCategory * _Nonnull obj2) {
+    [self.internalCategories sortUsingComparator:^NSComparisonResult(CDOCCategory * _Nonnull obj1, CDOCCategory * _Nonnull obj2) {
         return [obj1.name compare:obj2.name];
     }];
 
-//    [self.interalReferrers sortUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
+//    [self.internalReferrers sortUsingComparator:^NSComparisonResult(CDOCClass * _Nonnull obj1, CDOCClass * _Nonnull obj2) {
 //        return [obj1.name compare:obj2.name];
 //    }];
 
-    for (CDOCClass *subClass in interalSubNodes) {
+    for (CDOCClass *subClass in internalSubNodes) {
         [subClass sort];
     }
 }
@@ -243,9 +255,9 @@ NSString *ARTStringCreate(NSString *string, ...)
 - (NSString *)formattedStringForSimpleType;
 @end
 
-TZWarningIgnore(-Wincomplete-implementation)
+TZIgnoreWarning(-Wincomplete-implementation)
 @implementation CDType (ARTExtension)
-TZWarningIgnoreEnd
+TZIgnoreWarningEnd
 
 + (instancetype)alloc
 {

@@ -15,6 +15,7 @@
 #import <Cocoa/Cocoa.h>
 #import "CDExtensions.h"
 #define __cmd __PRETTY_FUNCTION__
+#import "TZDefine.h"
 #import "ARTDefine.h"
 #import "ARTProtocol.h"
 #import "ARTStrings.h"

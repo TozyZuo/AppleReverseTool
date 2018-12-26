@@ -224,9 +224,9 @@ static NSString *ARTConfigManagerPropertySwizzledSuffix = @"_swizzled";
     NSString *sel = self.dispathMap[[self.info classStringForProperty:[self propertyFromSetSelector:anInvocation.selector]]];
     NSInvocation *invocation = anInvocation;
     if (sel) {
-        TZWarningIgnore(-Warc-performSelector-leaks)
+        TZIgnoreWarning(-Warc-performSelector-leaks)
         [self performSelector:NSSelectorFromString(sel) withObject:invocation];
-        TZWarningIgnoreEnd
+        TZIgnoreWarningEnd
     }
 }
 

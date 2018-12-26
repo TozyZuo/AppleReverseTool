@@ -64,7 +64,7 @@
         [weakSelf.outlineView reloadData];
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(showBundle)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager, showBundle) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
      {
          BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
          BOOL old = [change[NSKeyValueChangeOldKey] boolValue];

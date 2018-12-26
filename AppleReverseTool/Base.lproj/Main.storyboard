@@ -345,23 +345,23 @@
                                         <menuItem title="Go Forward" keyEquivalent="" id="OY7-WF-poV">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <binding destination="hnw-xV-0zn" name="target" keyPath="keyWindow.nextResponder.contentViewController.textViewController" id="sEs-1x-7sc">
+                                                <binding destination="hnw-xV-0zn" name="enabled" keyPath="keyWindow.nextResponder.contentViewController.textViewController.canGoForward" id="q3c-NQ-XaQ"/>
+                                                <binding destination="hnw-xV-0zn" name="target" keyPath="keyWindow.nextResponder.contentViewController.textViewController.stack" id="IfI-PU-2yl">
                                                     <dictionary key="options">
-                                                        <string key="NSSelectorName">goForward:</string>
+                                                        <string key="NSSelectorName">goForward</string>
                                                     </dictionary>
                                                 </binding>
-                                                <binding destination="hnw-xV-0zn" name="enabled" keyPath="keyWindow.nextResponder.contentViewController.textViewController.canGoForward" id="q3c-NQ-XaQ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Go Back" keyEquivalent="" id="R4o-n2-Eq4">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <binding destination="hnw-xV-0zn" name="target" keyPath="keyWindow.nextResponder.contentViewController.textViewController" id="elb-h6-64t">
+                                                <binding destination="hnw-xV-0zn" name="enabled" keyPath="keyWindow.nextResponder.contentViewController.textViewController.stack.stackcanGoBack" id="GPv-fS-FaV"/>
+                                                <binding destination="hnw-xV-0zn" name="target" keyPath="keyWindow.nextResponder.contentViewController.textViewController.stack" id="YqC-nb-URt">
                                                     <dictionary key="options">
-                                                        <string key="NSSelectorName">goBack:</string>
+                                                        <string key="NSSelectorName">goBack</string>
                                                     </dictionary>
                                                 </binding>
-                                                <binding destination="hnw-xV-0zn" name="enabled" keyPath="keyWindow.nextResponder.contentViewController.textViewController.canGoBack" id="lWI-iJ-nxO"/>
                                             </connections>
                                         </menuItem>
                                     </items>

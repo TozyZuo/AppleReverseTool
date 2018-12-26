@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="42" rowSizeStyle="automatic" viewBased="YES" id="R4R-xy-lsp">
-                                <rect key="frame" x="0.0" y="0.0" width="459" height="257"/>
+                                <rect key="frame" x="0.0" y="0.0" width="491" height="257"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -52,6 +52,12 @@
                                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E3X-d2-KfK" customClass="ARTCategoryView">
                                                         <rect key="frame" x="9" y="9" width="24" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="character" value="C"/>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                                <color key="value" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </customView>
                                                 </subviews>
                                             </customView>
@@ -71,7 +77,7 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="CellID" id="rN8-gx-f33" customClass="ARTClassPickerCell">
-                                                <rect key="frame" x="14" y="1" width="443" height="17"/>
+                                                <rect key="frame" x="46" y="1" width="443" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </tableCellView>
                                         </prototypeCellViews>
@@ -84,7 +90,7 @@
                             </tableView>
                         </subviews>
                     </clipView>
-                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.076923076923076927" horizontal="YES" id="5mx-NM-Jml" customClass="RFOverlayScroller">
+                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="5mx-NM-Jml" customClass="RFOverlayScroller">
                         <rect key="frame" x="0.0" y="257" width="446" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>

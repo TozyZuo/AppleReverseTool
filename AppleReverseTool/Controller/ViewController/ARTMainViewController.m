@@ -78,8 +78,8 @@
 {
     [super awakeFromNib];
     
-    [self.classTreeViewController.view bind:NSHiddenBinding toObject:self.classTreeButton withKeyPath:@"selected" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
-    [self.relationshipTreeViewController.view bind:NSHiddenBinding toObject:self.relationshipTreeButton withKeyPath:@"selected" options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+    [self.classTreeViewController.view bind:NSHiddenBinding toObject:self.classTreeButton withKeyPath:@keypath(ARTButton, selected) options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+    [self.relationshipTreeViewController.view bind:NSHiddenBinding toObject:self.relationshipTreeButton withKeyPath:@keypath(ARTButton, selected) options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
 }
 
 - (void)viewDidLoad
@@ -131,9 +131,11 @@
 #if 0
         id c = [[NSClassFromString(@"CDOCClass") alloc] init];
         [(NSImage *)c setName:@"NSObject"];
+        id c1 = [[NSClassFromString(@"CDOCClass") alloc] init];
+        [(NSImage *)c1 setName:@"NSObject2"];
         ARTDataController *dc = [[ARTDataController alloc] init];
-        dc[@"classNodes"] = @[c];
-        dc[@"allClasses"] = @{@"NSObject": c};
+        dc[@"classNodes"] = @[c, c1];
+        dc[@"allClasses"] = @{@"NSObject": c, @"NSObject2": c1};
         dc[@"allClassesInMainFile"] = @{@"NSObject": c};
         self.dataController = dc;
         [self.classTreeViewController updateData:dc];

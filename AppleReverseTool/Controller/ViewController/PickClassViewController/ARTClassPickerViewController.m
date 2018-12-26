@@ -166,7 +166,6 @@
         NSView *cell = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
         ARTCategoryView *view = cell.subviews.firstObject;
         view.color = aClass.isInsideMainBundle ? NSColor.classColor : NSColor.otherClassColor;
-        view.character = @"C";
         return cell;
     }
 

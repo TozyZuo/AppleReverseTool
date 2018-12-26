@@ -51,7 +51,7 @@
         [weakSelf.outlineView reloadData];
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(hideUnexpandedVariables)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager, hideUnexpandedVariables) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
         BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
         BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
@@ -68,7 +68,7 @@
         }
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:NSStringFromSelector(@selector(allowExpandClassNotInMainBundle)) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager, allowExpandClassNotInMainBundle) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
      {
          BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
          BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
@@ -264,9 +264,9 @@
 
     if ([commandSelectorArray containsObject:NSStringFromSelector(commandSelector)] && self.popover.isVisible)
     {
-        TZWarningIgnore(-Warc-performSelector-leaks)
+        TZIgnoreWarning(-Warc-performSelector-leaks)
         [self.classPickerViewController performSelector:commandSelector withObject:nil];
-        TZWarningIgnoreEnd
+        TZIgnoreWarningEnd
         return YES;
     }
     return NO;

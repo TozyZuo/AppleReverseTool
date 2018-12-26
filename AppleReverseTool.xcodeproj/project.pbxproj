@@ -31,6 +31,7 @@
 		BA3BE8142164DA40007AEFEF /* ARTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8132164DA40007AEFEF /* ARTProtocol.m */; };
 		BA3BE8172164FC7D007AEFEF /* ARTTextViewControllerVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */; };
 		BA48E57921C7A2570091F9F2 /* ARTClassTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA48E57821C7A2570091F9F2 /* ARTClassTreeModel.m */; };
+		BA48E57C21C89B320091F9F2 /* ARTStackController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA48E57B21C89B320091F9F2 /* ARTStackController.m */; };
 		BA53CBF821998BAC00AA2F19 /* Foundation_Log.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */; };
 		BA53CBFB219C10B000AA2F19 /* NSMenu+TZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */; };
 		BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635C9D215DFBEE0048AB9A /* AppDelegate.m */; };
@@ -67,6 +68,7 @@
 		BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */; };
 		BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE921776449003FD6CB /* NSObject+ART.m */; };
 		BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */; };
+		BAC1777E21D2349600D33691 /* TZVector.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC1777D21D2349500D33691 /* TZVector.m */; };
 		BACFB3EA2170BCBE004CAD2E /* ARTRelationshipTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */; };
 		BACFB3EE2170BCFA004CAD2E /* ARTRelationshipTreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3ED2170BCFA004CAD2E /* ARTRelationshipTreeCell.m */; };
 		BAD5F5F2216C6F69002207CF /* CALayer+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F1216C6F69002207CF /* CALayer+ART.m */; };
@@ -253,6 +255,8 @@
 		BA3BE8162164FC7D007AEFEF /* ARTTextViewControllerVisitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTTextViewControllerVisitor.m; sourceTree = "<group>"; };
 		BA48E57721C7A2570091F9F2 /* ARTClassTreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTClassTreeModel.h; sourceTree = "<group>"; };
 		BA48E57821C7A2570091F9F2 /* ARTClassTreeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTClassTreeModel.m; sourceTree = "<group>"; };
+		BA48E57A21C89B320091F9F2 /* ARTStackController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTStackController.h; sourceTree = "<group>"; };
+		BA48E57B21C89B320091F9F2 /* ARTStackController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTStackController.m; sourceTree = "<group>"; };
 		BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Foundation_Log.m; sourceTree = "<group>"; };
 		BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+TZCategory.h"; sourceTree = "<group>"; };
 		BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+TZCategory.m"; sourceTree = "<group>"; };
@@ -318,6 +322,9 @@
 		BA9F9CE921776449003FD6CB /* NSObject+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ART.m"; sourceTree = "<group>"; };
 		BAB66BB72171F178004D50E1 /* ARTRelationshipTreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeModel.h; sourceTree = "<group>"; };
 		BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRelationshipTreeModel.m; sourceTree = "<group>"; };
+		BAC1777C21D2349500D33691 /* TZVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZVector.h; sourceTree = "<group>"; };
+		BAC1777D21D2349500D33691 /* TZVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVector.m; sourceTree = "<group>"; };
+		BAC1778221D2550000D33691 /* TZDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TZDefine.h; sourceTree = "<group>"; };
 		BACFB3E82170BCBE004CAD2E /* ARTRelationshipTreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeViewController.h; sourceTree = "<group>"; };
 		BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRelationshipTreeViewController.m; sourceTree = "<group>"; };
 		BACFB3EC2170BCFA004CAD2E /* ARTRelationshipTreeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeCell.h; sourceTree = "<group>"; };
@@ -515,6 +522,8 @@
 				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 				BAD5F5F8216C85CC002207CF /* ARTButton.h */,
 				BAD5F5F9216C85CC002207CF /* ARTButton.m */,
+				BAC1777C21D2349500D33691 /* TZVector.h */,
+				BAC1777D21D2349500D33691 /* TZVector.m */,
 				BA94A5C421AF9210004F6BCA /* ARTRichTextCell.h */,
 				BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */,
 			);
@@ -531,6 +540,8 @@
 				BA635CEF215E02D90048AB9A /* ARTController.m */,
 				BA635CF1215E02E90048AB9A /* ARTDataController.h */,
 				BA635CF2215E02E90048AB9A /* ARTDataController.m */,
+				BA48E57A21C89B320091F9F2 /* ARTStackController.h */,
+				BA48E57B21C89B320091F9F2 /* ARTStackController.m */,
 				BA635ECA215F1E700048AB9A /* ARTVisitor.h */,
 				BA635ECB215F1E700048AB9A /* ARTVisitor.m */,
 				BA8434042168AD13007E55B0 /* ARTURL.h */,
@@ -729,6 +740,7 @@
 		BAF2FEC72160BAAE0082A508 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BAC1778221D2550000D33691 /* TZDefine.h */,
 				BAF2FEC82160BAC50082A508 /* ARTDefine.h */,
 				BA21C91B2161C387008E8F97 /* ARTProtocol.h */,
 				BA3BE8132164DA40007AEFEF /* ARTProtocol.m */,
@@ -952,6 +964,7 @@
 				BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */,
 				BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */,
 				BA3BE7B921625BBD007AEFEF /* ARTClassTreeViewController.m in Sources */,
+				BAC1777E21D2349600D33691 /* TZVector.m in Sources */,
 				BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */,
 				BA635EBD215E09C70048AB9A /* CDStructureInfo.m in Sources */,
 				BA635EB9215E09C70048AB9A /* CDStructureTable.m in Sources */,
@@ -976,6 +989,7 @@
 				BA6C1AA62166579100ABC059 /* ARTView.m in Sources */,
 				BA635C9E215DFBEE0048AB9A /* AppDelegate.m in Sources */,
 				BA635CEC215E02930048AB9A /* ARTSingleInstance.m in Sources */,
+				BA48E57C21C89B320091F9F2 /* ARTStackController.m in Sources */,
 				BA94A5BB21AE911B004F6BCA /* ARTClassPickerViewController.m in Sources */,
 				BA635EBA215E09C70048AB9A /* CDVisitor.m in Sources */,
 				BACFB3EA2170BCBE004CAD2E /* ARTRelationshipTreeViewController.m in Sources */,

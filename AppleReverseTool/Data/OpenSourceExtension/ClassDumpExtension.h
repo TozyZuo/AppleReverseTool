@@ -65,6 +65,7 @@ NS_INLINE NSString *ARTLinkStringCreate(NSString *scheme, NSString *path, NSStri
 @property (readonly) NSArray<CDOCClass *> *subClasses;
 @property (readonly) NSHashTable<CDOCClass *> *referers;
 @property (readonly) NSArray<CDOCCategory *> *categories;
+@property (readonly) CDOCCategory * _Nullable (^categoryForName)(NSString *name);
 - (void)addCategory:(CDOCCategory *)category;
 - (void)addReferrer:(CDOCClass *)referrer;
 - (void)sort;

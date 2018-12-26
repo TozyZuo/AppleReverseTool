@@ -9,15 +9,24 @@
 #import "ARTTextViewController.h"
 #import "ARTTextViewControllerVisitor.h"
 #import "ARTDataController.h"
+#import "ARTStackController.h"
 #import "ARTView.h"
+#import "ARTCategoryView.h"
 #import "ARTButton.h"
 #import "ARTURL.h"
 #import "ARTRichTextController.h"
 #import "ARTFontManager.h"
 #import "ARTConfigManager.h"
+#import "TZVector.h"
 #import "ClassDumpExtension.h"
 #import "CDClassDump.h"
 #import "NSAlert+ART.h"
+#import "NSColor+ART.h"
+
+@interface TZMapVector<K, V> (ARTTextViewController)
+- (TZMapVector<NSAttributedString *, TZMapVector *> *)character;
+- (TZMapVector<NSNumber *, NSImage *> *)isInsideMainBundle;
+@end
 
 @interface ARTTextViewController ()
 <ARTRichTextControllerDelegate>
@@ -27,13 +36,16 @@
 @property (weak) IBOutlet ARTButton *goForwardButton;
 
 @property (nonatomic, strong) ARTRichTextController *richTextController;
-@property (nonatomic, strong) NSMutableArray<NSString *> *menuStack;
-@property (nonatomic, strong) NSMutableArray<NSString *> *linkStack;
+@property (nonatomic, strong) ARTStackController<NSString *> *stack;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *linkCache;
-@property (nonatomic, assign) NSUInteger maxCount;
-@property (nonatomic, assign) NSInteger currentLinkIndex;
-@property (nonatomic, assign) BOOL canGoBack;
-@property (nonatomic, assign) BOOL canGoForward;
+/**
+ *  @{
+ *      NSString *character : @{
+ *          NSNumber *isInsideMainBundle : NSImage *image,
+ *      }
+ *  }
+ */
+@property (class, readonly) TZMapVector<NSAttributedString */*character*/, TZMapVector<NSNumber */*isInsideMainBundle*/, NSImage *> *> *imageCache;
 @property (readonly) NSMenu *linkStackMenu;
 @end
 
@@ -43,11 +55,8 @@
 {
     [super viewDidLoad];
 
-    self.menuStack = [[NSMutableArray alloc] init];
-    self.linkStack = [[NSMutableArray alloc] init];
+    self.stack = [[ARTStackController alloc] init];
     self.linkCache = [[NSMutableDictionary alloc] init];
-    self.maxCount = ULONG_MAX;
-    self.currentLinkIndex = -1;
 
     self.textView.font = ARTFontManager.sharedFontManager.themeFont;
 
@@ -71,12 +80,12 @@
     [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton"] forState:ARTButtonStateNormal];
     [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton_highlighted"] forState:ARTButtonStateHighlighted];
     [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton_disabled"] forState:ARTButtonStateDisabled];
-    [self.goBackButton bind:NSEnabledBinding toObject:self withKeyPath:NSStringFromSelector(@selector(canGoBack)) options:nil];
+    [self.goBackButton bind:NSEnabledBinding toObject:self.stack withKeyPath:@keypath(ARTStackController, canGoBack) options:nil];
     self.goBackButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
     {
         switch (type) {
             case ARTControlEventTypeMouseUpInside:
-                [weakSelf goBack:button];
+                [weakSelf refreshLink:[weakSelf.stack goBack]];
                 break;
             default:
                 break;
@@ -86,12 +95,12 @@
     [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton"] forState:ARTButtonStateNormal];
     [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton_highlighted"] forState:ARTButtonStateHighlighted];
     [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton_disabled"] forState:ARTButtonStateDisabled];
-    [self.goForwardButton bind:NSEnabledBinding toObject:self withKeyPath:NSStringFromSelector(@selector(canGoForward)) options:nil];
+    [self.goForwardButton bind:NSEnabledBinding toObject:self.stack withKeyPath:@keypath(ARTStackController, canGoForward) options:nil];
     self.goForwardButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
     {
         switch (type) {
             case ARTControlEventTypeMouseUpInside:
-                [weakSelf goForward:button];
+                [weakSelf refreshLink:[weakSelf.stack goForward]];
                 break;
             default:
                 break;
@@ -103,8 +112,8 @@
     }];
 
     [self observe:ARTConfigManager.sharedManager
-         keyPaths:@[NSStringFromSelector(@selector(showBundle)),
-                    NSStringFromSelector(@selector(hideComments))]
+         keyPaths:@[@keypath(ARTConfigManager, showBundle),
+                    @keypath(ARTConfigManager, hideComments),]
           options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
             block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
@@ -112,7 +121,7 @@
         BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
         if (new != old) {
             [weakSelf.linkCache removeAllObjects];
-            [weakSelf goToIndex:weakSelf.currentLinkIndex];
+            [weakSelf refreshLink:weakSelf.stack.currentObject];
         }
     }];
 }
@@ -126,53 +135,41 @@
     }
 }
 
-- (void)willChangeLinkStack
-{
-
-}
-
-- (void)didChangeLinkStack
-{
-    // trigger button state change
-    self.canGoBack = self.canGoBack;
-    self.canGoForward = self.canGoForward;
-}
-
 #pragma mark - Property
 
-- (BOOL)canGoBack
++ (TZMapVector<NSAttributedString *,TZMapVector<NSNumber *,NSImage *> *> *)imageCache
 {
-    return self.currentLinkIndex - 1 >= 0;
-}
-
-- (BOOL)canGoForward
-{
-    return self.currentLinkIndex + 1 < self.linkStack.count;
+    static TZMapVector *imageCache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        imageCache = [[TZMapVector alloc] initWithType:@MapType(<NSAttributedString */*character*/, TZMapVector<NSNumber */*isInsideMainBundle*/, NSImage *> *>)];
+    });
+    return imageCache;
 }
 
 - (NSMenu *)linkStackMenu
 {
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
 
-    [self.menuStack enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSString *link, NSUInteger idx, BOOL * _Nonnull stop)
+    [self.stack.menuStack enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSString *link, NSUInteger idx, BOOL * _Nonnull stop)
      {
          ARTURL *url = [[ARTURL alloc] initWithString:link];
          NSString *title;
-//        NSImage *image; TODO
          if ([url.scheme isEqualToString:kSchemeStruct]) {
-             title = [@"[S] " stringByAppendingString:url.path];
+             title = url.path;
          } else if ([url.scheme isEqualToString:kSchemeUnion]) {
-             title = [@"[U] " stringByAppendingString:url.path];
+             title = url.path;
          } else if ([url.scheme isEqualToString:kSchemeCategory]) {
-             title = [NSString stringWithFormat:@"[C] %@ (%@)", url.host, url.path];
+             title = [NSString stringWithFormat:@"%@ (%@)", url.host, url.path];
          } else if ([url.scheme isEqualToString:kSchemeProtocol]) {
-             title = [@"[P] " stringByAppendingString:url.host];
+             title = url.host;
          } else {
-             title = [@"[C] " stringByAppendingString:url.host];
+             title = url.host;
          }
          NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:@selector(linkStackMenuAction:) keyEquivalent:@""];
          item.target = self;
          item.representedObject = link;
+         item.image = [self imageForLink:link];
          [menu addItem:item];
      }];
 
@@ -181,85 +178,86 @@
 
 #pragma mark - Private
 
-#pragma mark Stack
-
-- (void)menuStackHandleLink:(NSString *)link
-{
-    [self.menuStack removeObject:link];
-    [self.menuStack addObject:link];
-}
-
-- (IBAction)goBack:(id)sender
-{
-    if (self.canGoBack) {
-        [self goToIndex:self.currentLinkIndex - 1];
-    }
-}
-
-- (IBAction)goForward:(id)sender
-{
-    if (self.canGoForward) {
-        [self goToIndex:self.currentLinkIndex + 1];
-    }
-}
-
-- (void)goToIndex:(NSInteger)index
-{
-    if (index >= 0 && index < self.linkStack.count) {
-        [self willChangeLinkStack];
-
-        self.currentLinkIndex = index;
-        NSString *link = self.linkStack[self.currentLinkIndex];
-        [self menuStackHandleLink:link];
-        NSString *text = self.linkCache[link];
-        if (text) {
-            self.richTextController.text = text;
-        } else {
-            self.richTextController.text = _SC(@"Loading...", kColorComments);
-            [self textForLink:link completion:^(NSString *text) {
-                self.linkCache[link] = text;
-                self.richTextController.text = text;
-            }];
-        }
-
-        [self didChangeLinkStack];
-    }
-}
-
 - (void)pushLink:(NSString *)link text:(NSString *)text
 {
     if (!(link.length && text.length)) {
         return;
     }
 
-    [self willChangeLinkStack];
-
-    [self menuStackHandleLink:link];
-
-    while (self.currentLinkIndex < self.linkStack.count - 1) {
-        [self.linkStack removeLastObject];
-    }
-    [self.linkStack addObject:link];
-    if (self.linkStack.count > self.maxCount) {
-        [self.linkStack removeObjectAtIndex:0];
-    }
+    [self.stack push:link];
     self.linkCache[link] = text;
-//    self.currentLinkIndex = self.currentLinkIndex + 1;
-    self.currentLinkIndex = self.linkStack.count - 1;
-
     self.richTextController.text = text;
-    [self didChangeLinkStack];
 }
 
-#pragma mark Stack
+- (void)refreshLink:(NSString *)link
+{
+    if (link) {
+        [self textForLink:link needPlaceholder:YES completion:^(NSString *text) {
+            self.linkCache[link] = text;
+            self.richTextController.text = text;
+        }];
+    }
+}
 
-- (void)textForLink:(NSString *)link completion:(void (^)(NSString *text))completion
+- (NSImage *)imageForLink:(NSString *)link
+{
+    ARTURL *url = [[ARTURL alloc] initWithString:link];
+    NSAttributedString *character;
+    BOOL isInsideMainBundle;
+    if ([url.scheme isEqualToString:kSchemeStruct])
+    {
+        character = [[NSAttributedString alloc] initWithString:@"S"];
+        isInsideMainBundle = NO;
+    }
+    else if ([url.scheme isEqualToString:kSchemeUnion])
+    {
+        character = [[NSAttributedString alloc] initWithString:@"U"];
+        isInsideMainBundle = NO;
+    }
+    else if ([url.scheme isEqualToString:kSchemeCategory])
+    {
+        character = [[NSAttributedString alloc] initWithString:@"C" attributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
+        isInsideMainBundle = self.dataController.classForName(url.host).categoryForName(url.path).isInsideMainBundle;
+    }
+    else if ([url.scheme isEqualToString:kSchemeProtocol])
+    {
+        character = [[NSAttributedString alloc] initWithString:@"P"];
+        isInsideMainBundle = self.dataController.allProtocols[url.host].isInsideMainBundle;
+    }
+    else if ([url.scheme isEqualToString:kSchemeClass])
+    {
+        character = [[NSAttributedString alloc] initWithString:@"C"];
+        isInsideMainBundle = self.dataController.classForName(url.host).isInsideMainBundle;
+    }
+    else
+    {
+        NSAssert(0, @"handle this");
+        return nil;
+    }
+
+    NSImage *image = ARTTextViewController.imageCache.character[character].isInsideMainBundle[@(isInsideMainBundle)];
+    if (!image) {
+        ARTCategoryView *view = [[ARTCategoryView alloc] initWithFrame:NSMakeRect(0, 0, 16, 16)];
+        view.strokeColor = RGBColor(240, 240, 240);
+        view.character = character;
+        view.color = isInsideMainBundle ? NSColor.classColor : NSColor.otherClassColor;
+        image = view.image;
+        ARTTextViewController.imageCache.character[character].isInsideMainBundle[@(isInsideMainBundle)] = image;
+    }
+
+    return image;
+}
+
+- (void)textForLink:(NSString *)link needPlaceholder:(BOOL)needPlaceholder completion:(void (^)(NSString *text))completion
 {
     // check cache
     NSString *text = self.linkCache[link];
     if (text) {
         completion(text);
         return;
+    }
+    if (needPlaceholder) {
+        self.richTextController.text = _SC(@"Loading...", kColorComments);
     }
 
     ARTURL *url = [[ARTURL alloc] initWithString:link];
@@ -375,27 +373,31 @@
     [self updateDataWithLink:link];
 }
 
+- (IBAction)goBack:(id)sender
+{
+    [self refreshLink:[self.stack goBack]];
+}
+
+- (IBAction)goForward:(id)sender
+{
+    [self refreshLink:[self.stack goForward]];
+}
+
 #pragma mark - Public
 
 - (void)updateDataWithLink:(NSString *)link
 {
-    if (self.currentLinkIndex >= 0 && [self.linkStack[self.currentLinkIndex] isEqualToString:link]) {
+    if (self.stack.index >= 0 && [self.stack.currentObject isEqualToString:link]) {
         return;
     }
 
-    NSString *text = self.linkCache[link];
-    if (text) {
-        [self pushLink:link text:text];
-    } else {
-        self.richTextController.text = _SC(@"Loading...", kColorComments);
-        [self textForLink:link completion:^(NSString *text) {
-            if (text) {
-                [self pushLink:link text:text];
-            } else {
-                [self goToIndex:self.currentLinkIndex];
-            }
-        }];
-    }
+    [self textForLink:link needPlaceholder:YES completion:^(NSString *text) {
+        if (text) {
+            [self pushLink:link text:text];
+        } else {
+            [self refreshLink:self.stack.currentObject];
+        }
+    }];
 }
 
 #pragma mark - ARTRichTextControllerDelegate

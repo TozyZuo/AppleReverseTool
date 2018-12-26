@@ -11,9 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ARTCategoryView : ARTView
+@property (nonatomic, strong) NSColor *strokeColor;
 @property (nonatomic, strong) NSColor *color;
 @property (nonatomic, strong) NSColor *textColor;
-@property (nonatomic, strong) NSString *character;
+@property (nonatomic, strong) NSAttributedString *character;
 @end
 
 NS_ASSUME_NONNULL_END
