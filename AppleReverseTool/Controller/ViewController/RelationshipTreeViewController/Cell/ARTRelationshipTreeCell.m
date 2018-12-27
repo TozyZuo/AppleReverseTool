@@ -13,7 +13,7 @@
 #import "CDOCInstanceVariable.h"
 
 @interface ARTRelationshipTreeCell ()
-<ARTRichTextControllerDelegate>
+<TZRichTextControllerDelegate>
 @property (nonatomic, strong) ARTRelationshipTreeModel *data;
 @end
 

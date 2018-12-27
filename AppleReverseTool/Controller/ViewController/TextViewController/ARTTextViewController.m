@@ -29,7 +29,7 @@
 @end
 
 @interface ARTTextViewController ()
-<ARTRichTextControllerDelegate>
+<TZRichTextControllerDelegate>
 @property (weak) IBOutlet NSTextView *textView;
 @property (weak) IBOutlet ARTButton *menuButton;
 @property (weak) IBOutlet ARTButton *goBackButton;
@@ -400,7 +400,7 @@
     }];
 }
 
-#pragma mark - ARTRichTextControllerDelegate
+#pragma mark - TZRichTextControllerDelegate
 
 - (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {

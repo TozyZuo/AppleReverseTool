@@ -10,7 +10,7 @@
 #import "ARTRichTextController.h"
 
 @interface ARTRichTextCell ()
-<ARTRichTextControllerDelegate>
+<TZRichTextControllerDelegate>
 @property (nonatomic, strong) ARTRichTextController *richTextController;
 @end
 
@@ -67,7 +67,7 @@
     return self.richTextController.optimumSize;
 }
 
-#pragma mark - ARTRichTextControllerDelegate
+#pragma mark - TZRichTextControllerDelegate
 
 - (void)richTextController:(ARTRichTextController *)richTextController didSelectLink:(NSString *)link rightMouse:(BOOL)rightMouse
 {

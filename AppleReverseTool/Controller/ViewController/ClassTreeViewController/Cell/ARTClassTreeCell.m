@@ -13,7 +13,7 @@
 #import "NSColor+ART.h"
 
 @interface ARTClassTreeCell ()
-<ARTRichTextControllerDelegate>
+<TZRichTextControllerDelegate>
 @property (nonatomic,  weak ) CDOCClass *aClass;
 @property (nonatomic,  weak ) CDOCCategory *category;
 @end

@@ -67,6 +67,7 @@
 		BA9F9CE4217760FE003FD6CB /* ARTFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE3217760FE003FD6CB /* ARTFontManager.m */; };
 		BA9F9CE721776412003FD6CB /* ARTWeakObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */; };
 		BA9F9CEA21776449003FD6CB /* NSObject+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9F9CE921776449003FD6CB /* NSObject+ART.m */; };
+		BAB3FCB721D387B80006D54B /* TZRichTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB3FCB521D387B70006D54B /* TZRichTextController.m */; };
 		BAB66BB92171F178004D50E1 /* ARTRelationshipTreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */; };
 		BAC1777E21D2349600D33691 /* TZVector.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC1777D21D2349500D33691 /* TZVector.m */; };
 		BACFB3EA2170BCBE004CAD2E /* ARTRelationshipTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BACFB3E92170BCBE004CAD2E /* ARTRelationshipTreeViewController.m */; };
@@ -311,7 +312,7 @@
 		BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SFBPopovers.xcodeproj; path = SFBPopovers/SFBPopovers.xcodeproj; sourceTree = "<group>"; };
 		BA94A5D521AFD3EC004F6BCA /* SFBPopoversHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFBPopoversHook.h; sourceTree = "<group>"; };
 		BA94A5D621AFD3EC004F6BCA /* SFBPopoversHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFBPopoversHook.m; sourceTree = "<group>"; };
-		BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppKitExtension.m; path = AppleReverseTool/Util/AppKitExtension.m; sourceTree = SOURCE_ROOT; };
+		BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppKitExtension.m; path = OpenSource/TozyZuo/AppKitExtension.m; sourceTree = SOURCE_ROOT; };
 		BA9F9CDA217760CB003FD6CB /* ARTManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTManager.h; sourceTree = "<group>"; };
 		BA9F9CDB217760CB003FD6CB /* ARTManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTManager.m; sourceTree = "<group>"; };
 		BA9F9CE2217760FE003FD6CB /* ARTFontManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTFontManager.h; sourceTree = "<group>"; };
@@ -320,6 +321,8 @@
 		BA9F9CE621776412003FD6CB /* ARTWeakObjectWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTWeakObjectWrapper.m; sourceTree = "<group>"; };
 		BA9F9CE821776449003FD6CB /* NSObject+ART.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ART.h"; sourceTree = "<group>"; };
 		BA9F9CE921776449003FD6CB /* NSObject+ART.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ART.m"; sourceTree = "<group>"; };
+		BAB3FCB521D387B70006D54B /* TZRichTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZRichTextController.m; sourceTree = "<group>"; };
+		BAB3FCB621D387B80006D54B /* TZRichTextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZRichTextController.h; sourceTree = "<group>"; };
 		BAB66BB72171F178004D50E1 /* ARTRelationshipTreeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARTRelationshipTreeModel.h; sourceTree = "<group>"; };
 		BAB66BB82171F178004D50E1 /* ARTRelationshipTreeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARTRelationshipTreeModel.m; sourceTree = "<group>"; };
 		BAC1777C21D2349500D33691 /* TZVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZVector.h; sourceTree = "<group>"; };
@@ -361,9 +364,6 @@
 		BA0A511E21770FC800FD9CB8 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				BA53CC05219D18FB00AA2F19 /* DebugUtil */,
-				BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */,
-				BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */,
 				BA0A512421770FDE00FD9CB8 /* ARTRichTextController.h */,
 				BA0A512521770FDE00FD9CB8 /* ARTRichTextController.m */,
 				BA9F9CE2217760FE003FD6CB /* ARTFontManager.h */,
@@ -377,6 +377,7 @@
 		BA1919A821A2B252004D855E /* OpenSource */ = {
 			isa = PBXGroup;
 			children = (
+				BAB3FCA921D3870B0006D54B /* TozyZuo */,
 				BAD9619C21C743C300BCF65D /* XUIKit.xcodeproj */,
 				BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */,
 				BA1919A921A2B4E0004D855E /* FBKVOController.xcodeproj */,
@@ -522,8 +523,6 @@
 				BA3BE7CA21634B3B007AEFEF /* ARTControl.m */,
 				BAD5F5F8216C85CC002207CF /* ARTButton.h */,
 				BAD5F5F9216C85CC002207CF /* ARTButton.m */,
-				BAC1777C21D2349500D33691 /* TZVector.h */,
-				BAC1777D21D2349500D33691 /* TZVector.m */,
 				BA94A5C421AF9210004F6BCA /* ARTRichTextCell.h */,
 				BA94A5C521AF9210004F6BCA /* ARTRichTextCell.m */,
 			);
@@ -597,10 +596,6 @@
 		BA6C1AAC2166597D00ABC059 /* Categary */ = {
 			isa = PBXGroup;
 			children = (
-				BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */,
-				BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */,
-				BA6C1AB0216659F500ABC059 /* NSView_TZCategory.h */,
-				BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */,
 				BA3BE7CC21635425007AEFEF /* NSColor+ART.h */,
 				BA3BE7CD21635425007AEFEF /* NSColor+ART.m */,
 				BA856D17216B5AA5009944A3 /* NSAlert+ART.h */,
@@ -652,6 +647,33 @@
 				BA94A5D621AFD3EC004F6BCA /* SFBPopoversHook.m */,
 			);
 			path = OpenSourceExtension;
+			sourceTree = "<group>";
+		};
+		BAB3FCA921D3870B0006D54B /* TozyZuo */ = {
+			isa = PBXGroup;
+			children = (
+				BA53CC05219D18FB00AA2F19 /* DebugUtil */,
+				BAB3FCB421D387500006D54B /* Category */,
+				BAC1778221D2550000D33691 /* TZDefine.h */,
+				BAC1777C21D2349500D33691 /* TZVector.h */,
+				BAC1777D21D2349500D33691 /* TZVector.m */,
+				BAB3FCB621D387B80006D54B /* TZRichTextController.h */,
+				BAB3FCB521D387B70006D54B /* TZRichTextController.m */,
+				BA53CBF221998BAC00AA2F19 /* Foundation_Log.m */,
+				BA9CA3BC21901CC000BD7B78 /* AppKitExtension.m */,
+			);
+			path = TozyZuo;
+			sourceTree = "<group>";
+		};
+		BAB3FCB421D387500006D54B /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				BA53CBF9219C10B000AA2F19 /* NSMenu+TZCategory.h */,
+				BA53CBFA219C10B000AA2F19 /* NSMenu+TZCategory.m */,
+				BA6C1AB0216659F500ABC059 /* NSView_TZCategory.h */,
+				BA6C1AB1216659F500ABC059 /* NSView_TZCategory.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		BAB66BB62171F162004D50E1 /* Model */ = {
@@ -740,7 +762,6 @@
 		BAF2FEC72160BAAE0082A508 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				BAC1778221D2550000D33691 /* TZDefine.h */,
 				BAF2FEC82160BAC50082A508 /* ARTDefine.h */,
 				BA21C91B2161C387008E8F97 /* ARTProtocol.h */,
 				BA3BE8132164DA40007AEFEF /* ARTProtocol.m */,
@@ -968,6 +989,7 @@
 				BA3BE7B321624C6C007AEFEF /* ARTMainViewController.m in Sources */,
 				BA635EBD215E09C70048AB9A /* CDStructureInfo.m in Sources */,
 				BA635EB9215E09C70048AB9A /* CDStructureTable.m in Sources */,
+				BAB3FCB721D387B80006D54B /* TZRichTextController.m in Sources */,
 				BA0A512621770FDE00FD9CB8 /* ARTRichTextController.m in Sources */,
 				BA635CF3215E02E90048AB9A /* ARTDataController.m in Sources */,
 				BA3BE7C821632CB0007AEFEF /* RTLabel.m in Sources */,
