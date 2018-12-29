@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CGFloat lineSpacing;
 @property (readonly) CGFloat extraLineSpacing; // for calculating tracking area
 @property (readonly) NSEdgeInsets textInsets;
+- (nullable NSArray<NSValue *> *)rectsForCharacterRange:(NSRange)range;
 @end
 
 

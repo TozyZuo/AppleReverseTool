@@ -400,6 +400,39 @@
         return;
     }
 
+#if 1
+
+    NSArray<NSValue *> *rects = [self.view rectsForCharacterRange:NSMakeRange(0, self.plainText.length)];
+
+    CGRect bounds = rects.firstObject.rectValue;
+
+    for (NSValue *value in rects)
+    {
+        bounds = CGRectUnion(bounds, value.rectValue);
+    }
+
+    self.optimumSize = CGSizeMake(bounds.size.width + bounds.origin.x * 2, bounds.size.height + bounds.origin.y * 2);
+
+    for (TZTextComponent *linkableComponent in self.linkComponents)
+    {
+        linkableComponent.rects = [self.view rectsForCharacterRange:NSMakeRange(linkableComponent.position, linkableComponent.text.length)];
+        for (NSValue *rectValue in linkableComponent.rects) {
+            CGRect rect = rectValue.rectValue;
+
+#ifdef TrackingAreaDebug
+            NSView *view = [[NSView alloc] initWithFrame:rect];
+            view.wantsLayer = YES;
+            view.layer.backgroundColor = [NSColor.redColor colorWithAlphaComponent:.5].CGColor;
+            [self.view addSubview:view];
+            NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:rect options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:@{@"component": linkableComponent, @"view": view}];
+#else
+            NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:rect options:NSTrackingActiveAlways | NSTrackingMouseEnteredAndExited owner:self userInfo:@{@"component": linkableComponent}];
+#endif
+            [self.view addTrackingArea:trackingArea];
+            [self.trackingAreas addObject:trackingArea];
+        }
+    }
+#else
     NSSize size = self.view.bounds.size;
     NSEdgeInsets insets = self.textInsets;
     NSSize insetsSize = NSMakeSize(size.width - insets.left - insets.right, size.height - insets.top - insets.bottom);
@@ -480,6 +513,7 @@
     CFRelease(framesetter);
     CFRelease(path);
     CFRelease(frame);
+#endif
 }
 
 #pragma mark  Event
@@ -902,8 +936,8 @@
 {
     if (![_attributedText isEqualToAttributedString:attributedText]) {
         _attributedText = attributedText;
-        [self calculateTrackingArea];
         self.view.attributedStringValue = attributedText;
+        [self calculateTrackingArea];
     }
 }
 

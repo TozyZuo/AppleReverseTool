@@ -13,6 +13,8 @@
 #import "ARTDataController.h"
 #import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
+#import "TZVector.h"
+#import "NSTextView+TZCategory.h"
 
 @interface CDOCClass (ARTClassTreeViewController)
 @property (nonatomic, assign) BOOL isCategoryExpanded;
@@ -31,12 +33,21 @@
 
 @end
 
+@interface TZMapVector (ARTClassTreeViewController)
+@property NSValue *range;
+@property NSString *string;
+@property NSNumber *row;
+@end
+
+ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
+
 @interface ARTClassTreeViewController ()
 <
     NSOutlineViewDataSource,
     NSOutlineViewDelegate,
     NSTextFieldDelegate,
-    ARTRichTextCellDelegate
+    ARTRichTextCellDelegate,
+    NSTextFinderClient
 >
 @property (weak) IBOutlet NSOutlineView *outlineView;
 @property (nonatomic,  weak ) ARTDataController *dataController;
@@ -45,6 +56,10 @@
 @property (nonatomic, strong) NSArray<CDOCClass *> *filteredData; // keep origin state
 @property (nonatomic, strong) NSString *filterConditionText;
 @property (nonatomic, strong) NSOperationQueue *filterQueue;
+// TextFinder
+@property (strong) IBOutlet NSTextFinder *textFinder;
+@property (nonatomic, assign) NSUInteger stringLength;
+@property (nonatomic, strong) TZArrayVector<TZMapVector<NSString *, id> *> *finderIndex;
 @end
 
 @implementation ARTClassTreeViewController
@@ -57,6 +72,9 @@
 
     self.filterQueue = [[NSOperationQueue alloc] init];
     self.filterQueue.maxConcurrentOperationCount = 1;
+
+//    self.finderIndex = [[NSMutableArray alloc] init];
+    self.finderIndex = [[TZArrayVector alloc] initWithType:@ArrayType(<TZMapVector<NSString *, id> *>)];
 
     weakifySelf();
     [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
@@ -74,6 +92,17 @@
      }];
 }
 
+- (IBAction)performFindPanelAction:(id)sender
+{
+    [self performTextFinderAction:sender];
+}
+
+- (void)performTextFinderAction:(id)sender
+{
+    [self prepareForTextFinder];
+    [self.textFinder performAction:[sender tag]];
+}
+
 #pragma mark - Private
 
 - (void)reloadData
@@ -82,10 +111,31 @@
     [self.outlineView expandItem:nil expandChildren:YES];
 }
 
+- (void)prepareForTextFinder
+{
+    [self.finderIndex removeAllObjects];
+
+    NSInteger rowCount = self.outlineView.numberOfRows;
+    NSRange range = NSMakeRange(0, 0);
+    NSString *string;
+
+    for (int i = 0; i < rowCount; i++) {
+        CDOCProtocol *item = [self.outlineView itemAtRow:i];
+        string = item.name;
+        range = NSMakeRange(NSMaxRange(range), string.length);
+        self.finderIndex[i].string = string;
+        self.finderIndex[i].range = [NSValue valueWithRange:range];
+        self.finderIndex[i].row = @(i);
+    }
+
+    self.stringLength = NSMaxRange(range);
+}
+
 #pragma mark Filter
 
 - (void)filterWithText:(NSString *)text
 {
+    [self.textFinder noteClientStringWillChange];
     if (!text.length) {
         self.filteredData = nil;
         self.filterConditionText = nil;
@@ -185,6 +235,7 @@
     self.dataController = dataController;
     self.data = dataController.classNodes;
     [self reloadData];
+    [self prepareForTextFinder];
 }
 
 #pragma mark - NSOutlineViewDataSource
@@ -300,6 +351,66 @@
 - (void)controlTextDidChange:(NSNotification *)obj
 {
     [self filterWithText:[obj.object stringValue]];
+}
+
+#pragma mark - NSTextFinderClient
+
+- (BOOL)isEditable
+{
+    return NO;
+}
+
+- (TZMapVector *)modelForIndex:(NSUInteger)index
+{
+    for (TZMapVector *vector in self.finderIndex) {
+        NSRange range = vector.range.rangeValue;
+        if (index >= range.location && index < NSMaxRange(range)) {
+            return vector;
+        }
+    }
+    return nil;
+}
+
+- (NSString *)stringAtIndex:(NSUInteger)characterIndex effectiveRange:(NSRangePointer)outRange endsWithSearchBoundary:(BOOL *)outFlag
+{
+    TZMapVector *model = [self modelForIndex:characterIndex];
+    if (model) {
+        *outRange = model.range.rangeValue;
+        *outFlag = YES;
+        return model.string;
+    }
+    return nil;
+}
+
+- (void)scrollRangeToVisible:(NSRange)range
+{
+    TZMapVector *model = [self modelForIndex:range.location];
+    if (model) {
+        [self.outlineView scrollRowToVisible:model.row.integerValue];
+    }
+}
+
+- (NSView *)contentViewAtIndex:(NSUInteger)index effectiveCharacterRange:(NSRangePointer)outRange
+{
+    TZMapVector *model = [self modelForIndex:index];
+    if (model) {
+        *outRange = model.range.rangeValue;
+        ARTClassTreeCell *cell = [self.outlineView viewAtColumn:0 row:model.row.integerValue makeIfNecessary:YES];
+        return cell.textView;
+    }
+    return nil;
+}
+
+- (NSArray<NSValue *> *)rectsForCharacterRange:(NSRange)range
+{
+    TZMapVector *model = [self modelForIndex:range.location];
+    if (model) {
+        NSRange modelRange = model.range.rangeValue;
+        ARTClassTreeCell *cell = [self.outlineView viewAtColumn:0 row:model.row.integerValue makeIfNecessary:YES];
+        NSRange nameRange = [cell.textView.string rangeOfString:cell.data.name];
+        return [cell.textView rectsForStringRange:NSMakeRange(range.location - modelRange.location + nameRange.location, range.length)];
+    }
+    return nil;
 }
 
 @end

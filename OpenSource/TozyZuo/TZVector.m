@@ -108,12 +108,6 @@ const void *TZVectorRefKey = &TZVectorRefKey;
     return cachedVectorSelectors;
 }
 
-
-- (id)unknownSelector
-{
-    return self;
-}
-
 - (void)generateVector
 {
     if (!self.vector) {
@@ -234,6 +228,34 @@ const void *TZVectorRefKey = &TZVectorRefKey;
     }
 
     return vectorClass;
+}
+
+#pragma mark - Stub
+
+- (id)unknownSelector
+{
+    return self;
+}
+
+- (id)stub_value
+{
+    return self[NSStringFromSelector(_cmd)];
+}
+
+- (void)stub_setValue:(id)value
+{
+    const char *setSEL = sel_getName(_cmd);
+    size_t size = strlen(setSEL) - 3;
+    char buf[size];
+
+    // setXXX:
+    strncpy(buf, &setSEL[3], size);
+    char hi = buf[0];
+    char lo = isupper(hi) ? tolower(hi) : hi;
+    buf[0] = lo;
+    buf[size - 1] = '\0';
+
+    self[[NSString stringWithUTF8String:buf]] = value;
 }
 
 #pragma mark - Forward
@@ -540,47 +562,6 @@ const void *TZVectorRefKey = &TZVectorRefKey;
 @end
 
 
-#define IgnoreWarningHelper0(x) #x
-#define IgnoreWarningHelper1(x) IgnoreWarningHelper0(clang diagnostic ignored x)
-#define IgnoreWarningHelper2(y) IgnoreWarningHelper1(#y)
-
-#define IgnoreWarningEnd _Pragma("clang diagnostic pop")
-
-#define IgnoreWarning(...) IgnoreWarnings(__VA_ARGS__, 5, 4, 3, 2, 1)
-#define IgnoreWarnings(_1, _2, _3, _4, _5, N, ...) _IgnoreWarnings(N, _1, _2, _3, _4, _5)
-#define _IgnoreWarnings(count, args...) IgnoreWarning ## count(args)
-
-#define IgnoreWarning1(_1, _2, _3, _4, _5)\
-_Pragma("clang diagnostic push")\
-_Pragma(IgnoreWarningHelper2(_1))
-
-#define IgnoreWarning2(_1, _2, _3, _4, _5)\
-_Pragma("clang diagnostic push")\
-_Pragma(IgnoreWarningHelper2(_1))\
-_Pragma(IgnoreWarningHelper2(_2))
-
-#define IgnoreWarning3(_1, _2, _3, _4, _5)\
-_Pragma("clang diagnostic push")\
-_Pragma(IgnoreWarningHelper2(_1))\
-_Pragma(IgnoreWarningHelper2(_2))\
-_Pragma(IgnoreWarningHelper2(_3))
-
-#define IgnoreWarning4(_1, _2, _3, _4, _5)\
-_Pragma("clang diagnostic push")\
-_Pragma(IgnoreWarningHelper2(_1))\
-_Pragma(IgnoreWarningHelper2(_2))\
-_Pragma(IgnoreWarningHelper2(_3))\
-_Pragma(IgnoreWarningHelper2(_4))
-
-#define IgnoreWarning5(_1, _2, _3, _4, _5)\
-_Pragma("clang diagnostic push")\
-_Pragma(IgnoreWarningHelper2(_1))\
-_Pragma(IgnoreWarningHelper2(_2))\
-_Pragma(IgnoreWarningHelper2(_3))\
-_Pragma(IgnoreWarningHelper2(_4))\
-_Pragma(IgnoreWarningHelper2(_5))
-
-
 #define VectorImplementation(VectorClass)\
 \
 IgnoreWarning(-Wincompatible-pointer-types, -Wobjc-designated-initializers, -Wincomplete-implementation)\
@@ -860,3 +841,11 @@ VectorImplementation(TZHashTableVector)
 }
 
 @end
+
+Class TargetVectorClassForClass(Class cls)
+{
+    if ([[TZVectorType confusedVectorClasses] containsObject:cls]) {
+        return TZVector.class;
+    }
+    return cls;
+}

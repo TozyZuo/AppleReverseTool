@@ -135,6 +135,16 @@
     }
 }
 
+- (IBAction)performFindPanelAction:(id)sender
+{
+    [self performTextFinderAction:sender];
+}
+
+- (void)performTextFinderAction:(id)sender
+{
+    [self.textView performTextFinderAction:sender];
+}
+
 #pragma mark - Property
 
 + (TZMapVector<NSAttributedString *,TZMapVector<NSNumber *,NSImage *> *> *)imageCache

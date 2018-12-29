@@ -27,15 +27,15 @@ NS_INLINE void TZInvokeBlockInMainThread(void (^block)(void))
 //    });\
 //}
 
-#define TZIgnoreWarningHelper0(x) #x
-#define TZIgnoreWarningHelper1(x) TZIgnoreWarningHelper0(clang diagnostic ignored x)
-#define TZIgnoreWarningHelper2(y) TZIgnoreWarningHelper1(#y)
-
-#define TZIgnoreWarningEnd _Pragma("clang diagnostic pop")
-
 #define TZIgnoreWarning(...) TZIgnoreWarnings(__VA_ARGS__, 5, 4, 3, 2, 1)
 #define TZIgnoreWarnings(_1, _2, _3, _4, _5, N, ...) _TZIgnoreWarnings(N, _1, _2, _3, _4, _5)
 #define _TZIgnoreWarnings(count, args...) TZIgnoreWarning ## count(args)
+
+#define TZIgnoreWarningEnd _Pragma("clang diagnostic pop")
+
+#define TZIgnoreWarningHelper0(x) #x
+#define TZIgnoreWarningHelper1(x) TZIgnoreWarningHelper0(clang diagnostic ignored x)
+#define TZIgnoreWarningHelper2(y) TZIgnoreWarningHelper1(#y)
 
 #define TZIgnoreWarning1(_1, _2, _3, _4, _5)\
 _Pragma("clang diagnostic push")\
@@ -109,7 +109,12 @@ _Pragma(TZIgnoreWarningHelper2(_5))
     _Pragma("clang diagnostic pop")
 #endif
 
-#define keypath(TYPE, PATH) \
-(((void)(NO && ((void)((TYPE *)(nil)).PATH, NO)), # PATH))
+
+#ifdef DEBUG
+    #define keypath(TYPE, PATH) (((void)(((TYPE *)(nil)).PATH), # PATH))
+#else
+    #define keypath(TYPE, PATH) (# PATH)
+#endif
+
 
 #endif /* ARTDefine_h */
