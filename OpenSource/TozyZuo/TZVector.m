@@ -642,7 +642,7 @@ VectorImplementation(TZHashTableVector)
                  _typeClass == NSMutableSet.class ||
                  _typeClass == NSCountedSet.class)
         {
-            self.detailType = TZVectorTypeDetailTypeArray;
+            self.detailType = TZVectorTypeDetailTypeSet;
         }
     }
     return self;

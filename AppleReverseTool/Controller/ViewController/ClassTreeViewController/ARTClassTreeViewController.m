@@ -408,7 +408,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
         NSRange modelRange = model.range.rangeValue;
         ARTClassTreeCell *cell = [self.outlineView viewAtColumn:0 row:model.row.integerValue makeIfNecessary:YES];
         NSRange nameRange = [cell.textView.string rangeOfString:cell.data.name];
-        return [cell.textView rectsForStringRange:NSMakeRange(range.location - modelRange.location + nameRange.location, range.length)];
+        return [cell.textView rectsForCharacterRange:NSMakeRange(range.location - modelRange.location + nameRange.location, range.length)];
     }
     return nil;
 }
