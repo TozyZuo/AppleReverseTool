@@ -2,3 +2,6 @@
 	path = class-dump
 	url = https://github.com/TozyZuo/class-dump.git
 	branch = AppleReverseTool
+[submodule "OpenSource/TZKit"]
+	path = OpenSource/TZKit
+	url = https://github.com/TozyZuo/TZKit.git

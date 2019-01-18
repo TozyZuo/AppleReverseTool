@@ -13,8 +13,6 @@
 #import "ARTDataController.h"
 #import "ARTConfigManager.h"
 #import "ClassDumpExtension.h"
-#import "TZVector.h"
-#import "NSTextView+TZCategory.h"
 
 @interface CDOCClass (ARTClassTreeViewController)
 @property (nonatomic, assign) BOOL isCategoryExpanded;
@@ -33,13 +31,15 @@
 
 @end
 
-@interface TZMapVector (ARTClassTreeViewController)
+@interface NSMutableDictionary (ARTClassTreeViewController)
 @property NSValue *range;
 @property NSString *string;
 @property NSNumber *row;
 @end
 
-ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
+typedef NSMutableDictionary ARTIndexModel;
+
+ImplementCategory(NSMutableDictionary, ARTClassTreeViewController, range, string, row)
 
 @interface ARTClassTreeViewController ()
 <
@@ -59,7 +59,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
 // TextFinder
 @property (strong) IBOutlet NSTextFinder *textFinder;
 @property (nonatomic, assign) NSUInteger stringLength;
-@property (nonatomic, strong) TZArrayVector<TZMapVector<NSString *, id> *> *finderIndex;
+@property (nonatomic, strong) NSMutableArray<ARTIndexModel<NSString *, id> *> *finderIndex;
 @end
 
 @implementation ARTClassTreeViewController
@@ -74,7 +74,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
     self.filterQueue.maxConcurrentOperationCount = 1;
 
 //    self.finderIndex = [[NSMutableArray alloc] init];
-    self.finderIndex = [[TZArrayVector alloc] initWithType:@ArrayType(<TZMapVector<NSString *, id> *>)];
+    self.finderIndex = [NSMutableArray vectorWithType:@ArrayType(<NSMutableDictionary<NSString *, id> *>)];
 
     weakifySelf();
     [[ARTFontManager sharedFontManager] addObserver:self fontChangeBlock:^(NSFont * _Nonnull (^ _Nonnull updateFontBlock)(NSFont * _Nonnull)) {
@@ -82,7 +82,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
         [weakSelf.outlineView reloadData];
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager, showBundle) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager.sharedManager, showBundle) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
      {
          BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
          BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
@@ -360,12 +360,12 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
     return NO;
 }
 
-- (TZMapVector *)modelForIndex:(NSUInteger)index
+- (ARTIndexModel *)modelForIndex:(NSUInteger)index
 {
-    for (TZMapVector *vector in self.finderIndex) {
-        NSRange range = vector.range.rangeValue;
+    for (ARTIndexModel *model in self.finderIndex) {
+        NSRange range = model.range.rangeValue;
         if (index >= range.location && index < NSMaxRange(range)) {
-            return vector;
+            return model;
         }
     }
     return nil;
@@ -373,7 +373,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
 
 - (NSString *)stringAtIndex:(NSUInteger)characterIndex effectiveRange:(NSRangePointer)outRange endsWithSearchBoundary:(BOOL *)outFlag
 {
-    TZMapVector *model = [self modelForIndex:characterIndex];
+    ARTIndexModel *model = [self modelForIndex:characterIndex];
     if (model) {
         *outRange = model.range.rangeValue;
         *outFlag = YES;
@@ -384,7 +384,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
 
 - (void)scrollRangeToVisible:(NSRange)range
 {
-    TZMapVector *model = [self modelForIndex:range.location];
+    ARTIndexModel *model = [self modelForIndex:range.location];
     if (model) {
         [self.outlineView scrollRowToVisible:model.row.integerValue];
     }
@@ -392,7 +392,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
 
 - (NSView *)contentViewAtIndex:(NSUInteger)index effectiveCharacterRange:(NSRangePointer)outRange
 {
-    TZMapVector *model = [self modelForIndex:index];
+    ARTIndexModel *model = [self modelForIndex:index];
     if (model) {
         *outRange = model.range.rangeValue;
         ARTClassTreeCell *cell = [self.outlineView viewAtColumn:0 row:model.row.integerValue makeIfNecessary:YES];
@@ -403,7 +403,7 @@ ImplementCategory(TZMapVector, ARTClassTreeViewController, range, string, row)
 
 - (NSArray<NSValue *> *)rectsForCharacterRange:(NSRange)range
 {
-    TZMapVector *model = [self modelForIndex:range.location];
+    ARTIndexModel *model = [self modelForIndex:range.location];
     if (model) {
         NSRange modelRange = model.range.rangeValue;
         ARTClassTreeCell *cell = [self.outlineView viewAtColumn:0 row:model.row.integerValue makeIfNecessary:YES];

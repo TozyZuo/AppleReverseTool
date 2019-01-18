@@ -17,15 +17,14 @@
 #import "ARTRichTextController.h"
 #import "ARTFontManager.h"
 #import "ARTConfigManager.h"
-#import "TZVector.h"
 #import "ClassDumpExtension.h"
 #import "CDClassDump.h"
 #import "NSAlert+ART.h"
 #import "NSColor+ART.h"
 
-@interface TZMapVector<K, V> (ARTTextViewController)
-- (TZMapVector<NSAttributedString *, TZMapVector *> *)character;
-- (TZMapVector<NSNumber *, NSImage *> *)isInsideMainBundle;
+@interface NSMutableDictionary<K, V> (ARTTextViewController)
+- (NSMutableDictionary<NSAttributedString *, NSMutableDictionary *> *)character;
+- (NSMutableDictionary<NSNumber *, NSImage *> *)isInsideMainBundle;
 @end
 
 @interface ARTTextViewController ()
@@ -45,7 +44,7 @@
  *      }
  *  }
  */
-@property (class, readonly) TZMapVector<NSAttributedString */*character*/, TZMapVector<NSNumber */*isInsideMainBundle*/, NSImage *> *> *imageCache;
+@property (class, readonly) NSMutableDictionary<NSAttributedString */*character*/, NSMutableDictionary<NSNumber */*isInsideMainBundle*/, NSImage *> *> *imageCache;
 @property (readonly) NSMenu *linkStackMenu;
 @end
 
@@ -80,7 +79,7 @@
     [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton"] forState:ARTButtonStateNormal];
     [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton_highlighted"] forState:ARTButtonStateHighlighted];
     [self.goBackButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goBackButton_disabled"] forState:ARTButtonStateDisabled];
-    [self.goBackButton bind:NSEnabledBinding toObject:self.stack withKeyPath:@keypath(ARTStackController, canGoBack) options:nil];
+    [self.goBackButton bind:NSEnabledBinding toObject:self.stack withKeyPath:@keypath(self.stack, canGoBack) options:nil];
     self.goBackButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
     {
         switch (type) {
@@ -95,7 +94,7 @@
     [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton"] forState:ARTButtonStateNormal];
     [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton_highlighted"] forState:ARTButtonStateHighlighted];
     [self.goForwardButton setImage:[NSImage imageNamed:@"Default_ARTTextViewController_goForwardButton_disabled"] forState:ARTButtonStateDisabled];
-    [self.goForwardButton bind:NSEnabledBinding toObject:self.stack withKeyPath:@keypath(ARTStackController, canGoForward) options:nil];
+    [self.goForwardButton bind:NSEnabledBinding toObject:self.stack withKeyPath:@keypath(self.stack, canGoForward) options:nil];
     self.goForwardButton.eventHandler = ^(__kindof ARTButton * _Nonnull button, ARTControlEventType type, NSEvent * _Nonnull event)
     {
         switch (type) {
@@ -112,8 +111,8 @@
     }];
 
     [self observe:ARTConfigManager.sharedManager
-         keyPaths:@[@keypath(ARTConfigManager, showBundle),
-                    @keypath(ARTConfigManager, hideComments),]
+         keyPaths:@[@keypath(ARTConfigManager.sharedManager, showBundle),
+                    @keypath(ARTConfigManager.sharedManager, hideComments),]
           options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
             block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
@@ -147,12 +146,12 @@
 
 #pragma mark - Property
 
-+ (TZMapVector<NSAttributedString *,TZMapVector<NSNumber *,NSImage *> *> *)imageCache
++ (NSMutableDictionary<NSAttributedString *,NSMutableDictionary<NSNumber *,NSImage *> *> *)imageCache
 {
-    static TZMapVector *imageCache;
+    static id imageCache;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        imageCache = [[TZMapVector alloc] initWithType:@MapType(<NSAttributedString */*character*/, TZMapVector<NSNumber */*isInsideMainBundle*/, NSImage *> *>)];
+        imageCache = [NSMutableDictionary vectorWithType:@MapType(<NSAttributedString */*character*/, NSMutableDictionary<NSNumber */*isInsideMainBundle*/, NSImage *> *>)];
     });
     return imageCache;
 }

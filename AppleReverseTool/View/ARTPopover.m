@@ -29,10 +29,10 @@
 
 - (void)start
 {
-    weakifySelf();
+    @weakify(self);
     self.localMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:self.mask handler:^NSEvent * _Nullable(NSEvent * _Nonnull event)
     {
-        strongifySelf();
+        @strongify(self);
         if (self.handler) {
             self.handler(event);
         }
@@ -67,10 +67,10 @@
         self.backgroundColor = NSColor.whiteColor;
         self.position = SFBPopoverPositionTop;
 
-        weakifySelf();
+        @weakify(self);
         self.monitor = [[ARTEventMonitor alloc] initWithMask:NSEventMaskLeftMouseDown|NSEventMaskRightMouseDown handler:^(NSEvent *event)
         {
-            strongifySelf();
+            @strongify(self);
             NSWindow *popoverWindow = self[@"popoverWindow"];
             NSView *view = popoverWindow.contentView;
             NSPoint p = [view convertPoint:event.locationInWindow fromView:nil];
@@ -88,11 +88,11 @@
     [super displayPopoverInWindow:window atPoint:point chooseBestLocation:chooseBestLocation makeKey:makeKey];
     [self.monitor start];
 
-    weakifySelf();
+    @weakify(self);
     NSViewController *contentViewController = self[@"contentViewController"];
     [self observe:contentViewController.view keyPath:@"frame" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
      {
-         strongifySelf();
+         @strongify(self);
          CGRect newFrame = [change[NSKeyValueChangeNewKey] rectValue];
          CGRect oldFrame = [change[NSKeyValueChangeOldKey] rectValue];
          if (!CGRectEqualToRect(newFrame, oldFrame)) {

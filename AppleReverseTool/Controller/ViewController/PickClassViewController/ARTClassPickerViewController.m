@@ -87,9 +87,9 @@
 
         [self.filterQueue cancelAllOperations];
 
-        weakifySelf();
+        @weakify(self);
         NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-            strongifySelf();
+            @strongify(self);
 
             NSMutableArray *results = [[NSMutableArray alloc] init];
             NSMutableDictionary *resultsMap = [[NSMutableDictionary alloc] init];
@@ -112,7 +112,7 @@
 
         operation.completionBlock = ^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                strongifySelf();
+                @strongify(self);
                 if (!self.results.count) {
                     self.filterString = nil;
                     completion(nil);

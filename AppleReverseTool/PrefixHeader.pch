@@ -13,14 +13,12 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #ifdef __OBJC__
 #import <Cocoa/Cocoa.h>
+#import <TZKit/TZKit.h>
 #import "CDExtensions.h"
 #define __cmd __PRETTY_FUNCTION__
-#import "TZDefine.h"
 #import "ARTDefine.h"
 #import "ARTProtocol.h"
 #import "ARTStrings.h"
-#import "NSView_TZCategory.h"
-#import "NSMenu+TZCategory.h"
 #import "NSObject+ART.h"
 #import "ARTFontManager.h"
 #endif

@@ -78,8 +78,8 @@
 {
     [super awakeFromNib];
     
-    [self.classTreeViewController.view bind:NSHiddenBinding toObject:self.classTreeButton withKeyPath:@keypath(ARTButton, selected) options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
-    [self.relationshipTreeViewController.view bind:NSHiddenBinding toObject:self.relationshipTreeButton withKeyPath:@keypath(ARTButton, selected) options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+    [self.classTreeViewController.view bind:NSHiddenBinding toObject:self.classTreeButton withKeyPath:@keypath(self.classTreeButton, selected) options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
+    [self.relationshipTreeViewController.view bind:NSHiddenBinding toObject:self.relationshipTreeButton withKeyPath:@keypath(self.relationshipTreeButton, selected) options:@{NSValueTransformerNameBindingOption: NSNegateBooleanTransformerName}];
 }
 
 - (void)viewDidLoad

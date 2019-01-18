@@ -51,7 +51,7 @@
         [weakSelf.outlineView reloadData];
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager, hideUnexpandedVariables) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager.sharedManager, hideUnexpandedVariables) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
     {
         BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
         BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
@@ -68,7 +68,7 @@
         }
     }];
 
-    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager, allowExpandClassNotInMainBundle) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
+    [self observe:ARTConfigManager.sharedManager keyPath:@keypath(ARTConfigManager.sharedManager, allowExpandClassNotInMainBundle) options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change)
      {
          BOOL new = [change[NSKeyValueChangeNewKey] boolValue];
          BOOL old = [change[NSKeyValueChangeOldKey] boolValue];
@@ -219,10 +219,10 @@
     if (textField.stringValue.length) {
         [self.popover displayPopoverInWindow:self.view.window atPoint:[textField.superview convertPoint:NSMakePoint(textField.width * .5, textField.height) toView:nil]];
 
-        weakifySelf();
+        @weakify(self);
         [self.classPickerViewController setFilterString:textField.stringValue completion:^(CDOCClass * _Nullable aClass)
         {
-            strongifySelf();
+            @strongify(self);
             [self.popover closePopover:nil];
 
             if (aClass) {
