@@ -50,6 +50,8 @@
 		BA635EC9215E25D30048AB9A /* CDClassFrameworkVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635EC8215E25D30048AB9A /* CDClassFrameworkVisitor.m */; };
 		BA635ECC215F1E700048AB9A /* ARTVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = BA635ECB215F1E700048AB9A /* ARTVisitor.m */; };
 		BA6C1AA62166579100ABC059 /* ARTView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6C1AA52166579100ABC059 /* ARTView.m */; };
+		BA78BA8A21FAE6AC007DBDC3 /* TZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAED62E521EDDB4D00D9B266 /* TZKit.framework */; };
+		BA78BA8B21FAE6AC007DBDC3 /* TZKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAED62E521EDDB4D00D9B266 /* TZKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA8434062168AD13007E55B0 /* ARTURL.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8434052168AD13007E55B0 /* ARTURL.m */; };
 		BA856D19216B5AA5009944A3 /* NSAlert+ART.m in Sources */ = {isa = PBXBuildFile; fileRef = BA856D18216B5AA5009944A3 /* NSAlert+ART.m */; };
 		BA94A5BB21AE911B004F6BCA /* ARTClassPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA94A5BA21AE911B004F6BCA /* ARTClassPickerViewController.m */; };
@@ -69,7 +71,6 @@
 		BAD5F5FA216C85CC002207CF /* ARTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD5F5F9216C85CC002207CF /* ARTButton.m */; };
 		BAD961A221C743D500BCF65D /* XUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD961A121C743C300BCF65D /* XUIKit.framework */; };
 		BAD961A321C743D500BCF65D /* XUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAD961A121C743C300BCF65D /* XUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BAED62EA21EDDBC100D9B266 /* TZKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAED62E521EDDB4D00D9B266 /* TZKit.framework */; };
 		BAF2FEBB2160A8150082A508 /* ARTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBA2160A8150082A508 /* ARTWindowController.m */; };
 		BAF2FEBF2160A83C0082A508 /* ARTMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEBD2160A83C0082A508 /* ARTMainWindowController.m */; };
 		BAF2FEC62160B07B0082A508 /* ARTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAF2FEC52160B07B0082A508 /* ARTModel.m */; };
@@ -160,6 +161,20 @@
 			remoteGlobalIDString = 013D1F1013A5AE5A00BF0A67;
 			remoteInfo = MachObjC;
 		};
+		BA78BA7E21FAE66A007DBDC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAED62D221EDDB4D00D9B266 /* TZKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA732FD421DF5A7E00CE1725;
+			remoteInfo = "TZKit-macOS";
+		};
+		BA78BA8C21FAE6AC007DBDC3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAED62D221EDDB4D00D9B266 /* TZKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BA732FD421DF5A7E00CE1725;
+			remoteInfo = "TZKit-macOS";
+		};
 		BA94A5CC21AFD1FB004F6BCA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BA94A5C721AFD1FA004F6BCA /* SFBPopovers.xcodeproj */;
@@ -209,13 +224,6 @@
 			remoteGlobalIDString = BA732FE221DF5A9B00CE1725;
 			remoteInfo = "TZKit-iOS";
 		};
-		BAED62E821EDDBBA00D9B266 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BAED62D221EDDB4D00D9B266 /* TZKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BA732FD421DF5A7E00CE1725;
-			remoteInfo = "TZKit-macOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -226,6 +234,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				BA94A5D121AFD21B004F6BCA /* SFBPopovers.framework in Embed Frameworks */,
+				BA78BA8B21FAE6AC007DBDC3 /* TZKit.framework in Embed Frameworks */,
 				BA1919C021A2B539004D855E /* KVOController.framework in Embed Frameworks */,
 				BAD961A321C743D500BCF65D /* XUIKit.framework in Embed Frameworks */,
 			);
@@ -361,9 +370,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAED62EA21EDDBC100D9B266 /* TZKit.framework in Frameworks */,
 				BA94A5D021AFD215004F6BCA /* SFBPopovers.framework in Frameworks */,
 				BA635EC0215E0A440048AB9A /* libMachObjC.a in Frameworks */,
+				BA78BA8A21FAE6AC007DBDC3 /* TZKit.framework in Frameworks */,
 				BAD961A221C743D500BCF65D /* XUIKit.framework in Frameworks */,
 				BA1919BF21A2B539004D855E /* KVOController.framework in Frameworks */,
 			);
@@ -787,11 +796,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				BAED62E921EDDBBA00D9B266 /* PBXTargetDependency */,
 				BA94A5D321AFD228004F6BCA /* PBXTargetDependency */,
 				BA635EBF215E0A3E0048AB9A /* PBXTargetDependency */,
 				BA1919C221A2B539004D855E /* PBXTargetDependency */,
 				BAD961A521C743D500BCF65D /* PBXTargetDependency */,
+				BA78BA7F21FAE66A007DBDC3 /* PBXTargetDependency */,
+				BA78BA8D21FAE6AC007DBDC3 /* PBXTargetDependency */,
 			);
 			name = Rcode;
 			productName = AppleReverseTool;
@@ -1055,6 +1065,16 @@
 			name = MachObjC;
 			targetProxy = BA635EBE215E0A3E0048AB9A /* PBXContainerItemProxy */;
 		};
+		BA78BA7F21FAE66A007DBDC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "TZKit-macOS";
+			targetProxy = BA78BA7E21FAE66A007DBDC3 /* PBXContainerItemProxy */;
+		};
+		BA78BA8D21FAE6AC007DBDC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "TZKit-macOS";
+			targetProxy = BA78BA8C21FAE6AC007DBDC3 /* PBXContainerItemProxy */;
+		};
 		BA94A5D321AFD228004F6BCA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SFBPopovers;
@@ -1064,11 +1084,6 @@
 			isa = PBXTargetDependency;
 			name = XUIKit;
 			targetProxy = BAD961A421C743D500BCF65D /* PBXContainerItemProxy */;
-		};
-		BAED62E921EDDBBA00D9B266 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "TZKit-macOS";
-			targetProxy = BAED62E821EDDBBA00D9B266 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
